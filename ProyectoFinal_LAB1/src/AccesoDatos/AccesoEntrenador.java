@@ -116,89 +116,98 @@ public class AccesoEntrenador {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
         }
 
         return entrenador;
     }
 
-//    public List<Entrenador> listarEntrenador() {
-//        List<Entrenador> lista = new ArrayList<>();
-//
-//        try {
-//            String sql = "SELECT * FROM entrenador WHERE estado = 1 ";
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//
-//            while (rs.next()) {
-//                Entrenador entrenador = new Entrenador();
-//
-//                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
-//                entrenador.setDni(rs.getString("dni"));
-//                entrenador.setNombre(rs.getString("nombre"));
-//                entrenador.setApellido(rs.getString("apellido"));
-//                entrenador.setEspecialidad(rs.getString("fechaNacimiento"));
-//                entrenador.setEstado(true);
-//                lista.add(entrenador);
-//
-//            }
-//            ps.close();
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
-//        }
-//
-//        return entrenadors;
-//    }
-//
-//    public void modificarEntrenador(Entrenador entrenador) {
-//        String sql = "UPDATE entrenador SET dni = ? , apellido = ?, nombre = ?, fechaNacimiento = ? WHERE idEntrenador =  ?";
-//
-//        PreparedStatement ps = null;
-//
-//        try {
-//            ps = con.prepareStatement(sql);
-//            ps.setInt(1, entrenador.getDni());
-//            ps.setString(2, entrenador.getApellido());
-//            ps.setString(3, entrenador.getNombre());
-//            ps.setDate(4, Date.valueOf(entrenador.getFechaNacimiento()));
-//            ps.setInt(5, entrenador.getIdEntrenador());
-//            
-//            int exito = ps.executeUpdate();
-//
-//            if (exito == 1) {
-//                JOptionPane.showMessageDialog(null, "Entrenador modificado");
-//            } else {
-//                JOptionPane.showMessageDialog(null, "El entrenador no existe");
-//            }
-//
-//        } catch (SQLException e) {
-//
-//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
-//        }
-//
-//    }
-//
-//    public void eliminarEntrenador(int id) {
-//
-//        try {
-//
-//            String sql = "UPDATE entrenador SET estado = 0 WHERE idEntrenador = ? ";
-//
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ps.setInt(1, id);
-//
-//            int fila = ps.executeUpdate();
-//
-//            if (fila == 1) {
-//                JOptionPane.showMessageDialog(null, " Se eliminó el entrenador.");
-//
-//            }
-//            ps.close();
-//        } catch (SQLException e) {
-//
-//            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Entrenador");
-//        }
-//
-//    }
-//    
+    public List<Entrenador> listarEntrenador() {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenador WHERE estado = 1 ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public void modificarEntrenador(Entrenador entrenador) {
+        String sql = "UPDATE entrenador SET dni = ? , nombre = ?, appellido= ?, especialidad = ? WHERE idEntrenador =  ?";
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, entrenador.getDni());
+            ps.setString(2, entrenador.getNombre());
+            ps.setString(3, entrenador.getApellido());
+            ps.setString(4, entrenador.getEspecialidad());
+            ps.setInt(5, entrenador.getIdEntrenador());
+            
+            int exito = ps.executeUpdate();
+
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Entrenador modificado");
+            } else {
+                JOptionPane.showMessageDialog(null, "El entrenador no existe");
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+    }
+
+    public void eliminarEntrenador(int id) {
+
+        try {
+
+            String sql = "UPDATE entrenador SET estado = 0 WHERE idEntrenador = ? ";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            int fila = ps.executeUpdate();
+
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, " Se eliminó el entrenador.");
+
+            }
+            ps.close();
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Entrenador");
+        }
+
+    }
+    
 }
