@@ -18,22 +18,30 @@ public class AccesoMembresia {
 
     private Connection con;
     AccesoSocio as;
+
     public AccesoMembresia() {
         con = Conexion.getConexion();
         as = new AccesoSocio();
     }
 
     public void crearMembresia(Membresia membresia) {
-        String sql = "INSERT INTO `membresias`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
+        
+        if ( null!=buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
+            
+            JOptionPane.showMessageDialog(null, "esa membresia ya existe");
+            return ;
+        }
+        
+        String sql = "INSERT INTO `membresia`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             ps.setInt(1, membresia.getSocio().getIdSocio());
-            ps.setInt(2,membresia.getCantidadPases());
+            ps.setInt(2, membresia.getCantidadPases());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
             ps.setDate(4, Date.valueOf(membresia.getFechaFin()));
             ps.setDouble(5, membresia.getCosto());
-            
+
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
 
@@ -43,7 +51,7 @@ public class AccesoMembresia {
             }
             ps.close();
         } catch (SQLIntegrityConstraintViolationException x) {
-            JOptionPane.showMessageDialog(null, "El socio ya tiene una membresía activa");
+            JOptionPane.showMessageDialog(null, "El socio ya tiene una membresía activa" + x);
         } catch (SQLException S) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + S);
         } catch (Exception e) {
@@ -80,7 +88,7 @@ public class AccesoMembresia {
     public List<Membresia> listarMembresia() {
         List<Membresia> membresias = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM membresias WHERE estado = 1";
+            String sql = "SELECT * FROM membresia WHERE estado = 1";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -101,10 +109,10 @@ public class AccesoMembresia {
     }
 
     public void modificarMembresia(Membresia membresia) {
-        String sql = "UPDATE membresias SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";
+        String sql = "UPDATE membresia SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            
+
             ps.setInt(1, membresia.getSocio().getIdSocio());
             ps.setInt(2, membresia.getCantidadPases());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
@@ -126,7 +134,7 @@ public class AccesoMembresia {
 
     public void eliminarMembresia(int id) {
         try {
-            String sql = "UPDATE membresias SET estado = 0 WHERE idMembresia = ?";
+            String sql = "UPDATE membresia SET estado = 0 WHERE idMembresia = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
 
@@ -140,5 +148,11 @@ public class AccesoMembresia {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
         }
+
     }
+
+    
+    
+    
+    
 }

@@ -3,7 +3,7 @@ package Entidades;
 public class Socio {
 
     private int idSocio;
-    private int dni;
+    private String dni;
     private String nombre;
     private String Apellido;
     private int edad;
@@ -14,7 +14,18 @@ public class Socio {
     public Socio() {
     }
 
-    public Socio(int dni, String nombre, String Apellido, int edad, String correo, String telefono, boolean estado) {
+    public Socio(String dni, String nombre, String Apellido, int edad, String correo, String telefono, boolean estado) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.Apellido = Apellido;
+        this.edad = edad;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.estado = estado;
+    }
+
+    public Socio(int idSocio, String dni, String nombre, String Apellido, int edad, String correo, String telefono, boolean estado) {
+        this.idSocio = idSocio;
         this.dni = dni;
         this.nombre = nombre;
         this.Apellido = Apellido;
@@ -32,11 +43,11 @@ public class Socio {
         this.idSocio = idSocio;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
@@ -90,9 +101,7 @@ public class Socio {
 
     @Override
     public String toString() {
-        return "Socio{" + "idSocio=" + idSocio + ", nombre=" + nombre + '}';
+        return "Socio{" + "idSocio=" + idSocio + ", dni=" + dni + ", nombre=" + nombre + ", Apellido=" + Apellido + ", edad=" + edad + ", correo=" + correo + ", telefono=" + telefono + ", estado=" + estado + '}';
     }
 
-    
-    
 }
