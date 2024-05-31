@@ -5,9 +5,9 @@ import java.time.LocalTime;
 
 public class Clase {
 
-    private int idClase, cantidad;
+    private int idClase, capacidad;
     private String nombre;
-    private Entrenador idEntrenador;
+    private Entrenador entrenador;
     private LocalTime horario;
     private boolean estado;
     
@@ -15,11 +15,11 @@ public class Clase {
     
     // COMPLETO
 
-    public Clase(int idClase, int cantidad, String nombre, Entrenador idEntrenador, LocalTime horario, boolean estado) {
+    public Clase(int idClase, int cantidad, String nombre, Entrenador entrenador, LocalTime horario, boolean estado) {
         this.idClase = idClase;
-        this.cantidad = cantidad;
+        this.capacidad = cantidad;
         this.nombre = nombre;
-        this.idEntrenador = idEntrenador;
+        this.entrenador = entrenador;
         this.horario = horario;
         this.estado = estado;
     }
@@ -28,9 +28,9 @@ public class Clase {
     // SIN ID
 
     public Clase(int cantidad, String nombre, Entrenador idEntrenador, LocalTime horario, boolean estado) {
-        this.cantidad = cantidad;
+        this.capacidad = cantidad;
         this.nombre = nombre;
-        this.idEntrenador = idEntrenador;
+        this.entrenador = idEntrenador;
         this.horario = horario;
         this.estado = estado;
     }
@@ -49,12 +49,12 @@ public class Clase {
         this.idClase = idClase;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getCapacidad() {
+        return capacidad;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public String getNombre() {
@@ -65,12 +65,12 @@ public class Clase {
         this.nombre = nombre;
     }
 
-    public Entrenador getIdEntrenador() {
-        return idEntrenador;
+    public Entrenador getEntrenador() {
+        return entrenador;
     }
 
-    public void setIdEntrenador(Entrenador idEntrenador) {
-        this.idEntrenador = idEntrenador;
+    public void setEntrenador(Entrenador entrenador) {
+        this.entrenador = entrenador;
     }
 
     public LocalTime getHorario() {
@@ -93,7 +93,7 @@ public class Clase {
 
     @Override
     public String toString() {
-        return "Clase{" + "idClase=" + idClase + ", cantidad=" + cantidad + ", nombre=" + nombre + ", idEntrenador=" + idEntrenador + ", horario=" + horario + ", estado=" + estado + '}';
+        return "Clase{" + "idClase=" + idClase + ", capacidad=" + capacidad + ", nombre=" + nombre + ", idEntrenador=" + entrenador + ", horario=" + horario + ", estado=" + estado + '}';
     }
     
     
