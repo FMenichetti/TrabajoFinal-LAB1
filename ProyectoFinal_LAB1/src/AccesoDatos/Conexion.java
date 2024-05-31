@@ -9,7 +9,7 @@ public class Conexion {
     private static String user = "root";
     private static String pass = "";
     private static String url = "jdbc:mariadb://localhost/gimnasio_grupo4";
-    private static String db = "gimansio_grupo_4";
+    private static String db = "gimnasio_grupo4";
     private static Connection conexion = null;
 
     private Conexion() {

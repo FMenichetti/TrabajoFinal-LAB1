@@ -27,6 +27,7 @@ public class AccesoMembresia {
         String sql = "INSERT INTO `membresias`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
             ps.setInt(1, membresia.getSocio().getIdSocio());
             ps.setInt(2,membresia.getCantidadPases());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));

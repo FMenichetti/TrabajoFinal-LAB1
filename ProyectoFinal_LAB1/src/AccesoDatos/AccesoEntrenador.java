@@ -17,8 +17,7 @@ public class AccesoEntrenador {
 
     public void guardarEntrenador(Entrenador entrenador) {
         //usamos comodines para hacerlo generico
-        String sql = "INSERT INTO entrenador (dni,nombre,apellido,especialidad,estado) "
-                + "VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO entrenadores (dni,nombre,apellido,especialidad,estado) VALUES (?,?,?,?,?)";
         try {
             //instanciamos el prepared statement para poder cargar los comodines
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -55,7 +54,7 @@ public class AccesoEntrenador {
     public Entrenador buscarEntrenador(int id) {
         Entrenador entrenador = null;
 
-        String sql = "SELECT dni,nombre,apellido,especialidad FROM entrenador WHERE idEntrenador=? AND estado=1";
+        String sql = "SELECT dni,nombre,apellido,especialidad FROM entrenadores WHERE idEntrenador=? AND estado=1";
         PreparedStatement ps = null;
 
         try {
@@ -69,9 +68,9 @@ public class AccesoEntrenador {
 
                 entrenador.setIdEntrenador(id);
                 entrenador.setDni(rs.getString("dni"));
-                entrenador.setApellido(rs.getString("nombre"));
-                entrenador.setNombre(rs.getString("apellido"));
-                entrenador.setNombre(rs.getString("especialidad"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
                 entrenador.setEstado(true);
 
             } else {
@@ -94,7 +93,7 @@ public class AccesoEntrenador {
     public Entrenador buscarEntrenadorPorDni(String dni) {
         Entrenador entrenador = null;
 
-        String sql = "SELECT idEntrenador, dni, nombre, apellido, especialidad FROM entrenador WHERE dni=? AND estado = 1";
+        String sql = "SELECT idEntrenador, dni, nombre, apellido, especialidad FROM entrenadores WHERE dni=? AND estado = 1";
         PreparedStatement ps = null;
 
         try {
@@ -128,7 +127,7 @@ public class AccesoEntrenador {
         List<Entrenador> lista = new ArrayList<>();
 
         try {
-            String sql = "SELECT * FROM entrenador WHERE estado = 1 ";
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 ";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -157,7 +156,7 @@ public class AccesoEntrenador {
     }
 
     public void modificarEntrenador(Entrenador entrenador) {
-        String sql = "UPDATE entrenador SET dni = ? , nombre = ?, appellido= ?, especialidad = ? WHERE idEntrenador =  ?";
+        String sql = "UPDATE entrenadores SET dni = ? , nombre = ?, apellido= ?, especialidad = ? WHERE idEntrenador =  ?";
 
         PreparedStatement ps = null;
 
@@ -179,7 +178,7 @@ public class AccesoEntrenador {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador" + e);
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error general");
             System.out.println(e);
@@ -191,7 +190,7 @@ public class AccesoEntrenador {
 
         try {
 
-            String sql = "UPDATE entrenador SET estado = 0 WHERE idEntrenador = ? ";
+            String sql = "UPDATE entrenadores SET estado = 0 WHERE idEntrenador = ? ";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
