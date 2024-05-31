@@ -37,6 +37,7 @@ public class AccesoMembresia {
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
+                membresia.setIdMembresia(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Membresía añadida");
             }
             ps.close();
@@ -60,55 +61,17 @@ public class AccesoMembresia {
             if (rs.next()) {
                 membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                //Socio socio = as.buscar
-                //membresia.setTipo(rs.getString("tipo"));
+                Socio socio = as.buscarSocio(rs.getInt("idSocio"));
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                membresia.setEstado(rs.getInt("estado") == 1);
+                membresia.setCosto(rs.getDouble("costo"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe la membresía para el socio con ID: " + idSocio);
             }
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
-        }
-        return membresia;
-    }
-
-    public Membresia buscarMembresiaPorDniSocio(String dniSocio) {
-        Membresia membresia = null;
-        String sqlIdSocio = "SELECT `idSocio` FROM `socios` WHERE dni = ?";
-        try {
-            PreparedStatement psIdSocio = con.prepareStatement(sqlIdSocio);
-            psIdSocio.setString(1, dniSocio);
-
-            ResultSet rsIdSocio = psIdSocio.executeQuery();
-            if (rsIdSocio.next()) {
-                int idSocio = rsIdSocio.getInt("idSocio");
-
-                String sqlMembresia = "SELECT `idMembresia`, `tipo`, `fechaInicio`, `fechaFin`, `estado` FROM `membresias` WHERE idSocio=? AND estado = 1";
-                PreparedStatement psMembresia = con.prepareStatement(sqlMembresia);
-                psMembresia.setInt(1, idSocio);
-
-                ResultSet rsMembresia = psMembresia.executeQuery();
-                if (rsMembresia.next()) {
-                    membresia = new Membresia();
-                    membresia.setIdMembresia(rsMembresia.getInt("idMembresia"));
-                   // membresia.setIdSocio(idSocio);
-                    //membresia.setTipo(rsMembresia.getString("tipo"));
-                    membresia.setFechaInicio(rsMembresia.getDate("fechaInicio").toLocalDate());
-                    membresia.setFechaFin(rsMembresia.getDate("fechaFin").toLocalDate());
-                    membresia.setEstado(rsMembresia.getInt("estado") == 1);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se encontró la membresía para el socio con DNI: " + dniSocio);
-                }
-                psMembresia.close();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un socio con DNI: " + dniSocio);
-            }
-            psIdSocio.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socios o membresias: " + e.getMessage());
         }
         return membresia;
     }
@@ -122,11 +85,11 @@ public class AccesoMembresia {
             while (rs.next()) {
                 Membresia membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-               // membresia.setIdSocio(rs.getInt("idSocio"));
-               // membresia.setTipo(rs.getString("tipo"));
+                Socio socio = as.buscarSocio(rs.getInt("idSocio"));
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                membresia.setEstado(rs.getInt("estado") == 1);
+                membresia.setCosto(rs.getDouble("costo"));
                 membresias.add(membresia);
             }
             ps.close();
@@ -137,14 +100,16 @@ public class AccesoMembresia {
     }
 
     public void modificarMembresia(Membresia membresia) {
-        String sql = "UPDATE membresias SET idSocio = ?, tipo = ?, fechaInicio = ?, fechaFin = ? WHERE idMembresia = ?";
+        String sql = "UPDATE membresias SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            //ps.setInt(1, membresia.getIdSocio().getIdSocio());
-            //ps.setString(2, membresia.getTipo());
+            
+            ps.setInt(1, membresia.getSocio().getIdSocio());
+            ps.setInt(2, membresia.getCantidadPases());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
             ps.setDate(4, Date.valueOf(membresia.getFechaFin()));
-            ps.setInt(5, membresia.getIdMembresia());
+            ps.setDouble(5, membresia.getCosto());
+            ps.setInt(6, membresia.getIdMembresia());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
