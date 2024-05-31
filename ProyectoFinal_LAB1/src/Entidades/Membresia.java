@@ -5,10 +5,11 @@ import java.time.LocalDate;
 public class Membresia {
     //Atributos
     private int idMembresia;
-    private Socio idSocio;
-    private String tipo;
+    private Socio socio;
+    private int cantidadPases;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private double costo;
     private boolean estado;
     
     //Constructor vacío
@@ -16,24 +17,27 @@ public class Membresia {
     }
     
     //Constructor sin idMembresia
-    public Membresia(Socio idSocio, String tipo, LocalDate fechaInicio, LocalDate fechaFin, boolean estado) {
-        this.idSocio = idSocio;
-        this.tipo = tipo;
+    public Membresia(Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
+        this.socio = socio;
+        this.cantidadPases = cantidadPases;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.costo = costo;
         this.estado = estado;
     }
+    
     
     //Constructor completo
-    public Membresia(int idMembresia, Socio idSocio, String tipo, LocalDate fechaInicio, LocalDate fechaFin, boolean estado) {
+    public Membresia(int idMembresia, Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
         this.idMembresia = idMembresia;
-        this.idSocio = idSocio;
-        this.tipo = tipo;
+        this.socio = socio;
+        this.cantidadPases = cantidadPases;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.costo = costo;
         this.estado = estado;
     }
-    
+
     //Metodos Getters & Setters
     public int getIdMembresia() {
         return idMembresia;
@@ -41,17 +45,17 @@ public class Membresia {
     public void setIdMembresia(int idMembresia) {
         this.idMembresia = idMembresia;
     }
-    public Socio getIdSocio() {
-        return idSocio;
+    public Socio getSocio() {
+        return socio;
     }
-    public void setIdSocio(Socio idSocio) {
-        this.idSocio = idSocio;
+    public void setSocio(Socio socio) {
+        this.socio = socio;
     }
-    public String getTipo() {
-        return tipo;
+    public int getCantidadPases() {
+        return cantidadPases;
     }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setCantidadPases(int cantidadPases) {
+        this.cantidadPases = cantidadPases;
     }
     public LocalDate getFechaInicio() {
         return fechaInicio;
@@ -65,20 +69,28 @@ public class Membresia {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
+    public double getCosto() {
+        return costo;
+    }
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
     public boolean isEstado() {
         return estado;
     }
     public void setEstado(boolean estado) {
         this.estado = estado;
-    }
+    }    
     
     //Metodo toString()
     @Override
     public String toString() {
-        return "Membresia{" + "idMembresia=" + idMembresia + ", idSocio=" 
-                + idSocio + ", tipo=" + tipo + ", fechaInicio=" + fechaInicio 
-                + ", fechaFin=" + fechaFin + ", estado=" + estado + '}';
+        return "Membresia{" + "idMembresia=" + idMembresia + ", socio=" + socio + 
+                ", cantidadPases=" + cantidadPases + ", fechaInicio=" + fechaInicio + 
+                ", fechaFin=" + fechaFin + ", costo=" + costo + ", estado=" + estado + '}';
     }
+    
+    
     
        
     

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2024 a las 00:51:25
+-- Tiempo de generación: 31-05-2024 a las 21:27:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -211,17 +211,50 @@ INSERT INTO `inscripcion` (`idClasesSocio`, `idClase`, `idSocio`, `fechaInscripc
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `membresias`
+-- Estructura de tabla para la tabla `membresia`
 --
 
-CREATE TABLE `membresias` (
+CREATE TABLE `membresia` (
   `idMembresia` int(11) NOT NULL,
   `idSocio` int(11) NOT NULL,
-  `tipo` varchar(100) NOT NULL,
+  `cantidadPases` int(11) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
-  `estado` tinyint(1) NOT NULL
+  `costo` decimal(10,0) NOT NULL,
+  `estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `membresia`
+--
+
+INSERT INTO `membresia` (`idMembresia`, `idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES
+(1, 15, 8, '2024-06-01', '2024-06-30', 50, 1),
+(2, 45, 12, '2024-07-01', '2024-07-31', 75, 1),
+(3, 30, 20, '2024-08-01', '2024-08-31', 100, 1),
+(4, 15, 8, '2024-06-01', '2024-06-30', 50, 1),
+(5, 45, 12, '2024-07-01', '2024-07-31', 75, 1),
+(6, 30, 20, '2024-08-01', '2024-08-31', 100, 1),
+(7, 1, 8, '2024-06-01', '2024-06-30', 80, 1),
+(8, 2, 12, '2024-07-01', '2024-07-31', 120, 1),
+(9, 3, 20, '2024-08-01', '2024-08-31', 200, 1),
+(10, 4, 8, '2024-09-01', '2024-09-30', 80, 1),
+(11, 5, 12, '2024-10-01', '2024-10-31', 120, 1),
+(12, 6, 20, '2024-11-01', '2024-11-30', 200, 1),
+(13, 7, 8, '2024-12-01', '2024-12-31', 80, 1),
+(14, 8, 12, '2025-01-01', '2025-01-31', 120, 1),
+(15, 9, 20, '2025-02-01', '2025-02-28', 200, 1),
+(16, 10, 8, '2025-03-01', '2025-03-31', 80, 1),
+(17, 11, 12, '2025-04-01', '2025-04-30', 120, 1),
+(18, 12, 20, '2025-05-01', '2025-05-31', 200, 1),
+(19, 13, 8, '2025-06-01', '2025-06-30', 80, 1),
+(20, 14, 12, '2025-07-01', '2025-07-31', 120, 1),
+(21, 15, 20, '2025-08-01', '2025-08-31', 200, 1),
+(22, 16, 8, '2025-09-01', '2025-09-30', 80, 1),
+(23, 17, 12, '2025-10-01', '2025-10-31', 120, 1),
+(24, 18, 20, '2025-11-01', '2025-11-30', 200, 1),
+(25, 19, 8, '2025-12-01', '2025-12-31', 80, 1),
+(26, 20, 12, '2026-01-01', '2026-01-31', 120, 1);
 
 -- --------------------------------------------------------
 
@@ -363,9 +396,9 @@ ALTER TABLE `inscripcion`
   ADD KEY `idSocio` (`idSocio`);
 
 --
--- Indices de la tabla `membresias`
+-- Indices de la tabla `membresia`
 --
-ALTER TABLE `membresias`
+ALTER TABLE `membresia`
   ADD PRIMARY KEY (`idMembresia`),
   ADD KEY `idSocio` (`idSocio`);
 
@@ -400,10 +433,10 @@ ALTER TABLE `inscripcion`
   MODIFY `idClasesSocio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
--- AUTO_INCREMENT de la tabla `membresias`
+-- AUTO_INCREMENT de la tabla `membresia`
 --
-ALTER TABLE `membresias`
-  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `membresia`
+  MODIFY `idMembresia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `socios`
@@ -429,10 +462,10 @@ ALTER TABLE `inscripcion`
   ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`idSocio`) REFERENCES `socios` (`idSocio`);
 
 --
--- Filtros para la tabla `membresias`
+-- Filtros para la tabla `membresia`
 --
-ALTER TABLE `membresias`
-  ADD CONSTRAINT `membresias_ibfk_1` FOREIGN KEY (`idSocio`) REFERENCES `socios` (`idSocio`);
+ALTER TABLE `membresia`
+  ADD CONSTRAINT `membresia_ibfk_1` FOREIGN KEY (`idSocio`) REFERENCES `socios` (`idSocio`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

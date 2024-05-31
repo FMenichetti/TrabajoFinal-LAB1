@@ -1,6 +1,7 @@
 package AccesoDatos;
 
 import Entidades.Membresia;
+import Entidades.Socio;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,20 +17,22 @@ import javax.swing.JOptionPane;
 public class AccesoMembresia {
 
     private Connection con;
-
+    AccesoSocio as;
     public AccesoMembresia() {
         con = Conexion.getConexion();
+        as = new AccesoSocio();
     }
 
     public void crearMembresia(Membresia membresia) {
-        String sql = "INSERT INTO `membresias`(`idSocio`, `tipo`, `fechaInicio`, `fechaFin`, `estado`) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO `membresias`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            //ps.setInt(1, membresia.getIdSocio());
-            ps.setString(2, membresia.getTipo());
+            ps.setInt(1, membresia.getSocio().getIdSocio());
+            ps.setInt(2,membresia.getCantidadPases());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
             ps.setDate(4, Date.valueOf(membresia.getFechaFin()));
-            ps.setBoolean(5, membresia.isEstado());
+            ps.setDouble(5, membresia.getCosto());
+            
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
 
@@ -47,7 +51,7 @@ public class AccesoMembresia {
 
     public Membresia buscarMembresiaPorIdSocio(int idSocio) {
         Membresia membresia = null;
-        String sql = "SELECT `idMembresia`, `tipo`, `fechaInicio`, `fechaFin`, `estado` FROM `membresias` WHERE idSocio=? AND estado = 1";
+        String sql = "SELECT * FROM `membresia` WHERE `idSocio` = ? AND `estado` = 1";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idSocio);
@@ -56,8 +60,8 @@ public class AccesoMembresia {
             if (rs.next()) {
                 membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                //membresia.setIdSocio(idSocio);
-                membresia.setTipo(rs.getString("tipo"));
+                //Socio socio = as.buscar
+                //membresia.setTipo(rs.getString("tipo"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
                 membresia.setEstado(rs.getInt("estado") == 1);
@@ -91,7 +95,7 @@ public class AccesoMembresia {
                     membresia = new Membresia();
                     membresia.setIdMembresia(rsMembresia.getInt("idMembresia"));
                    // membresia.setIdSocio(idSocio);
-                    membresia.setTipo(rsMembresia.getString("tipo"));
+                    //membresia.setTipo(rsMembresia.getString("tipo"));
                     membresia.setFechaInicio(rsMembresia.getDate("fechaInicio").toLocalDate());
                     membresia.setFechaFin(rsMembresia.getDate("fechaFin").toLocalDate());
                     membresia.setEstado(rsMembresia.getInt("estado") == 1);
@@ -119,7 +123,7 @@ public class AccesoMembresia {
                 Membresia membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
                // membresia.setIdSocio(rs.getInt("idSocio"));
-                membresia.setTipo(rs.getString("tipo"));
+               // membresia.setTipo(rs.getString("tipo"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
                 membresia.setEstado(rs.getInt("estado") == 1);
@@ -136,8 +140,8 @@ public class AccesoMembresia {
         String sql = "UPDATE membresias SET idSocio = ?, tipo = ?, fechaInicio = ?, fechaFin = ? WHERE idMembresia = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            //ps.setInt(1, membresia.getIdSocio());
-            ps.setString(2, membresia.getTipo());
+            //ps.setInt(1, membresia.getIdSocio().getIdSocio());
+            //ps.setString(2, membresia.getTipo());
             ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
             ps.setDate(4, Date.valueOf(membresia.getFechaFin()));
             ps.setInt(5, membresia.getIdMembresia());
