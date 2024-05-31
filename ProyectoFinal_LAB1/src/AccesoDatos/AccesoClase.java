@@ -17,6 +17,7 @@ public class AccesoClase {
 
     private Connection con;
     private AccesoEntrenador entData;
+
     public AccesoClase() {
         con = Conexion.getConexion();
         entData = new AccesoEntrenador();
@@ -35,7 +36,7 @@ public class AccesoClase {
             ps.setTime(3, Time.valueOf(cla.getHorario()));
             ps.setInt(4, cla.getCapacidad());
             ps.setBoolean(5, cla.isEstado());
-                
+
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             //el resultset empieza detras de la primera columna y se fija si tiene un columna al frente
@@ -54,6 +55,42 @@ public class AccesoClase {
         } catch (Exception e) {
             System.out.println("error general");
         }
+
+    }
+
+    public Clase bucarClase(int id) {
+        Clase clase = null;
+
+        String sql = "SELECT nombre,idEntrenador,horario,capacidad,estado FROM clases WHERE idClase=? AND estado=1";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                clase = new Clase();
+
+                clase.setIdClase(id);
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador trainer = entData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(rs.getBoolean("estado"));
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "no existe el alumno");
+            }
+
+            ps.close();
+        } catch (SQLException E) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+        }
+
+        return clase;
 
     }
 
@@ -79,8 +116,8 @@ public class AccesoClase {
         return clases;
 
     }
-    
-    public void modificarClase(Clase clase){
+
+    public void modificarClase(Clase clase) {
         String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
         PreparedStatement ps = null;
 
@@ -91,7 +128,7 @@ public class AccesoClase {
             ps.setTime(3, Time.valueOf(clase.getHorario()));
             ps.setInt(4, clase.getCapacidad());
             ps.setBoolean(5, clase.isEstado());
-            
+
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
@@ -105,6 +142,7 @@ public class AccesoClase {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases");
         }
     }
+
     //borrado logico de clase
     public void eliminarClase(int id) {
 
@@ -128,7 +166,5 @@ public class AccesoClase {
         }
 
     }
-    
-    
 
 }
