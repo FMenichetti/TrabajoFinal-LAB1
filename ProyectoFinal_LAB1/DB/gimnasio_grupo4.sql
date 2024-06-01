@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2024 a las 21:27:26
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 01-06-2024 a las 23:53:32
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -148,7 +148,7 @@ INSERT INTO `entrenadores` (`idEntrenador`, `dni`, `nombre`, `apellido`, `especi
 --
 
 CREATE TABLE `inscripcion` (
-  `idClasesSocio` int(11) NOT NULL,
+  `idInscripcion` int(11) NOT NULL,
   `idClase` int(11) NOT NULL,
   `idSocio` int(11) NOT NULL,
   `fechaInscripcion` date NOT NULL
@@ -158,7 +158,7 @@ CREATE TABLE `inscripcion` (
 -- Volcado de datos para la tabla `inscripcion`
 --
 
-INSERT INTO `inscripcion` (`idClasesSocio`, `idClase`, `idSocio`, `fechaInscripcion`) VALUES
+INSERT INTO `inscripcion` (`idInscripcion`, `idClase`, `idSocio`, `fechaInscripcion`) VALUES
 (1, 1, 45, '2023-07-15'),
 (2, 7, 32, '2023-10-22'),
 (3, 12, 67, '2023-02-05'),
@@ -391,7 +391,7 @@ ALTER TABLE `entrenadores`
 -- Indices de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  ADD PRIMARY KEY (`idClasesSocio`),
+  ADD PRIMARY KEY (`idInscripcion`),
   ADD KEY `idClase` (`idClase`),
   ADD KEY `idSocio` (`idSocio`);
 
@@ -430,7 +430,7 @@ ALTER TABLE `entrenadores`
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `idClasesSocio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `idInscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `membresia`
