@@ -68,7 +68,7 @@ public class Inscripcion {
 
     @Override
     public String toString() {
-        return "Inscripcion{" + "idInscripcion=" + idInscripcion + ", clase=" + clase + ", socio=" + socio + ", fechaInscripcion=" + fechaInscripcion + '}';
+        return "Inscripcion{" + "idInscripcion=" + idInscripcion + ", clase=" + clase.getIdClase() + ", socio=" + socio.getIdSocio() + ", fechaInscripcion=" + fechaInscripcion + '}';
     }
     
     

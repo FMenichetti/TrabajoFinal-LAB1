@@ -62,10 +62,10 @@ public class main {
         Clase clase2=new Clase(20, "zumba", ae.buscarEntrenadorPorDni("28475698"), LocalTime.of(14, 0, 0), true);
       
       //arreglar despues
-      ac.guardarClase(clase2);
+      //ac.guardarClase(clase2);
     // clase=ac.buscarClase(57);
      //    System.out.println(""+clase);
-     clase=ac.buscarClase(59);
+     //clase=ac.buscarClase(59);
     // clase.setNombre("juanjo");
      
     // ac.modificarClase(clase);
@@ -74,9 +74,22 @@ public class main {
             System.out.println(""+listarClase);
         }*/
       
-     ac.eliminarClase(58);
+     //ac.eliminarClase(58);
       
-        
+      Inscripcion i1 = new Inscripcion(ac.buscarClase(3), as.buscarSocio(7), LocalDate.of(2020, Month.MARCH, 5));
+      
+      //ai.guardarInscripcion(i1);
+      //System.out.println(ai.buscarInscripcionPorId(2));
+//        for (Inscripcion listarInscripcione : ai.listarInscripciones()) {
+//            System.out.println(listarInscripcione);
+//        }
+     
+//     i1 = ai.buscarInscripcionPorId(49);
+//     i1.setFechaInscripcion(LocalDate.of(2021, Month.MARCH, 19));
+//     ai.modificarInscripcion(i1);
+
+    ai.borrarInscripcion(49);
+     
         
     }
 }
