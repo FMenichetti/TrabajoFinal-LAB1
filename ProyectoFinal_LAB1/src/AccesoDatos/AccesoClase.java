@@ -25,40 +25,45 @@ public class AccesoClase {
 
     public void guardarClase(Clase cla) {
         //usamos comodines para hacerlo generico
-        String sql = "INSERT INTO clases (nombre,idEntrenador,horario,capacidad,estado) "
-                + "VALUES (?,?,?,?,?)";
-        try {
-            //instanciamos el prepared statement para poder cargar los comodines
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            //cargamos los comodines
-            ps.setString(1, cla.getNombre());
-            ps.setInt(2, cla.getEntrenador().getIdEntrenador());
-            ps.setTime(3, Time.valueOf(cla.getHorario()));
-            ps.setInt(4, cla.getCapacidad());
-            ps.setBoolean(5, cla.isEstado());
+        if (existeClase(cla)) {
+            JOptionPane.showMessageDialog(null, "ya existe la clase");
+            return;
+        } else {
 
-            ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            //el resultset empieza detras de la primera columna y se fija si tiene un columna al frente
-            //devuelve booleano
-            if (rs.next()) {
-                cla.setIdClase(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Clase añadida");
+            String sql = "INSERT INTO clases (nombre,idEntrenador,horario,capacidad,estado) "
+                    + "VALUES (?,?,?,?,?)";
+            try {
+                //instanciamos el prepared statement para poder cargar los comodines
+                PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                //cargamos los comodines
+                ps.setString(1, cla.getNombre());
+                ps.setInt(2, cla.getEntrenador().getIdEntrenador());
+                ps.setTime(3, Time.valueOf(cla.getHorario()));
+                ps.setInt(4, cla.getCapacidad());
+                ps.setBoolean(5, cla.isEstado());
+
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                //el resultset empieza detras de la primera columna y se fija si tiene un columna al frente
+                //devuelve booleano
+                if (rs.next()) {
+                    cla.setIdClase(rs.getInt(1));
+                    JOptionPane.showMessageDialog(null, "Clase añadida");
+                }
+                //cerramos la conexion
+                ps.close();
+            } catch (SQLIntegrityConstraintViolationException x) {
+                JOptionPane.showMessageDialog(null, "La clase ya esta creada");
+            } catch (SQLException S) {
+                JOptionPane.showMessageDialog(null, "Error acceder a la tabla Clase " + S);
+
+            } catch (Exception e) {
+                System.out.println("error general");
             }
-            //cerramos la conexion
-            ps.close();
-        } catch (SQLIntegrityConstraintViolationException x) {
-            JOptionPane.showMessageDialog(null, "La clase ya esta creada");
-        } catch (SQLException S) {
-            JOptionPane.showMessageDialog(null, "Error acceder a la tabla Clase " + S);
-
-        } catch (Exception e) {
-            System.out.println("error general");
         }
-
     }
 
-    public Clase bucarClase(int id) {
+    public Clase buscarClase(int id) {
         Clase clase = null;
 
         String sql = "SELECT nombre,idEntrenador,horario,capacidad,estado FROM clases WHERE idClase=? AND estado=1";
@@ -79,15 +84,16 @@ public class AccesoClase {
                 clase.setHorario(rs.getTime("horario").toLocalTime());
                 clase.setCapacidad(rs.getInt("capacidad"));
                 clase.setEstado(rs.getBoolean("estado"));
+                clase.setEntrenador(trainer);
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "no existe el alumno");
+                JOptionPane.showMessageDialog(null, "no existe la clase");
             }
 
             ps.close();
         } catch (SQLException E) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clase");
         }
 
         return clase;
@@ -108,6 +114,7 @@ public class AccesoClase {
                 clase.setHorario(rs.getTime("horario").toLocalTime());
                 clase.setCapacidad(rs.getInt("capacidad"));
                 clase.setEstado(rs.getBoolean("estado"));
+                clases.add(clase);
             }
             ps.close();
         } catch (SQLException e) {
@@ -128,6 +135,7 @@ public class AccesoClase {
             ps.setTime(3, Time.valueOf(clase.getHorario()));
             ps.setInt(4, clase.getCapacidad());
             ps.setBoolean(5, clase.isEstado());
+            ps.setInt(6, clase.getIdClase());
 
             int exito = ps.executeUpdate();
 
@@ -139,7 +147,7 @@ public class AccesoClase {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
         }
     }
 
@@ -148,7 +156,7 @@ public class AccesoClase {
 
         try {
 
-            String sql = "UPDATE clases SET estado = 0 WHERE idClase = ? ";
+            String sql = "UPDATE clases SET estado = 0 WHERE idClase = ? AND estado=1";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -158,6 +166,8 @@ public class AccesoClase {
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, " Se eliminó la clase.");
 
+            }else if(fila==0){
+             JOptionPane.showMessageDialog(null, "No existe la clase");
             }
             ps.close();
         } catch (SQLException e) {
@@ -167,4 +177,27 @@ public class AccesoClase {
 
     }
 
+    public boolean existeClase(Clase clase) {
+
+        String sql = "SELECT * FROM `clases` WHERE `horario`=? and `idEntrenador`=? and estado=1";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setTime(1, Time.valueOf(clase.getHorario()));
+
+            ps.setInt(2, clase.getEntrenador().getIdEntrenador());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("" + e);
+
+        }
+        return false;
+    }
 }

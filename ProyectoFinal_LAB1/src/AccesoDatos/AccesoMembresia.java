@@ -75,6 +75,7 @@ public class AccesoMembresia {
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
                 membresia.setCosto(rs.getDouble("costo"));
+                membresia.setSocio(socio);
             } else {
                 JOptionPane.showMessageDialog(null, "No existe la membresía para el socio con ID: " + idSocio);
             }
