@@ -4,6 +4,10 @@
  */
 package Vistas;
 
+import java.io.File;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Gose is Lose
@@ -26,17 +30,43 @@ public class Vistas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jpFondoBtn = new javax.swing.JPanel();
+        lblMembresia = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jpFondoBtn.setBackground(new java.awt.Color(214, 235, 225));
+
+        lblMembresia.setIcon(new javax.swing.ImageIcon("C:\\Users\\river\\Documents\\GitHub\\TrabajoFinal-LAB1\\ProyectoFinal_LAB1\\src\\imagenes\\MEMBRESIA_MENU.png")); // NOI18N
+
+        javax.swing.GroupLayout jpFondoBtnLayout = new javax.swing.GroupLayout(jpFondoBtn);
+        jpFondoBtn.setLayout(jpFondoBtnLayout);
+        jpFondoBtnLayout.setHorizontalGroup(
+            jpFondoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFondoBtnLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(lblMembresia)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jpFondoBtnLayout.setVerticalGroup(
+            jpFondoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpFondoBtnLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(lblMembresia)
+                .addContainerGap(839, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1607, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jpFondoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -78,5 +108,7 @@ public class Vistas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jpFondoBtn;
+    private javax.swing.JLabel lblMembresia;
     // End of variables declaration//GEN-END:variables
 }
