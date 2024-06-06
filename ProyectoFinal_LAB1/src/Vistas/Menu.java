@@ -342,7 +342,7 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Socio s = new Socio();
+        VistaSocio s = new VistaSocio();
         s.setVisible(true);
         escritorio.add(s);
         s.moveToFront();
