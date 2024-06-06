@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vistas;
 
 import java.awt.Event;
@@ -10,10 +7,7 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Gose is Lose
- */
+
 public class Menu extends javax.swing.JFrame {
 
     private boolean memFlag = false;
@@ -70,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
         escritorio = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setSize(new java.awt.Dimension(1080, 720));
+        setSize(new java.awt.Dimension(1920, 720));
 
         jpFondoBtn.setBackground(new java.awt.Color(214, 235, 225));
 
@@ -325,6 +319,11 @@ public class Menu extends javax.swing.JFrame {
         m.setVisible(true);
         escritorio.add(m);
         m.moveToFront();
+        
+        try {
+            m.setMaximum(true);
+        } catch (Exception e) {
+        }
 
     }//GEN-LAST:event_lblMembresiaMouseClicked
 
@@ -347,6 +346,11 @@ public class Menu extends javax.swing.JFrame {
         s.setVisible(true);
         escritorio.add(s);
         s.moveToFront();
+        
+        try {
+            s.setMaximum(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_lblSociosMouseClicked
 
     private void lblClasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClasesMouseClicked
@@ -368,6 +372,11 @@ public class Menu extends javax.swing.JFrame {
         c.setVisible(true);
         escritorio.add(c);
         c.moveToFront();
+        
+        try {
+            c.setMaximum(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_lblClasesMouseClicked
 
     private void lblAsistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAsistenciaMouseClicked
@@ -389,6 +398,11 @@ public class Menu extends javax.swing.JFrame {
         a.setVisible(true);
         escritorio.add(a);
         a.moveToFront();
+        
+        try {
+            a.setMaximum(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_lblAsistenciaMouseClicked
 
     private void lblEntrenadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEntrenadorMouseClicked
@@ -410,6 +424,12 @@ public class Menu extends javax.swing.JFrame {
         e.setVisible(true);
         escritorio.add(e);
         e.moveToFront();
+        
+        try {
+            e.setMaximum(true);
+        } catch (Exception f) {
+        }
+        
     }//GEN-LAST:event_lblEntrenadorMouseClicked
 
     public void despintarTodos() {
