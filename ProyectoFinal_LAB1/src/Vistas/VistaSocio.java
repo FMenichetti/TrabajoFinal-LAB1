@@ -13,10 +13,10 @@ import javax.swing.JOptionPane;
  * @author Fabri
  */
 public class VistaSocio extends javax.swing.JInternalFrame {
-    
+
     private Socio socio = null;
     private AccesoSocio as = null;
-    
+
     public VistaSocio() {
         initComponents();
         as = new AccesoSocio();
@@ -198,6 +198,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         btnBuscar.setBounds(380, 140, 160, 50);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(40, 690, 100, 40);
 
@@ -292,12 +297,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         socio = null;
         try {
-            
+
             if (verificarLleno(txtIdSocio.getText())) {
                 socio = as.buscarSocio(Integer.parseInt(txtIdSocio.getText()));
             } else if (verificarLleno(txtDniSocio.getText())) {
                 socio = as.buscarSocioPorDni(txtDniSocio.getText());
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Debe completar el campo Id o Dni para realizar la busqueda");
             }
             if (socio != null) {
@@ -306,8 +311,38 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println("" + e);
         }
-        
+
     }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        // TODO add your handling code here:
+        //Guarda socio sin ID y estado true
+        socio = new Socio();
+        try {
+
+            if (!camposLlenos()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
+                return;
+            }
+            //cargarSocio(socio);
+            
+             socio.setDni(txtDniSocio.getText());
+        socio.setNombre(txtNombre.getText() );
+        socio.setApellido(txtApellido.getText() );
+        socio.setEdad( Integer.parseInt( txtEdad.getText() ));
+        socio.setCorreo(txtCorreo.getText() );
+        socio.setTelefono(txtTelefono.getText() );
+        socio.setEstado( rbEstado.isSelected() );
+            
+            as.guardarSocio(socio);
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
+        }
+
+
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     //Varifica un campo lleno
     private boolean verificarLleno(String txt) {
@@ -325,6 +360,21 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setText(socio.getCorreo());
         txtTelefono.setText(socio.getTelefono());
         rbEstado.setEnabled(socio.isEstado());
+    }
+
+    private boolean camposLlenos() { //Menos id
+        return !txtDniSocio.getText().isEmpty()
+                && !txtNombre.getText().isEmpty()
+                && !txtApellido.getText().isEmpty()
+                && !txtEdad.getText().isEmpty()
+                && !txtCorreo.getText().isEmpty()
+                && !txtTelefono.getText().isEmpty();
+    }
+    
+    private Socio cargarSocio( Socio socio ){
+       
+        
+        return socio;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
