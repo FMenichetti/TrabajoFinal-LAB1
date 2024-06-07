@@ -6,13 +6,14 @@ package Vistas;
 
 import AccesoDatos.AccesoSocio;
 import Entidades.Socio;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Fabri
  */
 public class VistaSocio extends javax.swing.JInternalFrame {
-
+    
     private Socio socio = null;
     private AccesoSocio as = null;
     
@@ -70,18 +71,13 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtIdSocio.setBorder(null);
         txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdSocio.setOpaque(false);
-        txtIdSocio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdSocioActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtIdSocio);
-        txtIdSocio.setBounds(150, 110, 150, 35);
+        txtIdSocio.setBounds(150, 110, 200, 35);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
         jLabel6.setText("jLabel3");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(370, 570, 122, 57);
+        jLabel6.setBounds(410, 470, 122, 57);
 
         lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblIdSocio.setText("ID SOCIO");
@@ -96,7 +92,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
         jLabel9.setText("jLabel3");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(370, 480, 122, 57);
+        jLabel9.setBounds(410, 390, 122, 57);
 
         lblApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblApellido.setText("APELLIDO");
@@ -139,13 +135,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtTelefono.setBorder(null);
         txtTelefono.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtTelefono.setOpaque(false);
-        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtTelefono);
-        txtTelefono.setBounds(150, 550, 150, 35);
+        txtTelefono.setBounds(150, 550, 200, 35);
 
         txtCorreo.setBackground(new java.awt.Color(28, 89, 59));
         txtCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -153,13 +144,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setBorder(null);
         txtCorreo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtCorreo.setOpaque(false);
-        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCorreoActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtCorreo);
-        txtCorreo.setBounds(150, 480, 150, 35);
+        txtCorreo.setBounds(150, 480, 200, 35);
 
         txtEdad.setBackground(new java.awt.Color(28, 89, 59));
         txtEdad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -167,13 +153,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtEdad.setBorder(null);
         txtEdad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtEdad.setOpaque(false);
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtEdad);
-        txtEdad.setBounds(150, 410, 150, 35);
+        txtEdad.setBounds(150, 410, 200, 35);
 
         txtApellido.setBackground(new java.awt.Color(28, 89, 59));
         txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -181,13 +162,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtApellido.setBorder(null);
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtApellido.setOpaque(false);
-        txtApellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidoActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtApellido);
-        txtApellido.setBounds(150, 330, 150, 35);
+        txtApellido.setBounds(150, 330, 200, 35);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
         txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -195,13 +171,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtNombre.setBorder(null);
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNombre.setOpaque(false);
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtNombre);
-        txtNombre.setBounds(150, 270, 150, 35);
+        txtNombre.setBounds(150, 270, 200, 35);
 
         txtDniSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -209,13 +180,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtDniSocio.setBorder(null);
         txtDniSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtDniSocio.setOpaque(false);
-        txtDniSocio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDniSocioActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtDniSocio);
-        txtDniSocio.setBounds(150, 190, 150, 35);
+        txtDniSocio.setBounds(150, 190, 200, 35);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         jPanel1.add(btnEliminar);
@@ -229,7 +195,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(360, 150, 150, 50);
+        btnBuscar.setBounds(380, 140, 160, 50);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         jPanel1.add(btnGuardar);
@@ -242,7 +208,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         rbEstado.setForeground(new java.awt.Color(60, 63, 65));
         rbEstado.setSelected(true);
         jPanel1.add(rbEstado);
-        rbEstado.setBounds(150, 628, 150, 40);
+        rbEstado.setBounds(150, 628, 200, 40);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -322,56 +288,44 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdSocioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdSocioActionPerformed
-
-    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoActionPerformed
-
-    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCorreoActionPerformed
-
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
-
-    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidoActionPerformed
-
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtDniSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniSocioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDniSocioActionPerformed
-
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
-        if ( verificarLleno( txtIdSocio.getText() )) {
-            socio = as.buscarSocio( Integer.parseInt( txtIdSocio.getText() ) );
-        }else{
-            socio = as.buscarSocioPorDni(txtDniSocio.getText());
+        socio = null;
+        try {
+            
+            if (verificarLleno(txtIdSocio.getText())) {
+                socio = as.buscarSocio(Integer.parseInt(txtIdSocio.getText()));
+            } else if (verificarLleno(txtDniSocio.getText())) {
+                socio = as.buscarSocioPorDni(txtDniSocio.getText());
+            }else{
+                JOptionPane.showMessageDialog(this, "Debe completar el campo Id o Dni para realizar la busqueda");
+            }
+            if (socio != null) {
+                cargarDatosTxt(socio);
+            }
+        } catch (Exception e) {
+            System.out.println("" + e);
         }
         
-        txtIdSocio.setText(String.valueOf(socio.getIdSocio() ));
-        txtDniSocio.setText(socio.getDni());
-        txtNombre.setText(socio.getNombre());
-        txtApellido.setText(socio.getApellido());
-        txtEdad.setText(String.valueOf( socio.getEdad() ));
-        txtCorreo.setText(socio.getCorreo());
-        txtTelefono.setText(socio.getTelefono());
-        rbEstado.setEnabled(socio.isEstado());
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     //Varifica un campo lleno
-    private boolean verificarLleno(String txt){
+    private boolean verificarLleno(String txt) {
         return !txt.isEmpty();
-    };
+    }
+
+    ;
+    
+    private void cargarDatosTxt(Socio socio) {
+        txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
+        txtDniSocio.setText(socio.getDni());
+        txtNombre.setText(socio.getNombre());
+        txtApellido.setText(socio.getApellido());
+        txtEdad.setText(String.valueOf(socio.getEdad()));
+        txtCorreo.setText(socio.getCorreo());
+        txtTelefono.setText(socio.getTelefono());
+        rbEstado.setEnabled(socio.isEstado());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
