@@ -75,7 +75,7 @@ public class Membresia {
     public void setCosto(double costo) {
         this.costo = costo;
     }
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
     public void setEstado(boolean estado) {

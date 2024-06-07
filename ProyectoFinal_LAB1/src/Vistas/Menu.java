@@ -315,7 +315,7 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Membresia m = new Membresia();
+        VistaMembresia m = new VistaMembresia();
         m.setVisible(true);
         escritorio.add(m);
         m.moveToFront();
