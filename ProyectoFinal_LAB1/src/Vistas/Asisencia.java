@@ -4,6 +4,17 @@
  */
 package Vistas;
 
+import AccesoDatos.AccesoInscripcion;
+import Entidades.Inscripcion;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author Fabri
@@ -15,6 +26,9 @@ public class Asisencia extends javax.swing.JInternalFrame {
      */
     public Asisencia() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
     }
 
     /**
@@ -26,21 +40,278 @@ public class Asisencia extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btnModificar = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtIdClase = new javax.swing.JTextField();
+        txtIdSocio = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JLabel();
+        txtIdAsistencia = new javax.swing.JTextField();
+        dcFecha = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        cbListar = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAsistencia = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txtBuscarLista = new javax.swing.JTextField();
+
+        jPanel1.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel1.setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setText("Id Asistencia");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(50, 110, 100, 30);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setText("Socio");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(50, 210, 45, 30);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel10.setText("Fecha de Inscripcion");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(50, 260, 170, 30);
+
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel13.setText("Clase");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(50, 160, 46, 30);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(270, 420, 100, 40);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setText("Asistencia");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(160, 30, 140, 36);
+
+        txtIdClase.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdClase.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdClase.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdClase.setBorder(null);
+        txtIdClase.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdClase.setOpaque(false);
+        jPanel1.add(txtIdClase);
+        txtIdClase.setBounds(130, 160, 80, 30);
+
+        txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdSocio.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdSocio.setBorder(null);
+        txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdSocio.setOpaque(false);
+        jPanel1.add(txtIdSocio);
+        txtIdSocio.setBounds(130, 210, 80, 30);
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
+        btnBuscar.setText("jLabel1");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(280, 100, 150, 50);
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNuevoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(30, 420, 99, 40);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(390, 420, 99, 40);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(150, 420, 100, 40);
+
+        txtIdAsistencia.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdAsistencia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdAsistencia.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdAsistencia.setBorder(null);
+        txtIdAsistencia.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdAsistencia.setOpaque(false);
+        jPanel1.add(txtIdAsistencia);
+        txtIdAsistencia.setBounds(160, 110, 80, 30);
+        jPanel1.add(dcFecha);
+        dcFecha.setBounds(240, 260, 180, 30);
+
+        jPanel2.setBackground(new java.awt.Color(214, 236, 225));
+
+        cbListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblAsistencia);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setText("Lista de Asistencias");
+
+        txtBuscarLista.setBackground(new java.awt.Color(28, 89, 59));
+        txtBuscarLista.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtBuscarLista.setForeground(new java.awt.Color(255, 255, 255));
+        txtBuscarLista.setBorder(null);
+        txtBuscarLista.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtBuscarLista.setOpaque(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtBuscarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbListar, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(120, 120, 120))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtBuscarLista)
+                    .addComponent(cbListar))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        //BOTON GUARDAR
+        int codigo;
+        Inscripcion i = null;
+        if (validaReal(txtIdAsistencia.getText())) {
+            codigo = Integer.parseInt(txtIdAsistencia.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ser numero");
+            limpiarCampos();
+            return;
+        }
+        AccesoInscripcion a = new AccesoInscripcion();
+
+        i = a.buscarInscripcionPorId(codigo);
+
+        Date fechaDeCoso = new Date(0);
+        fechaDeCoso = Date.valueOf(i.getFechaInscripcion());
+        txtIdClase.setText(i.getClase().getNombre());
+        txtIdSocio.setText(i.getSocio().getNombre());
+        dcFecha.setDate(fechaDeCoso);
+
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
+        limpiarCampos();
+        txtIdAsistencia.enable(false);
+    }//GEN-LAST:event_btnNuevoMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        // boton guardar
+        Inscripcion i = null;
+        AccesoInscripcion a = new AccesoInscripcion();
+        int idClase, idSocio;
+        LocalTime fechaInscripcion;
+        idClase = Integer.parseInt(txtIdClase.getText());
+        idSocio = Integer.parseInt(txtIdSocio.getText());
+        
+        
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+    //METODO PARA VALIDAR REAL
+    private boolean validaReal(String nro) {
+        Pattern patron = Pattern.compile("^\\d+(\\.\\d+)?$");
+        Matcher m = patron.matcher(nro);
+        return m.matches();
+    }
+    
+    public void limpiarCampos(){
+        // limpar calendar
+        txtIdClase.setText("");
+        txtIdAsistencia.setText("");
+        txtIdSocio.setText("");
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBuscar;
+    private javax.swing.JLabel btnEliminar;
+    private javax.swing.JLabel btnGuardar;
+    private javax.swing.JLabel btnModificar;
+    private javax.swing.JLabel btnNuevo;
+    private javax.swing.JComboBox<String> cbListar;
+    private com.toedter.calendar.JDateChooser dcFecha;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblAsistencia;
+    private javax.swing.JTextField txtBuscarLista;
+    private javax.swing.JTextField txtIdAsistencia;
+    private javax.swing.JTextField txtIdClase;
+    private javax.swing.JTextField txtIdSocio;
     // End of variables declaration//GEN-END:variables
 }
