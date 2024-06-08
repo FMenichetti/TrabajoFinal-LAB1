@@ -23,6 +23,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         initComponents();
         as = new AccesoSocio();
         ocultarModificar();
+        ocultarEliminar();
     }
 
     /**
@@ -74,9 +75,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtIdSocio.setBorder(null);
         txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdSocio.setOpaque(false);
-        txtIdSocio.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtIdSocioFocusLost(evt);
+        txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIdSocioKeyReleased(evt);
             }
         });
         jPanel1.add(txtIdSocio);
@@ -315,7 +316,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         socio = null;
         try {
-                //Le doy prioridad al campo ID
+            //Le doy prioridad al campo ID
             if (validaLleno(txtIdSocio.getText()) && validaEnteroPositivo(txtIdSocio.getText())) {
                 socio = as.buscarSocio(Integer.parseInt(txtIdSocio.getText()));
             } else if (validaLleno(txtDniSocio.getText()) && validaEnteroPositivo(txtDniSocio.getText())) {
@@ -328,9 +329,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 cargarDatosTxt(socio);
                 ocultarModificar();
             }
-            
-            
-            
+
         } catch (Exception e) {
             System.out.println("" + e);
         }
@@ -357,7 +356,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
-          //Modifica socio con ID y estado true
+        //Modifica socio con ID y estado true
         socio = new Socio();
         try {
             if (!camposLlenos()) {
@@ -366,19 +365,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
             //modificar Socio(socio);
             if (cargarSocio(socio)) {
-                
+
                 as.modificarSocio(socio);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
-      
-    }//GEN-LAST:event_btnModificarMouseClicked
 
-    private void txtIdSocioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSocioFocusLost
-        // TODO add your handling code here:
-        ocultarGuardar();
-    }//GEN-LAST:event_txtIdSocioFocusLost
+    }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
@@ -388,16 +382,31 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this, "Debe completar el campo ID para eliminacion de Socio");
                 return;
             }
-            socio.setIdSocio( Integer.parseInt( txtIdSocio.getText() ));
-                as.eliminarSocio( socio.getIdSocio() );
-            
+            socio = (((Socio) as.buscarSocio(Integer.parseInt(txtIdSocio.getText()))));
+
+            if (socio == null) {
+                JOptionPane.showMessageDialog(this, "No se encontro el socio a eliminar");
+            }
+            cargarDatosTxt(socio);
+            // Mostrar el cuadro de diálogo de confirmación
+            int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar al socio con ID; " + socio.getIdSocio(), "Confirma eliminacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (opcion == 0) {
+                as.eliminarSocio(socio.getIdSocio());
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
-      
+
     }//GEN-LAST:event_btnEliminarMouseClicked
 
-    
+    private void txtIdSocioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdSocioKeyReleased
+        // TODO add your handling code here:
+        ocultarGuardar();
+        ocultarEliminar();
+        ocultarModificar();
+    }//GEN-LAST:event_txtIdSocioKeyReleased
+
     private void cargarDatosTxt(Socio socio) {
         txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
         txtDniSocio.setText(socio.getDni());
@@ -423,10 +432,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         boolean validaciones = true;
 
         //Carga de ID
-        if ( !txtIdSocio.getText().isEmpty() && validaEnteroPositivo( txtIdSocio.getText() ) ) {
-            socio.setIdSocio(  Integer.parseInt( txtIdSocio.getText() ));
+        if (!txtIdSocio.getText().isEmpty() && validaEnteroPositivo(txtIdSocio.getText())) {
+            socio.setIdSocio(Integer.parseInt(txtIdSocio.getText()));
         }
-        
+
         //Validaciones campos solo letras
         if (validaSoloLetras(txtNombre.getText()) && validaSoloLetras(txtApellido.getText()) && validaciones) {
             socio.setNombre(txtNombre.getText());
@@ -460,7 +469,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             return false;
         }
         socio.setEstado(rbEstado.isSelected());
-        
+
         ocultarModificar();
 
         return validaciones;
@@ -475,28 +484,38 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
     }
+
     //=================Manejo de Botones================
-    private void ocultarGuardar(){
+    private void ocultarGuardar() {
         if (!txtIdSocio.getText().isEmpty()) {
-            btnGuardar.setEnabled(false);
-        }else{
-            btnGuardar.setEnabled(true);
+            btnGuardar.setVisible(false);
+        } else {
+            btnGuardar.setVisible(true);
         }
     }
-    
-    private void ocultarModificar(){
-        if (!txtIdSocio.getText().isEmpty() && !txtDniSocio.getText().isEmpty() ) {
-            btnModificar.setEnabled(true);
-        }else{
-            btnModificar.setEnabled(false);
+
+    private void ocultarModificar() {
+        if (!txtIdSocio.getText().isEmpty() && !txtDniSocio.getText().isEmpty()) {
+            btnModificar.setVisible(true);
+        } else {
+            btnModificar.setVisible(false);
         }
     }
-    
+
+    private void ocultarEliminar() {
+        if (!txtIdSocio.getText().isEmpty()) {
+            btnEliminar.setVisible(true);
+        } else {
+            btnEliminar.setVisible(false);
+        }
+    }
+
     //=========================Metodos de Validaciones====================
     //Valida un campo lleno
     private boolean validaLleno(String txt) {
         return !txt.isEmpty();
     }
+
     //valida entre 1-99
     private boolean validaNatural(String nro) {
         Pattern patron = Pattern.compile("^(?:[1-9]|[1-9][0-9])$");
