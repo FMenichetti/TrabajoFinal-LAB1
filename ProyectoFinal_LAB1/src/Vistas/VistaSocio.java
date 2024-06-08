@@ -6,6 +6,8 @@ package Vistas;
 
 import AccesoDatos.AccesoSocio;
 import Entidades.Socio;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     public VistaSocio() {
         initComponents();
         as = new AccesoSocio();
+        ocultarModificar();
     }
 
     /**
@@ -71,6 +74,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtIdSocio.setBorder(null);
         txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdSocio.setOpaque(false);
+        txtIdSocio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtIdSocioFocusLost(evt);
+            }
+        });
         jPanel1.add(txtIdSocio);
         txtIdSocio.setBounds(150, 110, 200, 35);
 
@@ -184,6 +192,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtDniSocio.setBounds(150, 190, 200, 35);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnEliminar);
         btnEliminar.setBounds(320, 690, 100, 40);
 
@@ -207,6 +220,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         btnGuardar.setBounds(40, 690, 100, 40);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnModificar);
         btnModificar.setBounds(180, 690, 100, 40);
 
@@ -297,17 +315,22 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         socio = null;
         try {
-
-            if (verificarLleno(txtIdSocio.getText())) {
+                //Le doy prioridad al campo ID
+            if (validaLleno(txtIdSocio.getText()) && validaEnteroPositivo(txtIdSocio.getText())) {
                 socio = as.buscarSocio(Integer.parseInt(txtIdSocio.getText()));
-            } else if (verificarLleno(txtDniSocio.getText())) {
+            } else if (validaLleno(txtDniSocio.getText()) && validaEnteroPositivo(txtDniSocio.getText())) {
                 socio = as.buscarSocioPorDni(txtDniSocio.getText());
             } else {
-                JOptionPane.showMessageDialog(this, "Debe completar el campo Id o Dni para realizar la busqueda");
+                limpiarCampos();
+                JOptionPane.showMessageDialog(this, "Debe completar con enteros positivos el campo Id o Dni para realizar la busqueda");
             }
             if (socio != null) {
                 cargarDatosTxt(socio);
+                ocultarModificar();
             }
+            
+            
+            
         } catch (Exception e) {
             System.out.println("" + e);
         }
@@ -319,37 +342,61 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         //Guarda socio sin ID y estado true
         socio = new Socio();
         try {
-
             if (!camposLlenos()) {
                 JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
                 return;
             }
             //cargarSocio(socio);
-            
-             socio.setDni(txtDniSocio.getText());
-        socio.setNombre(txtNombre.getText() );
-        socio.setApellido(txtApellido.getText() );
-        socio.setEdad( Integer.parseInt( txtEdad.getText() ));
-        socio.setCorreo(txtCorreo.getText() );
-        socio.setTelefono(txtTelefono.getText() );
-        socio.setEstado( rbEstado.isSelected() );
-            
-            as.guardarSocio(socio);
-            
+            if (cargarSocio(socio)) {
+                as.guardarSocio(socio);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
+        }
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        // TODO add your handling code here:
+          //Modifica socio con ID y estado true
+        socio = new Socio();
+        try {
+            if (!camposLlenos()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
+                return;
+            }
+            //modificar Socio(socio);
+            if (cargarSocio(socio)) {
+                
+                as.modificarSocio(socio);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
+        }
+      
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void txtIdSocioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSocioFocusLost
+        // TODO add your handling code here:
+        ocultarGuardar();
+    }//GEN-LAST:event_txtIdSocioFocusLost
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        // TODO add your handling code here:
+        socio = new Socio();
+        try {
+            if (txtIdSocio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe completar el campo ID para eliminacion de Socio");
+                return;
+            }
+            socio.setIdSocio( Integer.parseInt( txtIdSocio.getText() ));
+                as.eliminarSocio( socio.getIdSocio() );
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
+      
+    }//GEN-LAST:event_btnEliminarMouseClicked
 
-
-    }//GEN-LAST:event_btnGuardarMouseClicked
-
-    //Varifica un campo lleno
-    private boolean verificarLleno(String txt) {
-        return !txt.isEmpty();
-    }
-
-    ;
     
     private void cargarDatosTxt(Socio socio) {
         txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
@@ -370,11 +417,111 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 && !txtCorreo.getText().isEmpty()
                 && !txtTelefono.getText().isEmpty();
     }
-    
-    private Socio cargarSocio( Socio socio ){
-       
+
+    private boolean cargarSocio(Socio socio) { //Sin ID
+
+        boolean validaciones = true;
+
+        //Carga de ID
+        if ( !txtIdSocio.getText().isEmpty() && validaEnteroPositivo( txtIdSocio.getText() ) ) {
+            socio.setIdSocio(  Integer.parseInt( txtIdSocio.getText() ));
+        }
         
-        return socio;
+        //Validaciones campos solo letras
+        if (validaSoloLetras(txtNombre.getText()) && validaSoloLetras(txtApellido.getText()) && validaciones) {
+            socio.setNombre(txtNombre.getText());
+            socio.setApellido(txtApellido.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, "Los campos nombre y apellido reciben solo letras");
+            return false;
+        }
+        //validacion correo
+        if (validaEmail(txtCorreo.getText()) && validaciones) {
+            socio.setCorreo(txtCorreo.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, "El campo correo debe tener la sintaxis 'correo@correo.com' ");
+            return false;
+        }
+
+        //Validacion edad
+        if (validaNatural(txtEdad.getText()) && validaciones) {
+            socio.setEdad(Integer.parseInt(txtEdad.getText()));
+        } else {
+            JOptionPane.showMessageDialog(this, "El campo edad debe ser numerico y estar entre 1-99");
+            return false;
+        }
+
+        //Validacion de telefono y dni
+        if (validaEnteroPositivo(txtTelefono.getText()) && validaEnteroPositivo(txtDniSocio.getText()) && validaciones) {
+            socio.setDni(txtDniSocio.getText());
+            socio.setTelefono(txtTelefono.getText());
+        } else {
+            JOptionPane.showMessageDialog(this, "Los campos Telefono y Dni solo permiten enteros positivos");
+            return false;
+        }
+        socio.setEstado(rbEstado.isSelected());
+        
+        ocultarModificar();
+
+        return validaciones;
+    }
+
+    private void limpiarCampos() {
+        txtIdSocio.setText("");
+        txtDniSocio.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtEdad.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+    }
+    //=================Manejo de Botones================
+    private void ocultarGuardar(){
+        if (!txtIdSocio.getText().isEmpty()) {
+            btnGuardar.setEnabled(false);
+        }else{
+            btnGuardar.setEnabled(true);
+        }
+    }
+    
+    private void ocultarModificar(){
+        if (!txtIdSocio.getText().isEmpty() && !txtDniSocio.getText().isEmpty() ) {
+            btnModificar.setEnabled(true);
+        }else{
+            btnModificar.setEnabled(false);
+        }
+    }
+    
+    //=========================Metodos de Validaciones====================
+    //Valida un campo lleno
+    private boolean validaLleno(String txt) {
+        return !txt.isEmpty();
+    }
+    //valida entre 1-99
+    private boolean validaNatural(String nro) {
+        Pattern patron = Pattern.compile("^(?:[1-9]|[1-9][0-9])$");
+        Matcher m = patron.matcher(nro);
+        return m.matches();
+    }
+
+    //Metodo valida email con @ y .com
+    private boolean validaEmail(String email) {
+        Pattern patron = Pattern.compile("^[\\w._%+-]+@[\\w.-]+\\.com$");
+        Matcher m = patron.matcher(email);
+        return m.matches();
+    }
+
+    //Metodo valida letras
+    private boolean validaSoloLetras(String texto) {
+        Pattern patron = Pattern.compile("^[a-zA-Z\\s]+$");
+        Matcher m = patron.matcher(texto);
+        return m.matches();
+    }
+
+    private boolean validaEnteroPositivo(String nro) {
+        Pattern patron = Pattern.compile("^\\d+$");
+        Matcher m = patron.matcher(nro);
+        return m.matches();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
