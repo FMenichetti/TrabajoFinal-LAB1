@@ -248,8 +248,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(160, 690, 100, 40);
 
-        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IDSocio", "DNI", "Nombre", "Apellido", "Edad", "Correo" }));
-        cbFiltro.setSelectedIndex(-1);
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IDSocio", "DNI", "Nombre", "Apellido" }));
         cbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbFiltroItemStateChanged(evt);
@@ -264,12 +263,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Socio", "Dni", "Nombre", "Apellido"
             }
         ));
         jScrollPane1.setViewportView(tbFiltro);
 
-        txtFiltro.setText("Buscar....");
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtFiltroKeyReleased(evt);
@@ -339,6 +337,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
+        if ( !txtIdSocio.isEnabled() ) {
+        txtIdSocio.setEnabled(true);
+        txtIdSocio.requestFocus();
+            return;
+        }
         socio = null;
         try {
             //Le doy prioridad al campo ID
@@ -368,6 +371,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             limpiarCampos();
             activarCampos();
             ocultarGuardar();
+            txtIdSocio.setEnabled(false);
+            txtIdSocio.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "" + e);
         }
@@ -390,6 +395,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
                 as.modificarSocio(socio);
             }
+            txtIdSocio.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
@@ -418,6 +424,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             if (opcion == 0) {
                 as.eliminarSocio(socio.getIdSocio());
             }
+            txtIdSocio.requestFocus();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
@@ -447,6 +454,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             if (cargarSocio(socio)) {
                 as.guardarSocio(socio);
             }
+            txtIdSocio.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
@@ -455,50 +463,53 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private void cbFiltroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFiltroItemStateChanged
         // TODO add your handling code here:
         String seleccion = (String) cbFiltro.getSelectedItem();
+        txtFiltro.setText("");
+        txtFiltro.requestFocus();
+        //Listar completo en todas las opciones
         switch (seleccion) {
             case "IDSocio":
-                listarTabla();
+                listarTabla( as.listarSocioIdOrdenado() );
                 break;
             case "DNI":
-                listarTabla();
+               listarTabla( as.listarSocioDniOrdenado() );
                 break;
             case "Nombre":
-                listarTabla();
+                listarTabla( as.listarSocioNombreOrdenado() );
                 break;
             case "Apellido":
-                listarTabla();
+                listarTabla( as.listarSocioApellidoOrdenado() );
                 break;
+        }
+        txtFiltro.setEnabled(true);
     }//GEN-LAST:event_cbFiltroItemStateChanged
 
     private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
         // TODO add your handling code here:
-        String text = txtFiltro.getText();
         String seleccion = (String) cbFiltro.getSelectedItem();
+        String text = txtFiltro.getText();
         
         if (text.trim().length() == 0) {
             return;
         } 
-        
+        //Listar where txt == 
         switch (seleccion) {
             case "IDSocio":
-               
+                listarTabla( as.listarSocioIdFiltro(Integer.parseInt(text)));
                 break;
             case "DNI":
-                listarTabla();
+                listarTabla( as.listarSocioDniFiltro(text));
                 break;
             case "Nombre":
-                listarTabla();
+                 listarTabla( as.listarSocioNombreFiltro(text));
                 break;
             case "Apellido":
-                listarTabla();
+                 listarTabla( as.listarSocioApellidoFiltro(text));
                 break;
-        
-        
-        
         
         }
     }//GEN-LAST:event_txtFiltroKeyReleased
 
+///=============Metodos================
     private void cargarDatosTxt(Socio socio) {
         txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
         txtDniSocio.setText(socio.getDni());
@@ -666,9 +677,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         }
     }
 
-    public void listarTabla() {
+    public void listarTabla(List<Socio> lista) {
         limpiarTabla();
-        for (Socio s : as.listarSocio()) {
+        for (Socio s : lista ) {
 
             tabla.addRow(new Object[]{s.getIdSocio(), s.getDni(), s.getNombre(), s.getApellido()});
         }
