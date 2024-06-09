@@ -25,13 +25,13 @@ public class AccesoMembresia {
     }
 
     public void crearMembresia(Membresia membresia) {
-        
-        if ( null!=buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
-            
+
+        if (null != buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
+
             JOptionPane.showMessageDialog(null, "esa membresia ya existe");
-            return ;
+            return;
         }
-        
+
         String sql = "INSERT INTO `membresia`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -87,28 +87,57 @@ public class AccesoMembresia {
     }
 
     public List<Membresia> listarMembresia() {
-    List<Membresia> membresias = new ArrayList<>();
-    try {
-        String sql = "SELECT * FROM membresia WHERE estado = 1";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            Membresia membresia = new Membresia();
-            membresia.setIdMembresia(rs.getInt("idMembresia"));
-            membresia.setIdSocio(rs.getInt("idSocio")); // Asigna directamente el ID del socio
-            membresia.setCantidadPases(rs.getInt("cantidadPases"));
-            membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-            membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-            membresia.setCosto(rs.getDouble("costo"));
-            membresia.setEstado(rs.getBoolean("estado"));
-            membresias.add(membresia);
+        List<Membresia> membresias = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM membresia WHERE estado = 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Membresia membresia = new Membresia();
+                membresia.setIdMembresia(rs.getInt("idMembresia"));
+                membresia.setIdSocio(rs.getInt("idSocio")); // Asigna directamente el ID del socio
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
+                membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                membresia.setCosto(rs.getDouble("costo"));
+                membresia.setEstado(rs.getBoolean("estado"));
+                membresias.add(membresia);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
         }
-        ps.close();
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+        return membresias;
     }
-    return membresias;
-}
+
+    public List<Socio> listarSocioIdOrdenado() {
+        List<Socio> socios = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM socios WHERE estado = 1 ORDER BY idSocio ASC;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Socio socio = new Socio();
+                socio.setIdSocio(rs.getInt("idSocio"));
+                socio.setDni(rs.getString("dni"));
+                socio.setNombre(rs.getString("nombre"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getString("telefono"));
+                socio.setEstado(true);
+                socios.add(socio);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socio");
+        }
+        return socios;
+    }
 
     public void modificarMembresia(Membresia membresia) {
         String sql = "UPDATE membresia SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";
@@ -153,8 +182,57 @@ public class AccesoMembresia {
 
     }
 
-    
-    
-    
-    
+    //Listar especiales
+    public List<Membresia> listarMembresiaPorConsulta(String consulta) {
+        List<Membresia> membresias = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Membresia membresia = new Membresia();
+                membresia.setIdMembresia(rs.getInt("idMembresia"));
+                membresia.setIdSocio(rs.getInt("idSocio"));
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
+                membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                membresia.setCosto(rs.getDouble("costo"));
+                membresias.add(membresia);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+        }
+        return membresias;
+    }
+
+    public List<Membresia> listarMembresiaPorId() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY idMembresia ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorIdSocio() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY idSocio ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorCantidadPases() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY cantidadPases ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorFechaInicio() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY fechaInicio ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorFechaFin() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY fechaFin ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorCosto() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY costo ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
 }

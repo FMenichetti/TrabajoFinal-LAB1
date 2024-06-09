@@ -17,15 +17,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Entidades.Socio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextField;
-import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import javax.swing.text.JTextComponent;
 
 public class VistaMembresia extends javax.swing.JInternalFrame {
@@ -34,7 +30,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     private final AccesoMembresia accesoMembresia;
     private final AccesoSocio accesoSocio;
     private boolean creandoNuevaMembresia = false;
-    private List<Membresia> membresias;
+    private DefaultTableModel modeloTabla;
 
     // ==================== CONSTRUCTOR ====================
     public VistaMembresia() {
@@ -42,11 +38,11 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         accesoSocio = new AccesoSocio();
         accesoMembresia = new AccesoMembresia();
 
-        cargarDatosIniciales();
-
         // Deshabilitar botones guardar y modificar al abrir la vista
         btnGuardar.setEnabled(false);
         btnModificar.setEnabled(false);
+        
+        inicializarTabla();
 
         //llenar combos
         llenarComboPases();
@@ -72,8 +68,21 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         SwingUtilities.invokeLater(() -> {
             txtIdSocio.requestFocusInWindow();
             bloquearCamposInicio();
-
+            txtListarMembresias.setEnabled(false);
         });
+    }
+    
+    //inicializar tabla
+    private void inicializarTabla() {
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("ID Membresia");
+        modeloTabla.addColumn("ID Socio");
+        modeloTabla.addColumn("Cantidad de Pases");
+        modeloTabla.addColumn("Fecha de Inicio");
+        modeloTabla.addColumn("Fecha de Fin");
+        modeloTabla.addColumn("Costo");
+        modeloTabla.addColumn("Estado");
+        tblTablaMembresia.setModel(modeloTabla); // Asociar el modelo de tabla a la tabla visual
     }
 
     //limpiar campos
@@ -87,10 +96,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtIdSocio.requestFocus();
     }
 
-    //datos tabla
-    private void cargarDatosIniciales() {
-        // Aquí inicializamos la lista de membresías desde la base de datos
-        membresias = accesoMembresia.listarMembresia();
+    //limpiar tabla
+
+    public void limpiarTabla() {
+        modeloTabla.setRowCount(0); // Eliminar todas las filas de la tabla
     }
 
     //cargar datos a los campos de textos
@@ -199,13 +208,13 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
     //llenar combo membresias
     private void llenarComboBoxMembresias() {
+        cbMembresias.addItem("Seleccione aquí...");
         cbMembresias.addItem("Membresia");
         cbMembresias.addItem("Socio");
         cbMembresias.addItem("Cantidad de pases");
         cbMembresias.addItem("Fecha de inicio");
         cbMembresias.addItem("Fecha de fin");
         cbMembresias.addItem("Precio");
-        cbMembresias.addItem("Estado");
     }
 
     //chequeo de campos 
@@ -242,23 +251,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
         // Todos los campos están completos
         return true;
-    }
-
-    //listar en tabla
-    private void cargarDatosEnTabla(List<Membresia> membresias) {
-        DefaultTableModel model = (DefaultTableModel) tblTablaMembresia.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de cargar los nuevos datos
-        for (Membresia membresia : membresias) {
-            model.addRow(new Object[]{
-                membresia.getIdMembresia(),
-                membresia.getIdSocio(), // Utiliza el ID del socio directamente
-                membresia.getCantidadPases(),
-                membresia.getFechaInicio(),
-                membresia.getFechaFin(),
-                membresia.getCosto(),
-                membresia.getEstado() ? 1 : 0
-            });
-        }
     }
 
     private void agregarListeners() {
@@ -301,6 +293,17 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             btnGuardar.setEnabled(false);
         }
     }
+
+    //pintar tabla
+    public void listarTabla(List<Membresia> listaMembresias) {
+        limpiarTabla(); // Limpiar la tabla antes de agregar nuevas filas
+
+        for (Membresia membresia : listaMembresias) {
+            // Agregar una fila a la tabla por cada objeto Membresia en la lista
+            modeloTabla.addRow(new Object[]{membresia.getIdMembresia(), membresia.getIdSocio(), membresia.getCantidadPases(), membresia.getFechaInicio(), membresia.getFechaFin(), membresia.getCosto(), membresia.getEstado()});
+        }
+    }
+
 
     // ==================== INIT COMPONENTS ====================
 
@@ -349,7 +352,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCantidadPases.setText("CANTIDAD DE PASES");
         jPanel1.add(lblCantidadPases);
-        lblCantidadPases.setBounds(50, 250, 187, 22);
+        lblCantidadPases.setBounds(50, 250, 184, 22);
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaInicio.setText("FECHA INICIO");
@@ -378,7 +381,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("MEMBRESÍA");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 20, 180, 36);
+        jLabel3.setBounds(180, 20, 178, 36);
 
         lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblPrecio.setText("PRECIO");
@@ -446,14 +449,14 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFechaFin.setInheritsPopupMenu(true);
         txtFechaFin.setOpaque(false);
         jPanel1.add(txtFechaFin);
-        txtFechaFin.setBounds(180, 400, 150, 27);
+        txtFechaFin.setBounds(180, 400, 150, 26);
 
         txtFechaInicio.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaInicio.setDateFormatString("dd/MM/yyyy");
         txtFechaInicio.setInheritsPopupMenu(true);
         txtFechaInicio.setOpaque(false);
         jPanel1.add(txtFechaInicio);
-        txtFechaInicio.setBounds(190, 330, 150, 27);
+        txtFechaInicio.setBounds(190, 330, 150, 26);
 
         cbCantidadPases.setBackground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -508,7 +511,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(75, 17, 341, 36);
+        jLabel2.setBounds(75, 17, 338, 36);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(532, 0, 510, 680);
@@ -655,7 +658,33 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void cbMembresiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMembresiasActionPerformed
-        cargarDatosEnTabla(membresias);
+        String seleccion = (String) cbMembresias.getSelectedItem();
+
+        if (seleccion.equals("Membresia")) {
+            // Llamar al método para listar todas las membresías
+            List<Membresia> membresias = accesoMembresia.listarMembresia();
+            listarTabla(membresias);
+        } else if (seleccion.equals("Socio")) {
+            // Llamar al método para listar todas las membresías ordenadas por ID de socio
+            List<Membresia> membresias = accesoMembresia.listarMembresiaPorIdSocio();
+            listarTabla(membresias);
+        } else if (seleccion.equals("Cantidad de pases")) {
+            // Llamar al método para listar todas las membresías ordenadas por cantidad de pases
+            List<Membresia> membresias = accesoMembresia.listarMembresiaPorCantidadPases();
+            listarTabla(membresias);
+        } else if (seleccion.equals("Fecha de inicio")) {
+            // Llamar al método para listar todas las membresías ordenadas por fecha de inicio
+            List<Membresia> membresias = accesoMembresia.listarMembresiaPorFechaInicio();
+            listarTabla(membresias);
+        } else if (seleccion.equals("Fecha de fin")) {
+            // Llamar al método para listar todas las membresías ordenadas por fecha de fin
+            List<Membresia> membresias = accesoMembresia.listarMembresiaPorFechaFin();
+            listarTabla(membresias);
+        } else if (seleccion.equals("Precio")) {
+            // Llamar al método para listar todas las membresías ordenadas por precio
+            List<Membresia> membresias = accesoMembresia.listarMembresiaPorCosto();
+            listarTabla(membresias);
+        }
     }//GEN-LAST:event_cbMembresiasActionPerformed
 
 
