@@ -4,11 +4,15 @@
  */
 package Vistas;
 
+import AccesoDatos.AccesoClase;
 import AccesoDatos.AccesoInscripcion;
+import AccesoDatos.AccesoSocio;
 import Entidades.Inscripcion;
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Color;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,14 +25,29 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class Asisencia extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Asisencia
-     */
+    Inscripcion i = null;
+    Entidades.Membresia m = null;
+    AccesoInscripcion acInscripcion = new AccesoInscripcion();
+    AccesoClase acClase = new AccesoClase();
+    AccesoSocio acSocio = new AccesoSocio();
+    JTextFieldDateEditor editorJcalendar;
+    //creamos nuevos colores, el original y el para el estado no editable
+    Color verdeTransparente = new Color(28, 89, 59, 150);
+    Color original = new Color(28, 89, 59);
+
     public Asisencia() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        btnEliminar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        // para no editar el txt del jcalendar
+        editorJcalendar = (JTextFieldDateEditor) dcFecha.getDateEditor();
+        editorJcalendar.setEditable(false);
+        editorJcalendar.setBackground(verdeTransparente);
+        noEditables();
+
     }
 
     /**
@@ -42,9 +61,9 @@ public class Asisencia extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblIdSocio = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lblIdClase = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtIdClase = new javax.swing.JTextField();
@@ -70,22 +89,27 @@ public class Asisencia extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel7);
         jLabel7.setBounds(50, 110, 100, 30);
 
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel8.setText("Socio");
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(50, 210, 45, 30);
+        lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdSocio.setText("Id Socio");
+        jPanel1.add(lblIdSocio);
+        lblIdSocio.setBounds(50, 210, 80, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel10.setText("Fecha de Inscripcion");
         jPanel1.add(jLabel10);
         jLabel10.setBounds(50, 260, 170, 30);
 
-        jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel13.setText("Clase");
-        jPanel1.add(jLabel13);
-        jLabel13.setBounds(50, 160, 46, 30);
+        lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdClase.setText("Id Clase");
+        jPanel1.add(lblIdClase);
+        lblIdClase.setBounds(50, 160, 80, 30);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnModificar);
         btnModificar.setBounds(270, 420, 100, 40);
 
@@ -132,6 +156,11 @@ public class Asisencia extends javax.swing.JInternalFrame {
         btnNuevo.setBounds(30, 420, 99, 40);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnEliminar);
         btnEliminar.setBounds(390, 420, 99, 40);
 
@@ -238,57 +267,220 @@ public class Asisencia extends javax.swing.JInternalFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         //BOTON GUARDAR
-        int codigo;
-        Inscripcion i = null;
-        if (validaReal(txtIdAsistencia.getText())) {
-            codigo = Integer.parseInt(txtIdAsistencia.getText());
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe ser numero");
-            limpiarCampos();
+        lblIdClase.setText("Clase");
+        lblIdSocio.setText("Socio");
+        if (reactivarBusqueda()) {
+            btnGuardar.setEnabled(false); // al reactivar la busqueda desactivamos el btn guardar
             return;
+        } else {
+            btnEliminar.setEnabled(false); // se desactiva en el caso que no exista la asist a buscar
+            int codigo;
+            if (validaEntero(txtIdAsistencia.getText())) {
+                codigo = Integer.parseInt(txtIdAsistencia.getText());
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ser numero");
+                limpiarCampos();
+                txtIdAsistencia.requestFocus();
+                return;
+            }
+            i = acInscripcion.buscarInscripcionPorId(codigo);
+            if (i != null) {
+                Date fechaDeInscripcion = new Date(0);
+                fechaDeInscripcion = Date.valueOf(i.getFechaInscripcion());
+                txtIdClase.setText(i.getClase().getIdClase()+"");
+                txtIdSocio.setText(i.getSocio().getIdSocio()+"");
+                dcFecha.setDate(fechaDeInscripcion);
+                btnEliminar.setEnabled(true); // se activa en el caso que si exista la asist a buscar
+            } else {
+                limpiarCampos();
+            }
         }
-        AccesoInscripcion a = new AccesoInscripcion();
-
-        i = a.buscarInscripcionPorId(codigo);
-
-        Date fechaDeCoso = new Date(0);
-        fechaDeCoso = Date.valueOf(i.getFechaInscripcion());
-        txtIdClase.setText(i.getClase().getNombre());
-        txtIdSocio.setText(i.getSocio().getNombre());
-        dcFecha.setDate(fechaDeCoso);
 
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
+        btnGuardar.setEnabled(true); // al hacer uno nuevo activamos el guardar
+        btnEliminar.setEnabled(false); // y desactivamos el eliminar
         limpiarCampos();
-        txtIdAsistencia.enable(false);
+        lblIdClase.setText("Id clase");
+        lblIdSocio.setText("Id socio");
+        txtIdClase.requestFocus();
+        txtIdAsistencia.setText("Automatico");
+        editables();
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // boton guardar
-        Inscripcion i = null;
-        AccesoInscripcion a = new AccesoInscripcion();
-        int idClase, idSocio;
-        LocalTime fechaInscripcion;
-        idClase = Integer.parseInt(txtIdClase.getText());
-        idSocio = Integer.parseInt(txtIdSocio.getText());
-        
-        
+        Inscripcion nueva = new Inscripcion();
+        int idSocio, idClase;
+        if (!btnGuardar.isEnabled()) {
+            return;
+        }
+
+        if (validarCampos()) {
+            idClase = Integer.parseInt(txtIdClase.getText());
+            idSocio = Integer.parseInt(txtIdSocio.getText());
+            Entidades.Clase c = acClase.buscarClase(idClase);
+            Entidades.Socio s = acSocio.buscarSocio(idSocio);
+            if (c == null) {
+                txtIdClase.requestFocus();
+                txtIdClase.setText("");
+                return;
+            }
+            if (s == null) {
+                txtIdSocio.requestFocus();
+                txtIdSocio.setText("");
+                return;
+            }
+            nueva.setClase(c);
+            nueva.setSocio(s);
+            nueva.setFechaInscripcion(dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            i = nueva;
+            acInscripcion.guardarInscripcion(i);
+            limpiarCampos();
+        }
+
+
     }//GEN-LAST:event_btnGuardarMouseClicked
 
-    //METODO PARA VALIDAR REAL
-    private boolean validaReal(String nro) {
-        Pattern patron = Pattern.compile("^\\d+(\\.\\d+)?$");
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        // btn eliminar
+        int codigo, confirm;
+        if (!btnEliminar.isEnabled()) {
+            return;
+        }
+
+        if (validaEntero(txtIdAsistencia.getText())) {
+            codigo = Integer.parseInt(txtIdAsistencia.getText());
+            // Preguntar al usuario si está seguro de eliminar la asistencia
+            confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar la asistencia número " + codigo + "?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return; // Si el usuario no confirma, salir del método
+            }
+            acInscripcion.borrarInscripcion(codigo);
+            limpiarCampos();
+            btnEliminar.setEnabled(false); // si se encuentra y elimina una insc, se cambia el estado del btn
+        }
+        
+
+
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+       // MODIFICAR MEMBRESIA
+       editables();
+       // aca poner reesctriccion para cuando se habilite el boton modificar y despues modificar la insc // tipo el reactivarBusqueda
+       // ver si vale la pena, en buscar, que traiga los nombres txt y aca cambiarlos por id
+       int idClase,idSocio;
+       Inscripcion nueva = new Inscripcion();
+        if (validarCampos()) {
+            idClase = Integer.parseInt(txtIdClase.getText());
+            idSocio = Integer.parseInt(txtIdSocio.getText());
+            Entidades.Clase c = acClase.buscarClase(idClase);
+            Entidades.Socio s = acSocio.buscarSocio(idSocio);
+            if (c == null) {
+                txtIdClase.requestFocus();
+                txtIdClase.setText("");
+                return;
+            }
+            if (s == null) {
+                txtIdSocio.requestFocus();
+                txtIdSocio.setText("");
+            }
+            nueva.setClase(c);
+            nueva.setSocio(s);
+            nueva.setFechaInscripcion(dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            i = nueva;
+            acInscripcion.modificarInscripcion(i);
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_btnModificarMouseClicked
+// REACTIVAR BOTON BUSCAR
+
+    public boolean reactivarBusqueda() {
+        if (!txtIdAsistencia.isEditable()) {
+            noEditables();
+            txtIdAsistencia.setEditable(true);
+            txtIdAsistencia.setText("");
+            limpiarCampos();
+            return true;
+        }
+        return false;
+    }
+
+// SETEAR EN EDITABLES LOS TXT
+    public void editables() {
+        txtIdClase.setEditable(true);
+        txtIdSocio.setEditable(true);
+        dcFecha.setEnabled(true);
+        txtIdClase.setBackground(original);
+        txtIdSocio.setBackground(original);
+
+        // el id asistencia pasa a ser no editable
+        txtIdAsistencia.setEditable(false);
+        txtIdAsistencia.setBackground(verdeTransparente);
+        editorJcalendar.setBackground(verdeTransparente);
+    }
+
+// SETEAR EN NO EDITABLE LOS TXT
+    public void noEditables() {
+
+        txtIdClase.setEditable(false);
+        txtIdSocio.setEditable(false);
+        dcFecha.setEnabled(false);
+        txtIdClase.setBackground(verdeTransparente);
+        txtIdSocio.setBackground(verdeTransparente);
+
+        // el id Asistencia pasa a ser editable
+        txtIdAsistencia.setEditable(true);
+        txtIdAsistencia.setBackground(original);
+    }
+
+// VALIDAMOS TODOS LOS CAMPOS MENOS EL DE ID ASISTENCIA
+    public boolean validarCampos() {
+
+        // validamos txt id clase
+        if (txtIdClase.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Rellene el campo id Clase");
+            return false;
+        }
+        if (!validaEntero(txtIdClase.getText())) {
+            JOptionPane.showMessageDialog(null, "El campo id Clase debe de ser un entero");
+            return false;
+        }
+        // validamos txt id socio
+        if (txtIdSocio.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Rellene el campo id Socio");
+            return false;
+        }
+        if (!validaEntero(txtIdSocio.getText())) {
+            JOptionPane.showMessageDialog(null, "El campo id socio debe de ser un entero");
+            return false;
+        }
+
+        // verificamos la fecha 
+        if (editorJcalendar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Rellene el campo fecha");
+            return false;
+        }
+        return true;
+    }
+
+    //METODO PARA VALIDAR Entero
+    private boolean validaEntero(String nro) {
+
+        Pattern patron = Pattern.compile("^[0-9]+$");
         Matcher m = patron.matcher(nro);
         return m.matches();
     }
-    
-    public void limpiarCampos(){
-        // limpar calendar
+
+    // limpiar campos
+    public void limpiarCampos() {
+        editorJcalendar.setText("");
         txtIdClase.setText("");
         txtIdAsistencia.setText("");
         txtIdSocio.setText("");
-    
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -300,14 +492,14 @@ public class Asisencia extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbListar;
     private com.toedter.calendar.JDateChooser dcFecha;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblIdClase;
+    private javax.swing.JLabel lblIdSocio;
     private javax.swing.JTable tblAsistencia;
     private javax.swing.JTextField txtBuscarLista;
     private javax.swing.JTextField txtIdAsistencia;
