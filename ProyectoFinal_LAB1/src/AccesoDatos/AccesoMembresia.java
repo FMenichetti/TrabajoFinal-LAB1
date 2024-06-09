@@ -87,27 +87,28 @@ public class AccesoMembresia {
     }
 
     public List<Membresia> listarMembresia() {
-        List<Membresia> membresias = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM membresia WHERE estado = 1";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Membresia membresia = new Membresia();
-                membresia.setIdMembresia(rs.getInt("idMembresia"));
-                as.buscarSocio(rs.getInt("idSocio"));
-                membresia.setCantidadPases(rs.getInt("cantidadPases"));
-                membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-                membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
-                membresia.setCosto(rs.getDouble("costo"));
-                membresias.add(membresia);
-            }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+    List<Membresia> membresias = new ArrayList<>();
+    try {
+        String sql = "SELECT * FROM membresia WHERE estado = 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Membresia membresia = new Membresia();
+            membresia.setIdMembresia(rs.getInt("idMembresia"));
+            membresia.setIdSocio(rs.getInt("idSocio")); // Asigna directamente el ID del socio
+            membresia.setCantidadPases(rs.getInt("cantidadPases"));
+            membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+            membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+            membresia.setCosto(rs.getDouble("costo"));
+            membresia.setEstado(rs.getBoolean("estado"));
+            membresias.add(membresia);
         }
-        return membresias;
+        ps.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
     }
+    return membresias;
+}
 
     public void modificarMembresia(Membresia membresia) {
         String sql = "UPDATE membresia SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";

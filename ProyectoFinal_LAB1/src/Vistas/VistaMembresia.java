@@ -34,16 +34,15 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     private final AccesoMembresia accesoMembresia;
     private final AccesoSocio accesoSocio;
     private boolean creandoNuevaMembresia = false;
-     
+    private List<Membresia> membresias;
 
     // ==================== CONSTRUCTOR ====================
     public VistaMembresia() {
         initComponents();
         accesoSocio = new AccesoSocio();
         accesoMembresia = new AccesoMembresia();
-        
-        List<Membresia> membresias = new ArrayList<>();
-        cargarDatosEnTabla(membresias);
+
+        cargarDatosIniciales();
 
         // Deshabilitar botones guardar y modificar al abrir la vista
         btnGuardar.setEnabled(false);
@@ -73,7 +72,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         SwingUtilities.invokeLater(() -> {
             txtIdSocio.requestFocusInWindow();
             bloquearCamposInicio();
-            
+
         });
     }
 
@@ -86,6 +85,12 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFechaFin.setDate(null);
         txtPrecio.setText("");
         txtIdSocio.requestFocus();
+    }
+
+    //datos tabla
+    private void cargarDatosIniciales() {
+        // Aquí inicializamos la lista de membresías desde la base de datos
+        membresias = accesoMembresia.listarMembresia();
     }
 
     //cargar datos a los campos de textos
@@ -243,21 +248,16 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     private void cargarDatosEnTabla(List<Membresia> membresias) {
         DefaultTableModel model = (DefaultTableModel) tblTablaMembresia.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de cargar los nuevos datos
-
-        if (membresias.isEmpty()) {
-            model.addRow(new Object[]{"No hay membresías disponibles", "", "", "", "", "", ""});
-        } else {
-            for (Membresia membresia : membresias) {
-                model.addRow(new Object[]{
-                        membresia.getIdMembresia(),
-                        membresia.getSocio().getIdSocio(),
-                        membresia.getCantidadPases(),
-                        membresia.getFechaInicio(),
-                        membresia.getFechaFin(),
-                        membresia.getCosto(),
-                        membresia.getEstado() ? "Activo" : "Inactivo"
-                    });
-            }
+        for (Membresia membresia : membresias) {
+            model.addRow(new Object[]{
+                membresia.getIdMembresia(),
+                membresia.getIdSocio(), // Utiliza el ID del socio directamente
+                membresia.getCantidadPases(),
+                membresia.getFechaInicio(),
+                membresia.getFechaFin(),
+                membresia.getCosto(),
+                membresia.getEstado() ? 1 : 0
+            });
         }
     }
 
@@ -349,7 +349,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCantidadPases.setText("CANTIDAD DE PASES");
         jPanel1.add(lblCantidadPases);
-        lblCantidadPases.setBounds(50, 250, 184, 22);
+        lblCantidadPases.setBounds(50, 250, 187, 22);
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaInicio.setText("FECHA INICIO");
@@ -378,7 +378,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("MEMBRESÍA");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 20, 178, 36);
+        jLabel3.setBounds(180, 20, 180, 36);
 
         lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblPrecio.setText("PRECIO");
@@ -446,14 +446,14 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFechaFin.setInheritsPopupMenu(true);
         txtFechaFin.setOpaque(false);
         jPanel1.add(txtFechaFin);
-        txtFechaFin.setBounds(180, 400, 150, 26);
+        txtFechaFin.setBounds(180, 400, 150, 27);
 
         txtFechaInicio.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaInicio.setDateFormatString("dd/MM/yyyy");
         txtFechaInicio.setInheritsPopupMenu(true);
         txtFechaInicio.setOpaque(false);
         jPanel1.add(txtFechaInicio);
-        txtFechaInicio.setBounds(190, 330, 150, 26);
+        txtFechaInicio.setBounds(190, 330, 150, 27);
 
         cbCantidadPases.setBackground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -469,6 +469,11 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(null);
 
+        cbMembresias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMembresiasActionPerformed(evt);
+            }
+        });
         jPanel2.add(cbMembresias);
         cbMembresias.setBounds(246, 86, 200, 30);
 
@@ -480,7 +485,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Socio", "Membresía", "Pases", "Precio", "Inicio", "Fin", "Estado"
+                "Membresía", "Socio", "Pases", "Inicio", "Fin", "Precio", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -503,7 +508,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(75, 17, 338, 36);
+        jLabel2.setBounds(75, 17, 341, 36);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(532, 0, 510, 680);
@@ -648,6 +653,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void cbMembresiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMembresiasActionPerformed
+        cargarDatosEnTabla(membresias);
+    }//GEN-LAST:event_cbMembresiasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
