@@ -6,11 +6,15 @@ package Vistas;
 
 import AccesoDatos.AccesoSocio;
 import Entidades.Socio;
+import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -20,7 +24,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private Socio socio = null;
     private AccesoSocio as = null;
-    private DefaultTableModel tabla ;
+    private DefaultTableModel tabla;
 
     public VistaSocio() {
         initComponents();
@@ -30,10 +34,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtIdSocio.requestFocus();
         desactivarCampos();
         btnGuardar.setEnabled(false);
+        //===========Lado Derecho===========
         tabla = new DefaultTableModel();
         pintarColumnasTabla();
         limpiarTabla();
-        
+        txtFiltro.setEnabled(false);
+
     }
 
     /**
@@ -242,7 +248,13 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(160, 690, 100, 40);
 
-        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDSocio", "DNI", "Nombre", "Apellido", "Edad", "Correo" }));
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IDSocio", "DNI", "Nombre", "Apellido", "Edad", "Correo" }));
+        cbFiltro.setSelectedIndex(-1);
+        cbFiltro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFiltroItemStateChanged(evt);
+            }
+        });
 
         tbFiltro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -258,6 +270,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbFiltro);
 
         txtFiltro.setText("Buscar....");
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
@@ -346,7 +363,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
         // TODO add your handling code here:
-        
+
         try {
             limpiarCampos();
             activarCampos();
@@ -359,7 +376,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
         //Modifica socio con ID y estado true
-        if ( !btnModificar.isEnabled()) {
+        if (!btnModificar.isEnabled()) {
             return;
         }
         socio = new Socio();
@@ -381,7 +398,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
-        if ( !btnEliminar.isEnabled()) {
+        if (!btnEliminar.isEnabled()) {
             return;
         }
         socio = new Socio();
@@ -417,10 +434,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        if ( !btnGuardar.isEnabled()) {
+        if (!btnGuardar.isEnabled()) {
             return;
         }
-          socio = new Socio();
+        socio = new Socio();
         try {
             if (!camposLlenos()) {
                 JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
@@ -434,6 +451,53 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void cbFiltroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFiltroItemStateChanged
+        // TODO add your handling code here:
+        String seleccion = (String) cbFiltro.getSelectedItem();
+        switch (seleccion) {
+            case "IDSocio":
+                listarTabla();
+                break;
+            case "DNI":
+                listarTabla();
+                break;
+            case "Nombre":
+                listarTabla();
+                break;
+            case "Apellido":
+                listarTabla();
+                break;
+    }//GEN-LAST:event_cbFiltroItemStateChanged
+
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        // TODO add your handling code here:
+        String text = txtFiltro.getText();
+        String seleccion = (String) cbFiltro.getSelectedItem();
+        
+        if (text.trim().length() == 0) {
+            return;
+        } 
+        
+        switch (seleccion) {
+            case "IDSocio":
+               
+                break;
+            case "DNI":
+                listarTabla();
+                break;
+            case "Nombre":
+                listarTabla();
+                break;
+            case "Apellido":
+                listarTabla();
+                break;
+        
+        
+        
+        
+        }
+    }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void cargarDatosTxt(Socio socio) {
         txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
@@ -495,7 +559,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Los campos Telefono y Dni solo permiten enteros positivos");
             return false;
         }
-        socio.setEstado( true);
+        socio.setEstado(true);
 
         ocultarModificar();
 
@@ -536,18 +600,18 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(false);
         }
     }
-    
-    private void desactivarCampos(){
-        
+
+    private void desactivarCampos() {
+
         txtNombre.setEditable(false);
         txtApellido.setEditable(false);
         txtEdad.setEditable(false);
         txtCorreo.setEditable(false);
         txtTelefono.setEditable(false);
     }
-    
-    private void activarCampos(){
-        
+
+    private void activarCampos() {
+
         txtNombre.setEditable(true);
         txtApellido.setEditable(true);
         txtEdad.setEditable(true);
@@ -587,12 +651,13 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         Matcher m = patron.matcher(nro);
         return m.matches();
     }
-    
+
     //================Metodos tabla====================
     private void pintarColumnasTabla() {
-        tabla = (DefaultTableModel)tbFiltro.getModel();
+        tabla = (DefaultTableModel) tbFiltro.getModel();
 
     }
+
     //Limpieza de la tabla
     public void limpiarTabla() {
         int filas = tabla.getRowCount() - 1;
@@ -600,12 +665,17 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             tabla.removeRow(i);
         }
     }
-    
-    public void listarTabla(List<Socio> s) {
-        limpiarTabla();
 
-        
+    public void listarTabla() {
+        limpiarTabla();
+        for (Socio s : as.listarSocio()) {
+
+            tabla.addRow(new Object[]{s.getIdSocio(), s.getDni(), s.getNombre(), s.getApellido()});
+        }
     }
+
+    // Método para manejar el evento de cambio en el JComboBox
+// Método para manejar el evento de entrada en el JTextField
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
