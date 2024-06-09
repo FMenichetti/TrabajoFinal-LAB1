@@ -95,7 +95,7 @@ public class AccesoMembresia {
             while (rs.next()) {
                 Membresia membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                Socio socio = as.buscarSocio(rs.getInt("idSocio"));
+                as.buscarSocio(rs.getInt("idSocio"));
                 membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
