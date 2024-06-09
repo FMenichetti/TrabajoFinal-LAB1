@@ -6,9 +6,11 @@ package Vistas;
 
 import AccesoDatos.AccesoSocio;
 import Entidades.Socio;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,12 +20,20 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private Socio socio = null;
     private AccesoSocio as = null;
+    private DefaultTableModel tabla ;
 
     public VistaSocio() {
         initComponents();
         as = new AccesoSocio();
         ocultarModificar();
         ocultarEliminar();
+        txtIdSocio.requestFocus();
+        desactivarCampos();
+        btnGuardar.setEnabled(false);
+        tabla = new DefaultTableModel();
+        pintarColumnasTabla();
+        limpiarTabla();
+        
     }
 
     /**
@@ -43,7 +53,6 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
         lblEdad = new javax.swing.JLabel();
-        lblEstado = new javax.swing.JLabel();
         lblDniSocio = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
@@ -56,14 +65,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtDniSocio = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JLabel();
-        btnGuardar = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
-        rbEstado = new javax.swing.JRadioButton();
+        btnGuardar = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbFiltro = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField3 = new javax.swing.JTextField();
+        tbFiltro = new javax.swing.JTable();
+        txtFiltro = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -113,20 +122,15 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel1.add(lblEdad);
         lblEdad.setBounds(30, 410, 120, 35);
 
-        lblEstado.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblEstado.setText("ESTADO");
-        jPanel1.add(lblEstado);
-        lblEstado.setBounds(20, 630, 120, 35);
-
         lblDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblDniSocio.setText("DNI SOCIO");
         jPanel1.add(lblDniSocio);
         lblDniSocio.setBounds(25, 190, 120, 35);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("MEMBRESÍA");
+        jLabel3.setText("SOCIO");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(230, 20, 178, 35);
+        jLabel3.setBounds(230, 20, 95, 35);
 
         lblCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCorreo.setText("CORREO");
@@ -199,7 +203,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(320, 690, 100, 40);
+        btnEliminar.setBounds(410, 690, 100, 40);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.setText("jLabel1");
@@ -211,14 +215,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel1.add(btnBuscar);
         btnBuscar.setBounds(380, 140, 160, 50);
 
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
-        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarMouseClicked(evt);
+                btnNuevoMouseClicked(evt);
             }
         });
-        jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(40, 690, 100, 40);
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(40, 690, 100, 40);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -227,16 +231,20 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(180, 690, 100, 40);
+        btnModificar.setBounds(290, 690, 100, 40);
 
-        rbEstado.setForeground(new java.awt.Color(60, 63, 65));
-        rbEstado.setSelected(true);
-        jPanel1.add(rbEstado);
-        rbEstado.setBounds(150, 628, 200, 40);
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(160, 690, 100, 40);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IDSocio", "DNI", "Nombre", "Apellido", "Edad", "Correo" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbFiltro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -247,9 +255,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbFiltro);
 
-        jTextField3.setText("jTextField3");
+        txtFiltro.setText("Buscar....");
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
@@ -262,9 +270,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel2))
@@ -280,8 +288,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(136, Short.MAX_VALUE))
@@ -336,27 +344,24 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnBuscarMouseClicked
 
-    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
         // TODO add your handling code here:
-        //Guarda socio sin ID y estado true
-        socio = new Socio();
+        
         try {
-            if (!camposLlenos()) {
-                JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
-                return;
-            }
-            //cargarSocio(socio);
-            if (cargarSocio(socio)) {
-                as.guardarSocio(socio);
-            }
+            limpiarCampos();
+            activarCampos();
+            ocultarGuardar();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
+            JOptionPane.showMessageDialog(this, "" + e);
         }
-    }//GEN-LAST:event_btnGuardarMouseClicked
+    }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
         //Modifica socio con ID y estado true
+        if ( !btnModificar.isEnabled()) {
+            return;
+        }
         socio = new Socio();
         try {
             if (!camposLlenos()) {
@@ -376,6 +381,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
+        if ( !btnEliminar.isEnabled()) {
+            return;
+        }
         socio = new Socio();
         try {
             if (txtIdSocio.getText().isEmpty()) {
@@ -385,7 +393,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             socio = (((Socio) as.buscarSocio(Integer.parseInt(txtIdSocio.getText()))));
 
             if (socio == null) {
-                JOptionPane.showMessageDialog(this, "No se encontro el socio a eliminar");
+                return;
             }
             cargarDatosTxt(socio);
             // Mostrar el cuadro de diálogo de confirmación
@@ -407,6 +415,26 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         ocultarModificar();
     }//GEN-LAST:event_txtIdSocioKeyReleased
 
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        // TODO add your handling code here:
+        if ( !btnGuardar.isEnabled()) {
+            return;
+        }
+          socio = new Socio();
+        try {
+            if (!camposLlenos()) {
+                JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
+                return;
+            }
+            //cargarSocio(socio);
+            if (cargarSocio(socio)) {
+                as.guardarSocio(socio);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
+        }
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
     private void cargarDatosTxt(Socio socio) {
         txtIdSocio.setText(String.valueOf(socio.getIdSocio()));
         txtDniSocio.setText(socio.getDni());
@@ -415,7 +443,6 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtEdad.setText(String.valueOf(socio.getEdad()));
         txtCorreo.setText(socio.getCorreo());
         txtTelefono.setText(socio.getTelefono());
-        rbEstado.setEnabled(socio.isEstado());
     }
 
     private boolean camposLlenos() { //Menos id
@@ -468,7 +495,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Los campos Telefono y Dni solo permiten enteros positivos");
             return false;
         }
-        socio.setEstado(rbEstado.isSelected());
+        socio.setEstado( true);
 
         ocultarModificar();
 
@@ -488,26 +515,44 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     //=================Manejo de Botones================
     private void ocultarGuardar() {
         if (!txtIdSocio.getText().isEmpty()) {
-            btnGuardar.setVisible(false);
+            btnGuardar.setEnabled(false);
         } else {
-            btnGuardar.setVisible(true);
+            btnGuardar.setEnabled(true);
         }
     }
 
     private void ocultarModificar() {
         if (!txtIdSocio.getText().isEmpty() && !txtDniSocio.getText().isEmpty()) {
-            btnModificar.setVisible(true);
+            btnModificar.setEnabled(true);
         } else {
-            btnModificar.setVisible(false);
+            btnModificar.setEnabled(false);
         }
     }
 
     private void ocultarEliminar() {
         if (!txtIdSocio.getText().isEmpty()) {
-            btnEliminar.setVisible(true);
+            btnEliminar.setEnabled(true);
         } else {
-            btnEliminar.setVisible(false);
+            btnEliminar.setEnabled(false);
         }
+    }
+    
+    private void desactivarCampos(){
+        
+        txtNombre.setEditable(false);
+        txtApellido.setEditable(false);
+        txtEdad.setEditable(false);
+        txtCorreo.setEditable(false);
+        txtTelefono.setEditable(false);
+    }
+    
+    private void activarCampos(){
+        
+        txtNombre.setEditable(true);
+        txtApellido.setEditable(true);
+        txtEdad.setEditable(true);
+        txtCorreo.setEditable(true);
+        txtTelefono.setEditable(true);
     }
 
     //=========================Metodos de Validaciones====================
@@ -542,13 +587,33 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         Matcher m = patron.matcher(nro);
         return m.matches();
     }
+    
+    //================Metodos tabla====================
+    private void pintarColumnasTabla() {
+        tabla = (DefaultTableModel)tbFiltro.getModel();
+
+    }
+    //Limpieza de la tabla
+    public void limpiarTabla() {
+        int filas = tabla.getRowCount() - 1;
+        for (int i = filas; i >= 0; i--) {
+            tabla.removeRow(i);
+        }
+    }
+    
+    public void listarTabla(List<Socio> s) {
+        limpiarTabla();
+
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
     private javax.swing.JLabel btnEliminar;
     private javax.swing.JLabel btnGuardar;
     private javax.swing.JLabel btnModificar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel btnNuevo;
+    private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
@@ -556,21 +621,19 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDniSocio;
     private javax.swing.JLabel lblEdad;
-    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblIdSocio;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
-    private javax.swing.JRadioButton rbEstado;
+    private javax.swing.JTable tbFiltro;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDniSocio;
     private javax.swing.JTextField txtEdad;
+    private javax.swing.JTextField txtFiltro;
     private javax.swing.JTextField txtIdSocio;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
