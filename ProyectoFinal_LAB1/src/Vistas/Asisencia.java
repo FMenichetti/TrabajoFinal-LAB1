@@ -12,6 +12,7 @@ import Entidades.Inscripcion;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -45,6 +47,8 @@ public class Asisencia extends javax.swing.JInternalFrame {
     // TABLA
     private DefaultTableModel tabla;
     List<Inscripcion> inscripciones;
+    
+    
 
     public Asisencia() {
         initComponents();
@@ -54,6 +58,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnGuardar.setEnabled(false);
         btnModificar.setEnabled(false);
+        txtBuscarLista.setEditable(false); // empezar el txt en desabilitado
         // para no editar el txt del jcalendar
         editorJcalendar = (JTextFieldDateEditor) dcFecha.getDateEditor();
         editorJcalendar.setEditable(false);
@@ -63,6 +68,10 @@ public class Asisencia extends javax.swing.JInternalFrame {
         tabla = new DefaultTableModel();
         inscripciones = new ArrayList<>();
         pintarColumnasTabla();
+        // INICIALIZAMOS COMBO BOX
+        llenarComboBoxMembresias();
+        // pintar txt buscar
+        inicializarTxtFiltrar();
     }
 
     /**
@@ -201,7 +210,11 @@ public class Asisencia extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
-        cbListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id Asistencia", "Id Clase", "Id Socio", "Fecha" }));
+        cbListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbListarActionPerformed(evt);
+            }
+        });
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -225,6 +238,14 @@ public class Asisencia extends javax.swing.JInternalFrame {
         txtBuscarLista.setBorder(null);
         txtBuscarLista.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtBuscarLista.setOpaque(false);
+        txtBuscarLista.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBuscarListaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBuscarListaFocusLost(evt);
+            }
+        });
         txtBuscarLista.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBuscarListaKeyReleased(evt);
@@ -376,62 +397,56 @@ public class Asisencia extends javax.swing.JInternalFrame {
 // -------------------- BUSQUEDA EN TABLA -----------------------
 
     private void txtBuscarListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarListaKeyReleased
-        int aBuscar;
-       
-        switch (cbListar.getSelectedIndex()) {
-            case 0:
-                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
-                if (txtBuscarLista.getText().isEmpty()) {
-                    return;
-                }
-                if (!validaEntero(txtBuscarLista.getText())) {
-                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
-                    txtBuscarLista.setText("");
-                    return;
-                }
-                
-                aBuscar = Integer.parseInt(txtBuscarLista.getText());
-                buscarPorIdAsist(aBuscar);
-                break;
-            case 1:
-                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
-                if (txtBuscarLista.getText().isEmpty()) {
-                    return;
-                }
-                if (!validaEntero(txtBuscarLista.getText())) {
-                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
-                    txtBuscarLista.setText("");
-                    return;
-                }
-                aBuscar = Integer.parseInt(txtBuscarLista.getText());
-                buscarPorIdClase(aBuscar);
-                break;
-            case 2:
-                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
-                if (txtBuscarLista.getText().isEmpty()) {
-                    return;
-                }
-                if (!validaEntero(txtBuscarLista.getText())) {
-                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
-                    txtBuscarLista.setText("");
-                    return;
-                }
-                aBuscar = Integer.parseInt(txtBuscarLista.getText());
-                buscarPorIdSocio(aBuscar);
-                break;
-            case 3:
-                 
-                aBuscar = Integer.parseInt(txtBuscarLista.getText());
-                buscarPorFecha(aBuscar);
-                break;
-            default:
-                throw new AssertionError();
-        }
+        String filtro = txtBuscarLista.getText().trim();
+        String seleccion = (String) cbListar.getSelectedItem();
+
+        List<Inscripcion> listaFiltrada = filtrarAsistencias(seleccion, filtro);
+        listarTabla(listaFiltrada);
     }//GEN-LAST:event_txtBuscarListaKeyReleased
+
+    private void cbListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListarActionPerformed
+        String seleccion = (String) cbListar.getSelectedItem();
+
+        if (seleccion.equals("Id Asistencia")) {
+            // Llamar al método para listar todas las membresías
+            List<Inscripcion> inscripciones = acInscripcion.listarInscripciones();
+            listarTabla(inscripciones);
+            txtBuscarLista.setEditable(true);
+        } else if (seleccion.equals("Clase")) {
+            // Llamar al método para listar todas las membresías ordenadas por ID de socio
+            List<Inscripcion> inscripciones = acInscripcion.listarAsistenciasPorIdClases();
+            listarTabla(inscripciones);
+            txtBuscarLista.setEditable(true);
+        } else if (seleccion.equals("Socio")) {
+            // Llamar al método para listar todas las membresías ordenadas por cantidad de pases
+            List<Inscripcion> inscripciones = acInscripcion.listarAsistenciasPorIdSocio();
+            listarTabla(inscripciones);
+            txtBuscarLista.setEditable(true);
+        } else if (seleccion.equals("Fecha")) {
+            // Llamar al método para listar todas las membresías ordenadas por fecha de inicio
+            List<Inscripcion> inscripciones = acInscripcion.listarAsistenciasPorFecha();
+            listarTabla(inscripciones);
+            txtBuscarLista.setEditable(true);
+        }
+    }//GEN-LAST:event_cbListarActionPerformed
+
+    private void txtBuscarListaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarListaFocusGained
+        if (txtBuscarLista.getText().equals("Escriba aquí...")) {
+            txtBuscarLista.setText("");
+            txtBuscarLista.setForeground(Color.WHITE);
+        }
+    }//GEN-LAST:event_txtBuscarListaFocusGained
+
+    private void txtBuscarListaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarListaFocusLost
+         if (txtBuscarLista.getText().isEmpty()) {
+            txtBuscarLista.setText("Escriba aquí...");
+            txtBuscarLista.setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_txtBuscarListaFocusLost
 
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);
-
+        
         if (verPases.getCantidadPases() <= 0) {
             return false;
         } else {
@@ -623,55 +638,68 @@ public class Asisencia extends javax.swing.JInternalFrame {
         }
     }
 
-    public List<Inscripcion> buscarPorIdAsist(int id) {
-
-        List<Inscripcion> inscripciones = new ArrayList();
-        inscripciones = acInscripcion.listarInscripcionesPorIdAsistencia(id);
-        limpiarTabla();
-        for (Inscripcion ins : inscripciones) {
-            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
-            }
-            );
-        }
-        return inscripciones;
+    // ---------------------- empezamos a pintar las row segun los metodos de ac ------------------------------
+    
+    //filtrado por criterio
+    private List<Inscripcion> filtrarAsistencias(String criterio, String filtro) {
+        
+        return acInscripcion.listarInscripciones().stream()
+                .filter(i -> {
+                    switch (criterio) {
+                        case "Id Asistencia":
+                            return String.valueOf(i.getIdInscripcion()).contains(filtro);
+                        case "Clase":
+                            return  i.getClase().getNombre().toLowerCase().contains(filtro.toLowerCase());
+                        case "Socio":
+                            String nombreCompleto = i.getSocio().getNombre()+" "+i.getSocio().getApellido();
+                            return nombreCompleto.toLowerCase().contains(filtro.toLowerCase());
+                        case "Fecha":
+                            return i.getFechaInscripcion().toString().contains(filtro);
+                        default:
+                            return false;
+                    }
+                })
+                .collect(Collectors.toList());
     }
-
-    public List<Inscripcion> buscarPorIdClase(int id) {
-        List<Inscripcion> inscripciones = new ArrayList();
-        inscripciones = acInscripcion.listarInscripcionesPorIdClase(id);
-        limpiarTabla();
-        for (Inscripcion ins : inscripciones) {
-            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
-            }
-            );
+    
+    //pintar tabla
+    public void listarTabla(List<Inscripcion> listaAsistencias) {
+        limpiarTabla(); // Limpiar la tabla antes de agregar nuevas filas
+        for (Inscripcion ins : listaAsistencias) {
+            tabla.addRow(new Object[]{
+                ins.getIdInscripcion(),
+                ins.getClase().getNombre(),
+                ins.getSocio().getNombre() +" "+ ins.getSocio().getApellido(),
+                ins.getFechaInscripcion()
+            });
         }
-        return inscripciones;
-
+            
     }
-
-    public List<Inscripcion> buscarPorIdSocio(int id) {
-        List<Inscripcion> inscripciones = new ArrayList();
-        inscripciones = acInscripcion.listarInscripcionesPorIdSocio(id);
-        limpiarTabla();
-        for (Inscripcion ins : inscripciones) {
-            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
-            }
-            );
-        }
-        return inscripciones;
-
+    //llenar combo membresias
+    private void llenarComboBoxMembresias() {
+        cbListar.addItem("Seleccione aquí...");
+        cbListar.addItem("Id Asistencia");
+        cbListar.addItem("Clase");
+        cbListar.addItem("Socio");
+        cbListar.addItem("Fecha");
     }
-    public List<Inscripcion> buscarPorFecha(int id) {
-        List<Inscripcion> inscripciones = new ArrayList();
-        inscripciones = acInscripcion.listarInscripcionesPorIdSocio(id);
-        limpiarTabla();
-        for (Inscripcion ins : inscripciones) {
-            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
-            }
-            );
-        }
-        return inscripciones;
+    
+    //iniciar campo de filtro dinamico
+    private void inicializarTxtFiltrar() {
+        txtBuscarLista.setText("Escriba aquí...");
+        txtBuscarLista.setForeground(Color.GRAY);
 
+        txtBuscarLista.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBuscarListaFocusGained(evt);
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtBuscarListaFocusLost(evt);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

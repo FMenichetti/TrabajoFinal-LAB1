@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -69,14 +70,12 @@ public class AccesoInscripcion {
         return inscripciones;
 
     }
-
-    // LISTAS PARA EL COMBOBOX ID ASISTENCIA
-    public List<Inscripcion> listarInscripcionesPorIdAsistencia(int id) {
-        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
-        String sql = "SELECT * FROM inscripcion WHERE CAST(idInscripcion AS CHAR) LIKE CONCAT('%', ? , '%') ORDER BY idInscripcion ASC;";
+    
+    //Listar especiales
+    public List<Inscripcion> listarInscripcionesPorConsulta(String consulta) {
+        List<Inscripcion> inscripciones = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            PreparedStatement ps = con.prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Inscripcion inscripcion = new Inscripcion();
@@ -90,88 +89,33 @@ public class AccesoInscripcion {
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener Inscripciones" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
         }
         return inscripciones;
-
     }
 
-    // LISTAS PARA EL COMBOBOX ID CLASE
-    public List<Inscripcion> listarInscripcionesPorIdClase(int id) {
-        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
-        String sql = "SELECT * FROM inscripcion WHERE CAST(idClase AS CHAR) LIKE CONCAT( ? ) ORDER BY idClase ASC;";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Inscripcion inscripcion = new Inscripcion();
-                inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-                Clase cla = ac.buscarClase(rs.getInt("idClase"));
-                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
-                inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
-                inscripcion.setClase(cla);
-                inscripcion.setSocio(soc);
-                inscripciones.add(inscripcion);
-            }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener Inscripciones" + e.getMessage());
-        }
-        return inscripciones;
-
+    public List<Inscripcion> listarAsistenciasPorId() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
     }
 
-    // LISTAS PARA EL COMBOBOX ID SOCIO
-    public List<Inscripcion> listarInscripcionesPorIdSocio(int id) {
-        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
-        String sql = "SELECT * FROM inscripcion WHERE CAST(idSocio AS CHAR) LIKE CONCAT( ? ) ORDER BY idSocio ASC;";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Inscripcion inscripcion = new Inscripcion();
-                inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-                Clase cla = ac.buscarClase(rs.getInt("idClase"));
-                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
-                inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
-                inscripcion.setClase(cla);
-                inscripcion.setSocio(soc);
-                inscripciones.add(inscripcion);
-            }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener Inscripciones" + e.getMessage());
-        }
-        return inscripciones;
-
+    public List<Inscripcion> listarAsistenciasPorIdSocio() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idSocio ASC;";
+        return listarInscripcionesPorConsulta(consulta);
     }
 
-    public List<Inscripcion> listarInscripcionesPorFecha(int id) {
-        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
-        String sql = "SELECT * FROM inscripcion WHERE DATE_FORMAT(fecha, '%Y-%m-%d') LIKE '2023-06' ORDER BY fecha ASC";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Inscripcion inscripcion = new Inscripcion();
-                inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-                Clase cla = ac.buscarClase(rs.getInt("idClase"));
-                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
-                inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
-                inscripcion.setClase(cla);
-                inscripcion.setSocio(soc);
-                inscripciones.add(inscripcion);
-            }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener Inscripciones" + e.getMessage());
-        }
-        return inscripciones;
-
+    public List<Inscripcion> listarAsistenciasPorIdClases() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idClase ASC;";
+        return listarInscripcionesPorConsulta(consulta);
     }
+
+    public List<Inscripcion> listarAsistenciasPorFecha() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY fechaInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
+    }
+
+
+
 
     public Inscripcion buscarInscripcionPorId(int id) {
         Inscripcion insc = null;
@@ -201,7 +145,7 @@ public class AccesoInscripcion {
 
         return insc;
     }
-
+   
     public void modificarInscripcion(Inscripcion insc) {
         String sql = "UPDATE inscripcion SET idClase = ? , idSocio = ?, fechaInscripcion = ? WHERE idInscripcion = ?";
 
