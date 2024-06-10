@@ -15,10 +15,13 @@ import java.sql.Date;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -39,6 +42,9 @@ public class Asisencia extends javax.swing.JInternalFrame {
     //creamos nuevos colores, el original y el para el estado no editable
     Color verdeTransparente = new Color(28, 89, 59, 150);
     Color original = new Color(28, 89, 59);
+    // TABLA
+    private DefaultTableModel tabla;
+    List<Inscripcion> inscripciones;
 
     public Asisencia() {
         initComponents();
@@ -53,7 +59,10 @@ public class Asisencia extends javax.swing.JInternalFrame {
         editorJcalendar.setEditable(false);
         editorJcalendar.setBackground(verdeTransparente);
         noEditables();
-
+        //---------------TABLA---------------------
+        tabla = new DefaultTableModel();
+        inscripciones = new ArrayList<>();
+        pintarColumnasTabla();
     }
 
     /**
@@ -192,7 +201,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
-        cbListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbListar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id Asistencia", "Id Clase", "Id Socio", "Fecha" }));
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,6 +225,11 @@ public class Asisencia extends javax.swing.JInternalFrame {
         txtBuscarLista.setBorder(null);
         txtBuscarLista.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtBuscarLista.setOpaque(false);
+        txtBuscarLista.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarListaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -275,7 +289,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         //BOTON GUARDAR
         if (reactivarBusqueda()) {
             btnGuardar.setEnabled(false); // al reactivar la busqueda desactivamos el btn guardar
-            btnModificar.setEnabled(true);// al reactivar la busqueda desactivamos el btn modificar
+            btnModificar.setEnabled(false);// al reactivar la busqueda desactivamos el btn modificar
             return;
         } else {
             btnEliminar.setEnabled(false); // se desactiva en el caso que no exista la asist a buscar
@@ -359,15 +373,71 @@ public class Asisencia extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false); // al intentar modificar o eliminar algo que no este escrito
     }//GEN-LAST:event_btnModificarMouseClicked
 
+// -------------------- BUSQUEDA EN TABLA -----------------------
+
+    private void txtBuscarListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarListaKeyReleased
+        int aBuscar;
+       
+        switch (cbListar.getSelectedIndex()) {
+            case 0:
+                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
+                if (txtBuscarLista.getText().isEmpty()) {
+                    return;
+                }
+                if (!validaEntero(txtBuscarLista.getText())) {
+                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
+                    txtBuscarLista.setText("");
+                    return;
+                }
+                
+                aBuscar = Integer.parseInt(txtBuscarLista.getText());
+                buscarPorIdAsist(aBuscar);
+                break;
+            case 1:
+                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
+                if (txtBuscarLista.getText().isEmpty()) {
+                    return;
+                }
+                if (!validaEntero(txtBuscarLista.getText())) {
+                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
+                    txtBuscarLista.setText("");
+                    return;
+                }
+                aBuscar = Integer.parseInt(txtBuscarLista.getText());
+                buscarPorIdClase(aBuscar);
+                break;
+            case 2:
+                // si no puso texto que salga del metodo sin mostrar nada asi no es molesto
+                if (txtBuscarLista.getText().isEmpty()) {
+                    return;
+                }
+                if (!validaEntero(txtBuscarLista.getText())) {
+                    JOptionPane.showMessageDialog(null, "El codigo debe ser en numeros enteros");
+                    txtBuscarLista.setText("");
+                    return;
+                }
+                aBuscar = Integer.parseInt(txtBuscarLista.getText());
+                buscarPorIdSocio(aBuscar);
+                break;
+            case 3:
+                 
+                aBuscar = Integer.parseInt(txtBuscarLista.getText());
+                buscarPorFecha(aBuscar);
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }//GEN-LAST:event_txtBuscarListaKeyReleased
+
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);
-        
-        if (verPases.getCantidadPases()<=0 ) {
+
+        if (verPases.getCantidadPases() <= 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
-       
+
     }
 
     public void restarPases(int id) {
@@ -532,6 +602,75 @@ public class Asisencia extends javax.swing.JInternalFrame {
         txtIdClase.setText("");
         txtIdAsistencia.setText("");
         txtIdSocio.setText("");
+
+    }
+
+    // -------------------------------TABLA-------------------------------------
+    private void pintarColumnasTabla() {
+        tblAsistencia.setModel(tabla);
+        tabla.addColumn("Id Asistencia");
+        tabla.addColumn("Clase");
+        tabla.addColumn("Socio");
+        tabla.addColumn("Fecha");
+
+    }
+
+    //Limpieza de la tabla
+    public void limpiarTabla() {
+        int filas = tabla.getRowCount() - 1;
+        for (int i = filas; i >= 0; i--) {
+            tabla.removeRow(i);
+        }
+    }
+
+    public List<Inscripcion> buscarPorIdAsist(int id) {
+
+        List<Inscripcion> inscripciones = new ArrayList();
+        inscripciones = acInscripcion.listarInscripcionesPorIdAsistencia(id);
+        limpiarTabla();
+        for (Inscripcion ins : inscripciones) {
+            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
+            }
+            );
+        }
+        return inscripciones;
+    }
+
+    public List<Inscripcion> buscarPorIdClase(int id) {
+        List<Inscripcion> inscripciones = new ArrayList();
+        inscripciones = acInscripcion.listarInscripcionesPorIdClase(id);
+        limpiarTabla();
+        for (Inscripcion ins : inscripciones) {
+            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
+            }
+            );
+        }
+        return inscripciones;
+
+    }
+
+    public List<Inscripcion> buscarPorIdSocio(int id) {
+        List<Inscripcion> inscripciones = new ArrayList();
+        inscripciones = acInscripcion.listarInscripcionesPorIdSocio(id);
+        limpiarTabla();
+        for (Inscripcion ins : inscripciones) {
+            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
+            }
+            );
+        }
+        return inscripciones;
+
+    }
+    public List<Inscripcion> buscarPorFecha(int id) {
+        List<Inscripcion> inscripciones = new ArrayList();
+        inscripciones = acInscripcion.listarInscripcionesPorIdSocio(id);
+        limpiarTabla();
+        for (Inscripcion ins : inscripciones) {
+            tabla.addRow(new Object[]{ins.getIdInscripcion(), ins.getClase().getNombre(), ins.getSocio().getNombre(), ins.getFechaInscripcion()
+            }
+            );
+        }
+        return inscripciones;
 
     }
 
