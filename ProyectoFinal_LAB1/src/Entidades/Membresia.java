@@ -28,8 +28,8 @@ public class Membresia {
     }
     
     //Constructor con idSocio entero
-    public Membresia(int idSocio, Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
-        this.socio = socio;
+    public Membresia(int idSocio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
+        this.idSocio = idSocio;
         this.cantidadPases = cantidadPases;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -39,7 +39,7 @@ public class Membresia {
     
     
     //Constructor completo
-    public Membresia(int idSocio, int idMembresia, Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
+    public Membresia(int idMembresia, Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
         this.idMembresia = idMembresia;
         this.socio = socio;
         this.cantidadPases = cantidadPases;

@@ -9,14 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class AccesoMembresia {
 
-    private Connection con;
+    private final Connection con;
     AccesoSocio as;
 
     public AccesoMembresia() {
@@ -108,35 +107,6 @@ public class AccesoMembresia {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
         }
         return membresias;
-    }
-
-    public List<Socio> listarSocioIdOrdenado() {
-        List<Socio> socios = new ArrayList<>();
-
-        try {
-            String sql = "SELECT * FROM socios WHERE estado = 1 ORDER BY idSocio ASC;";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Socio socio = new Socio();
-                socio.setIdSocio(rs.getInt("idSocio"));
-                socio.setDni(rs.getString("dni"));
-                socio.setNombre(rs.getString("nombre"));
-                socio.setApellido(rs.getString("apellido"));
-                socio.setEdad(rs.getInt("edad"));
-                socio.setCorreo(rs.getString("correo"));
-                socio.setTelefono(rs.getString("telefono"));
-                socio.setEstado(true);
-                socios.add(socio);
-
-            }
-            ps.close();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socio");
-        }
-        return socios;
     }
 
     public void modificarMembresia(Membresia membresia) {

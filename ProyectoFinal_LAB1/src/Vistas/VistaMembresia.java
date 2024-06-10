@@ -18,6 +18,7 @@ import Entidades.Socio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -29,10 +30,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     // ==================== ATRIBUTOS ====================
     private final AccesoMembresia accesoMembresia;
     private final AccesoSocio accesoSocio;
-    private boolean creandoNuevaMembresia = false;
     private DefaultTableModel modeloTabla;
 
     // ==================== CONSTRUCTOR ====================
+    
     public VistaMembresia() {
         initComponents();
         accesoSocio = new AccesoSocio();
@@ -41,7 +42,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         // Deshabilitar botones guardar y modificar al abrir la vista
         btnGuardar.setEnabled(false);
         btnModificar.setEnabled(false);
-        
+
         inicializarTabla();
 
         //llenar combos
@@ -59,19 +60,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
         //agregar listeners a los campos
         agregarListeners();
+
+        inicializarTxtFiltrar();
     }
 
-    // ==================== METODOS ====================
+    // ==================== METODOS ========================
+    
     //hacer foco en idSocio
     private void inicializarVista() {
         // Solicitar foco en txtIdSocio después de que el componente sea visible
         SwingUtilities.invokeLater(() -> {
             txtIdSocio.requestFocusInWindow();
             bloquearCamposInicio();
-            txtListarMembresias.setEnabled(false);
+            txtFiltrar.setEnabled(false);
         });
     }
-    
+
     //inicializar tabla
     private void inicializarTabla() {
         modeloTabla = new DefaultTableModel();
@@ -81,7 +85,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Fecha de Inicio");
         modeloTabla.addColumn("Fecha de Fin");
         modeloTabla.addColumn("Costo");
-        modeloTabla.addColumn("Estado");
         tblTablaMembresia.setModel(modeloTabla); // Asociar el modelo de tabla a la tabla visual
     }
 
@@ -97,9 +100,11 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     }
 
     //limpiar tabla
-
     public void limpiarTabla() {
-        modeloTabla.setRowCount(0); // Eliminar todas las filas de la tabla
+        int rowCount = modeloTabla.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            modeloTabla.removeRow(i);
+        }
     }
 
     //cargar datos a los campos de textos
@@ -126,6 +131,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFechaFin.setEnabled(false);
         cbCantidadPases.setEnabled(false);
         txtPrecio.setEditable(false);
+        btnEliminar.setEnabled(false);
     }
 
     //habilitar campos
@@ -150,39 +156,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
-    }
-
-    //sacamos info de ingresada en los campos
-    private void recolectarInformacionYguardar() {
-        // Recolectar los datos de los campos
-        String idSocioStr = txtIdSocio.getText();
-        String cantidadPasesString = (String) cbCantidadPases.getSelectedItem();
-        int cantidadPases = Integer.parseInt(cantidadPasesString);
-        LocalDate fechaInicio = txtFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaFin = txtFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        double precio = Double.parseDouble(txtPrecio.getText());
-
-        try {
-            // Convertir el ID del socio de cadena de texto a entero
-            int idSocio = Integer.parseInt(idSocioStr);
-
-            // Buscar el socio correspondiente al ID ingresado
-            Socio socio = accesoSocio.buscarSocio(idSocio);
-            if (socio == null) {
-                JOptionPane.showMessageDialog(this, "No se encontró ningún socio con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            // Crear una nueva instancia de Membresia con el socio encontrado y los datos recolectados
-            Membresia nuevaMembresia = new Membresia(socio, cantidadPases, fechaInicio, fechaFin, precio, true);
-
-            // Llamar al método para crear la membresía en la base de datos o donde sea necesario
-            accesoMembresia.crearMembresia(nuevaMembresia);
-
-        } catch (NumberFormatException e) {
-            // Manejar el caso en que el ID del socio ingresado no sea un número válido
-            JOptionPane.showMessageDialog(this, "El ID del socio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     //llenar combo de pases
@@ -289,21 +262,68 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
     //anular boton guardar
     private void anularBotonGuardar() {
-        if (!creandoNuevaMembresia) {
-            btnGuardar.setEnabled(false);
-        }
+
+    }
+
+    //iniciar campo de filtro dinamico
+    private void inicializarTxtFiltrar() {
+        txtFiltrar.setText("Escriba aquí...");
+        txtFiltrar.setForeground(Color.GRAY);
+
+        txtFiltrar.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFiltrarFocusGained(evt);
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFiltrarFocusLost(evt);
+            }
+        });
     }
 
     //pintar tabla
     public void listarTabla(List<Membresia> listaMembresias) {
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblTablaMembresia.getModel();
         limpiarTabla(); // Limpiar la tabla antes de agregar nuevas filas
 
         for (Membresia membresia : listaMembresias) {
-            // Agregar una fila a la tabla por cada objeto Membresia en la lista
-            modeloTabla.addRow(new Object[]{membresia.getIdMembresia(), membresia.getIdSocio(), membresia.getCantidadPases(), membresia.getFechaInicio(), membresia.getFechaFin(), membresia.getCosto(), membresia.getEstado()});
+            modeloTabla.addRow(new Object[]{
+                membresia.getIdMembresia(),
+                membresia.getIdSocio(),
+                membresia.getCantidadPases(),
+                membresia.getFechaInicio(),
+                membresia.getFechaFin(),
+                membresia.getCosto(),
+                membresia.getEstado()
+            });
         }
     }
 
+    //filtrado dinamico
+    private List<Membresia> filtrarMembresias(String criterio, String filtro) {
+        return accesoMembresia.listarMembresia().stream()
+                .filter(m -> {
+                    switch (criterio) {
+                        case "Membresia":
+                            return String.valueOf(m.getIdMembresia()).contains(filtro);
+                        case "Socio":
+                            return String.valueOf(m.getIdSocio()).contains(filtro);
+                        case "Cantidad de pases":
+                            return String.valueOf(m.getCantidadPases()).contains(filtro);
+                        case "Fecha de inicio":
+                            return m.getFechaInicio().toString().contains(filtro);
+                        case "Fecha de fin":
+                            return m.getFechaFin().toString().contains(filtro);
+                        case "Precio":
+                            return String.valueOf(m.getCosto()).contains(filtro);
+                        default:
+                            return false;
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 
     // ==================== INIT COMPONENTS ====================
 
@@ -333,7 +353,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         cbMembresias = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTablaMembresia = new javax.swing.JTable();
-        txtListarMembresias = new javax.swing.JTextField();
+        txtFiltrar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -504,9 +524,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel2.add(jScrollPane1);
         jScrollPane1.setBounds(44, 152, 407, 463);
 
-        txtListarMembresias.setText("Escriba aquí...");
-        jPanel2.add(txtListarMembresias);
-        txtListarMembresias.setBounds(48, 80, 180, 46);
+        txtFiltrar.setText("Escriba aquí...");
+        txtFiltrar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFiltrarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFiltrarFocusLost(evt);
+            }
+        });
+        txtFiltrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltrarKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtFiltrar);
+        txtFiltrar.setBounds(48, 80, 180, 46);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
@@ -535,6 +568,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 cargarDatos(membresia);
                 habilitarCampos();
                 btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
@@ -545,7 +579,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         limpiarCampos();
         habilitarCampos();
         btnGuardar.setEnabled(true);
-        creandoNuevaMembresia = true;
         txtIdSocio.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoMouseClicked
 
@@ -555,7 +588,35 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         }
         //chequear campos competos
         if (comprobarCamposCompletos()) {
-            recolectarInformacionYguardar();
+            // Recolectar los datos de los campos
+            String idSocioStr = txtIdSocio.getText();
+            String cantidadPasesString = (String) cbCantidadPases.getSelectedItem();
+            int cantidadPases = Integer.parseInt(cantidadPasesString);
+            LocalDate fechaInicio = txtFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaFin = txtFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            double precio = Double.parseDouble(txtPrecio.getText());
+
+            try {
+                // Convertir el ID del socio de cadena de texto a entero
+                int idSocio = Integer.parseInt(idSocioStr);
+
+                // Buscar el socio correspondiente al ID ingresado
+                Socio socio = accesoSocio.buscarSocio(idSocio);
+                if (socio == null) {
+                    JOptionPane.showMessageDialog(this, "No se encontró ningún socio con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Crear una nueva instancia de Membresia con el socio encontrado y los datos recolectados
+                Membresia nuevaMembresia = new Membresia(socio, cantidadPases, fechaInicio, fechaFin, precio, true);
+
+                // Llamar al método para crear la membresía en la base de datos o donde sea necesario
+                accesoMembresia.crearMembresia(nuevaMembresia);
+
+            } catch (NumberFormatException e) {
+                // Manejar el caso en que el ID del socio ingresado no sea un número válido
+                JOptionPane.showMessageDialog(this, "El ID del socio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             limpiarCampos();
         }
 
@@ -568,65 +629,64 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         // Comprobar si todos los campos están completos
         if (!comprobarCamposCompletos()) {
             return; // Si algún campo está incompleto, salir del método
-        } else {
+        }
+
+        try {
             // Recolectar los datos de los campos
-            String idMembresiaStr = txtIdMembresia.getText();
-            String idSocioStr = txtIdSocio.getText();
-            String cantidadPasesString = (String) cbCantidadPases.getSelectedItem();
-            int cantidadPases = Integer.parseInt(cantidadPasesString);
+            int idMembresia = Integer.parseInt(txtIdMembresia.getText());
+            int idSocio = Integer.parseInt(txtIdSocio.getText());
+            int cantidadPases = Integer.parseInt((String) cbCantidadPases.getSelectedItem());
             LocalDate fechaInicio = txtFechaInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate fechaFin = txtFechaFin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             double precio = Double.parseDouble(txtPrecio.getText());
 
-            try {
-                // Convertir el ID de la membresía y del socio de cadena de texto a entero
-                int idMembresia = Integer.parseInt(idMembresiaStr);
-                int idSocio = Integer.parseInt(idSocioStr);
-
-                // Buscar la membresía correspondiente al ID ingresado
-                Membresia membresiaExistente = accesoMembresia.buscarMembresiaPorIdSocio(idSocio);
-                if (membresiaExistente == null) {
-                    JOptionPane.showMessageDialog(this, "No se encontró ninguna membresía con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Buscar el socio correspondiente al ID ingresado
-                Socio socio = accesoSocio.buscarSocio(idSocio);
-                if (socio == null) {
-                    JOptionPane.showMessageDialog(this, "No se encontró ningún socio con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Preguntar al usuario si está seguro de modificar la membresía
-                int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea modificar la membresía número " + idMembresia + "?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
-                if (confirm != JOptionPane.YES_OPTION) {
-                    return; // Si el usuario no confirma, salir del método
-                }
-
-                // Crear una nueva instancia de Membresia con el socio encontrado y los datos recolectados
-                Membresia membresiaModificada = new Membresia(idMembresia, socio, cantidadPases, fechaInicio, fechaFin, precio, true);
-
-                // Llamar al método para modificar la membresía en la base de datos
-                accesoMembresia.modificarMembresia(membresiaModificada);
-
-                // Limpiar los campos después de modificar la membresía
-                limpiarCampos();
-
-            } catch (NumberFormatException e) {
-                // Manejar el caso en que el ID del socio ingresado no sea un número válido
-                JOptionPane.showMessageDialog(this, "El ID del socio y el ID de la membresía deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-                return; // Salir del método si hay un error
+            // Buscar la membresía correspondiente al ID ingresado
+            Membresia membresiaExistente = accesoMembresia.buscarMembresiaPorIdSocio(idSocio);
+            if (membresiaExistente == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna membresía con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            // Buscar el socio correspondiente al ID ingresado
+            Socio socio = accesoSocio.buscarSocio(idSocio);
+            if (socio == null) {
+                JOptionPane.showMessageDialog(this, "No se encontró ningún socio con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Preguntar al usuario si está seguro de modificar la membresía
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea modificar la membresía número " + idMembresia + "?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return; // Si el usuario no confirma, salir del método
+            }
+
+            // Crear una nueva instancia de Membresia con el socio encontrado y los datos recolectados
+            Membresia membresiaModificada = new Membresia(idMembresia, socio, cantidadPases, fechaInicio, fechaFin, precio, true);
+
+            // Llamar al método para modificar la membresía en la base de datos
+            accesoMembresia.modificarMembresia(membresiaModificada);
+
+            // Limpiar los campos después de modificar la membresía
+            limpiarCampos();
+
+        } catch (NumberFormatException e) {
+            // Manejar el caso en que el ID del socio ingresado no sea un número válido
+            JOptionPane.showMessageDialog(this, "El ID del socio y el ID de la membresía deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Salir del método si hay un error
         }
 
         // Limpiar los campos después de guardar la membresía
         limpiarCampos();
 
-        //inicializar vista de nuevo
+        // Inicializar vista de nuevo
         inicializarVista();
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        if (!btnEliminar.isEnabled()) {
+            return; // No hacer nada si el botón de eliminar está desactivado
+        }
+
         String idSocioStr = txtIdSocio.getText().trim();
         if (idSocioStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe elegir un socio para eliminar");
@@ -657,6 +717,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
+    // ==================== EVENTOS =======================
+
     private void cbMembresiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMembresiasActionPerformed
         String seleccion = (String) cbMembresias.getSelectedItem();
 
@@ -664,28 +726,56 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             // Llamar al método para listar todas las membresías
             List<Membresia> membresias = accesoMembresia.listarMembresia();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         } else if (seleccion.equals("Socio")) {
             // Llamar al método para listar todas las membresías ordenadas por ID de socio
             List<Membresia> membresias = accesoMembresia.listarMembresiaPorIdSocio();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         } else if (seleccion.equals("Cantidad de pases")) {
             // Llamar al método para listar todas las membresías ordenadas por cantidad de pases
             List<Membresia> membresias = accesoMembresia.listarMembresiaPorCantidadPases();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         } else if (seleccion.equals("Fecha de inicio")) {
             // Llamar al método para listar todas las membresías ordenadas por fecha de inicio
             List<Membresia> membresias = accesoMembresia.listarMembresiaPorFechaInicio();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         } else if (seleccion.equals("Fecha de fin")) {
             // Llamar al método para listar todas las membresías ordenadas por fecha de fin
             List<Membresia> membresias = accesoMembresia.listarMembresiaPorFechaFin();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         } else if (seleccion.equals("Precio")) {
             // Llamar al método para listar todas las membresías ordenadas por precio
             List<Membresia> membresias = accesoMembresia.listarMembresiaPorCosto();
             listarTabla(membresias);
+            txtFiltrar.setEnabled(true);
         }
     }//GEN-LAST:event_cbMembresiasActionPerformed
+
+    private void txtFiltrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltrarKeyReleased
+        String filtro = txtFiltrar.getText().trim();
+        String seleccion = (String) cbMembresias.getSelectedItem();
+
+        List<Membresia> listaFiltrada = filtrarMembresias(seleccion, filtro);
+        listarTabla(listaFiltrada);
+    }//GEN-LAST:event_txtFiltrarKeyReleased
+
+    private void txtFiltrarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltrarFocusGained
+        if (txtFiltrar.getText().equals("Escriba aquí...")) {
+            txtFiltrar.setText("");
+            txtFiltrar.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtFiltrarFocusGained
+
+    private void txtFiltrarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltrarFocusLost
+        if (txtFiltrar.getText().isEmpty()) {
+            txtFiltrar.setText("Escriba aquí...");
+            txtFiltrar.setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_txtFiltrarFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -710,9 +800,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblTablaMembresia;
     private com.toedter.calendar.JDateChooser txtFechaFin;
     private com.toedter.calendar.JDateChooser txtFechaInicio;
+    private javax.swing.JTextField txtFiltrar;
     private javax.swing.JTextField txtIdMembresia;
     private javax.swing.JTextField txtIdSocio;
-    private javax.swing.JTextField txtListarMembresias;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
