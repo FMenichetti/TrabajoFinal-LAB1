@@ -21,7 +21,8 @@ public class AccesoSocio {
         
     }
     
-    public void guardarSocio(Socio socio) {
+    public boolean guardarSocio(Socio socio) {
+        boolean flag = false;
         String sql = "INSERT INTO socios (dni,nombre,apellido,edad,correo,telefono,estado) "
                 + "VALUES (?,?,?,?,?,?,?)";
         try {
@@ -38,7 +39,9 @@ public class AccesoSocio {
             ResultSet rs = ps.getGeneratedKeys();
             
             if (rs.next()) {
+                flag = true;
                 JOptionPane.showMessageDialog(null, "Socio añadido");
+                
             }
             
             ps.close();
@@ -48,7 +51,7 @@ public class AccesoSocio {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "error al acceder al socio");
         }
-        
+        return flag;
     }
     
     public Socio buscarSocio(int id) {
@@ -143,7 +146,9 @@ public class AccesoSocio {
         return socios;
     }
     
-    public void modificarSocio(Socio socio) {
+    public boolean modificarSocio(Socio socio) {
+        boolean flag = false;
+        
         String sql = "UPDATE socios SET dni = ?, nombre = ?, apellido = ?, edad = ? , correo = ? , telefono = ?  WHERE idSocio = ?";
         
         PreparedStatement ps = null;
@@ -161,6 +166,7 @@ public class AccesoSocio {
             int exito = ps.executeUpdate();
             
             if (exito == 1) {
+                flag = true;
                 JOptionPane.showMessageDialog(null, "Socio modificado");
             } else {
                 JOptionPane.showMessageDialog(null, "El Socio no existe");
@@ -169,10 +175,12 @@ public class AccesoSocio {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socio"+e);
         }
+        return flag;
     }
     
-    public void eliminarSocio(int id) {
+    public boolean eliminarSocio(int id) {
         
+        boolean flag = false;
         try {
             String sql = "UPDATE socios SET estado = 0 WHERE idSocio = ?";
             PreparedStatement ps = con.prepareStatement(sql);
@@ -181,7 +189,7 @@ public class AccesoSocio {
             int fila = ps.executeUpdate();
             
             if (fila == 1) {
-                
+                flag = true;
                 JOptionPane.showMessageDialog(null, "Baja logica al socio.");
             }
             ps.close();
@@ -190,7 +198,7 @@ public class AccesoSocio {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Socio");
             
         }
-        
+        return flag;
     }
     
     public List<Socio> listarSocioIdOrdenado() {

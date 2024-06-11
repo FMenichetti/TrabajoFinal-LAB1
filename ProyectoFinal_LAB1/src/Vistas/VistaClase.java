@@ -367,7 +367,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-
+boolean flag = false;
         // TODO add your handling code here:
         if (!btnModificar.isEnabled()) {
             return;
@@ -385,8 +385,11 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 limpiarCampos();
             }
             txtIdClase.requestFocus();
-            ocultarBotonesMenosNuevo();
+            if ( flag) {
+                ocultarBotonesMenosNuevo();
             resetFiltros();
+            }
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
         }
@@ -395,6 +398,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
 
         // TODO add your handling code here:
+        boolean flag = false;
         if (!btnEliminar.isEnabled()) {
             return;
         }
@@ -417,8 +421,10 @@ public class VistaClase extends javax.swing.JInternalFrame {
             }
             txtIdClase.requestFocus();
             ocultarBotonesMenosNuevo();
+            if ( flag) {
+                ocultarBotonesMenosNuevo();
             resetFiltros();
-            limpiarCampos();
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
@@ -436,6 +442,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        boolean flag = false;
         if (!btnGuardar.isEnabled()) {
             return;
         }
@@ -451,8 +458,10 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 limpiarCampos();
             }
             txtIdClase.requestFocus();
-            ocultarBotonesMenosNuevo();
+            if ( flag) {
+                ocultarBotonesMenosNuevo();
             resetFiltros();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
         }

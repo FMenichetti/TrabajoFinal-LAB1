@@ -24,11 +24,12 @@ public class AccesoClase {
         entData = new AccesoEntrenador();
     }
 
-    public void guardarClase(Clase cla) {
+    public boolean guardarClase(Clase cla) {
         //usamos comodines para hacerlo generico
+        boolean flag = false;
         if (existeClase(cla)) {
             JOptionPane.showMessageDialog(null, "ya existe la clase");
-            return;
+            return false;
         } else {
 
             String sql = "INSERT INTO clases (nombre,idEntrenador,horario,capacidad,estado) "
@@ -49,6 +50,7 @@ public class AccesoClase {
                 //devuelve booleano
                 if (rs.next()) {
                     cla.setIdClase(rs.getInt(1));
+                    flag = true;
                     JOptionPane.showMessageDialog(null, "Clase añadida");
                 }
                 //cerramos la conexion
@@ -62,6 +64,7 @@ public class AccesoClase {
                 System.out.println("error general");
             }
         }
+        return flag;
     }
 
     public Clase buscarClase(int id) {
@@ -126,10 +129,11 @@ public class AccesoClase {
 
     }
 
-    public void modificarClase(Clase clase) {
+    public boolean modificarClase(Clase clase) {
         String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
         PreparedStatement ps = null;
 
+        boolean flag = false;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, clase.getNombre());
@@ -142,6 +146,7 @@ public class AccesoClase {
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
+                flag = true;
                 JOptionPane.showMessageDialog(null, "Clase modificada");
             } else {
                 JOptionPane.showMessageDialog(null, "La clase no existe");
@@ -151,10 +156,13 @@ public class AccesoClase {
 
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
         }
+        return flag;
     }
 
     //borrado logico de clase
-    public void eliminarClase(int id) {
+    public boolean eliminarClase(int id) {
+
+        boolean flag = false;
 
         try {
 
@@ -166,6 +174,7 @@ public class AccesoClase {
             int fila = ps.executeUpdate();
 
             if (fila == 1) {
+                flag = true;
                 JOptionPane.showMessageDialog(null, " Se eliminó la clase.");
 
             } else if (fila == 0) {
@@ -176,7 +185,7 @@ public class AccesoClase {
 
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla clase");
         }
-
+        return flag;
     }
 
     public boolean existeClase(Clase clase) {
@@ -371,7 +380,7 @@ public class AccesoClase {
         }
         return clases;
     }
-    
+
     public List<Clase> listarClaseCapacidadFiltro(int num) {
         List<Clase> clases = new ArrayList<>();
 
@@ -400,7 +409,7 @@ public class AccesoClase {
         }
         return clases;
     }
-    
+
     public List<Clase> listarClaseNombreFiltro(String nombre) {
         List<Clase> clases = new ArrayList<>();
 
@@ -429,7 +438,7 @@ public class AccesoClase {
         }
         return clases;
     }
-    
+
     public List<Clase> listarClaseEntrenadorFiltro(String nombre) {
         List<Clase> clases = new ArrayList<>();
 
@@ -458,7 +467,7 @@ public class AccesoClase {
         }
         return clases;
     }
-    
+
     public List<Clase> listarClaseHorarioFiltro(int id) {
         List<Clase> clases = new ArrayList<>();
 
