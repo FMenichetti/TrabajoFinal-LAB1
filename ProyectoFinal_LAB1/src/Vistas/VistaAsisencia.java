@@ -115,24 +115,24 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jPanel1.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setText("Id Asistencia");
+        jLabel7.setText("ID ASISTENCIA");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(20, 110, 100, 30);
+        jLabel7.setBounds(20, 130, 126, 30);
 
         lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblIdSocio.setText("Id Socio");
+        lblIdSocio.setText("ID SOCIO");
         jPanel1.add(lblIdSocio);
-        lblIdSocio.setBounds(20, 210, 80, 30);
+        lblIdSocio.setBounds(20, 250, 80, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel10.setText("Fecha de Inscripcion");
+        jLabel10.setText("FECHA DE INSCRIPCION");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(20, 260, 170, 30);
+        jLabel10.setBounds(20, 310, 210, 30);
 
         lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblIdClase.setText("Id Clase");
+        lblIdClase.setText("ID CLASE");
         jPanel1.add(lblIdClase);
-        lblIdClase.setBounds(20, 160, 80, 30);
+        lblIdClase.setBounds(20, 190, 80, 30);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -141,7 +141,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(270, 420, 100, 40);
+        btnModificar.setBounds(270, 600, 100, 40);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("Asistencia");
@@ -155,7 +155,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtIdClase.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdClase.setOpaque(false);
         jPanel1.add(txtIdClase);
-        txtIdClase.setBounds(100, 160, 80, 30);
+        txtIdClase.setBounds(120, 190, 80, 30);
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -164,7 +164,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdSocio.setOpaque(false);
         jPanel1.add(txtIdSocio);
-        txtIdSocio.setBounds(100, 210, 80, 30);
+        txtIdSocio.setBounds(120, 250, 80, 30);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.setText("jLabel1");
@@ -174,7 +174,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(280, 100, 150, 50);
+        btnBuscar.setBounds(310, 120, 150, 50);
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -183,7 +183,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(30, 420, 99, 40);
+        btnNuevo.setBounds(30, 600, 99, 40);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -192,7 +192,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(390, 420, 99, 40);
+        btnEliminar.setBounds(390, 600, 99, 40);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -201,9 +201,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(150, 420, 100, 40);
+        btnGuardar.setBounds(150, 600, 100, 40);
         jPanel1.add(dcFecha);
-        dcFecha.setBounds(210, 260, 180, 30);
+        dcFecha.setBounds(250, 310, 180, 30);
 
         txtIdAsistencia1.setBackground(new java.awt.Color(28, 89, 59));
         txtIdAsistencia1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -211,8 +211,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtIdAsistencia1.setBorder(null);
         txtIdAsistencia1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtIdAsistencia1.setOpaque(false);
+        txtIdAsistencia1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdAsistencia1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtIdAsistencia1);
-        txtIdAsistencia1.setBounds(130, 110, 80, 30);
+        txtIdAsistencia1.setBounds(170, 130, 80, 30);
 
         txtPases.setBackground(new java.awt.Color(28, 89, 59));
         txtPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -221,12 +226,12 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtPases.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtPases.setOpaque(false);
         jPanel1.add(txtPases);
-        txtPases.setBounds(270, 310, 140, 30);
+        txtPases.setBounds(220, 370, 140, 30);
 
         lblPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblPases.setText("Cantidad de pases disponibles");
+        lblPases.setText("CANTIDAD DE PASES");
         jPanel1.add(lblPases);
-        lblPases.setBounds(10, 310, 260, 30);
+        lblPases.setBounds(20, 370, 190, 30);
 
         btnAgregarMembresia.setText("Agregar");
         btnAgregarMembresia.addActionListener(new java.awt.event.ActionListener() {
@@ -235,7 +240,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnAgregarMembresia);
-        btnAgregarMembresia.setBounds(420, 310, 70, 30);
+        btnAgregarMembresia.setBounds(440, 310, 80, 30);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
@@ -324,8 +329,8 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBuscarLista)
-                    .addComponent(cbListar))
+                    .addComponent(txtBuscarLista, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(cbListar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(135, Short.MAX_VALUE))
@@ -531,6 +536,10 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_tblAsistenciaMouseClicked
+
+    private void txtIdAsistencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsistencia1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdAsistencia1ActionPerformed
 
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);

@@ -340,33 +340,33 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(214, 236, 225));
         jPanel1.setLayout(null);
 
         lblMembresia.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblMembresia.setText("ID MEMBRESÍA");
         jPanel1.add(lblMembresia);
-        lblMembresia.setBounds(50, 110, 140, 22);
+        lblMembresia.setBounds(20, 180, 140, 22);
 
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCantidadPases.setText("CANTIDAD DE PASES");
         jPanel1.add(lblCantidadPases);
-        lblCantidadPases.setBounds(50, 250, 184, 22);
+        lblCantidadPases.setBounds(20, 250, 184, 22);
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaInicio.setText("FECHA INICIO");
         jPanel1.add(lblFechaInicio);
-        lblFechaInicio.setBounds(50, 330, 130, 22);
+        lblFechaInicio.setBounds(20, 330, 130, 22);
 
         lblFechaFin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaFin.setText("FECHA FIN");
         jPanel1.add(lblFechaFin);
-        lblFechaFin.setBounds(50, 400, 100, 22);
+        lblFechaFin.setBounds(20, 400, 100, 22);
 
         lblSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblSocio.setText("ID SOCIO");
         jPanel1.add(lblSocio);
-        lblSocio.setBounds(50, 180, 90, 22);
+        lblSocio.setBounds(20, 110, 90, 22);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -375,7 +375,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(340, 140, 160, 70);
+        btnBuscar.setBounds(300, 90, 150, 50);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("MEMBRESÍA");
@@ -385,7 +385,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblPrecio.setText("PRECIO");
         jPanel1.add(lblPrecio);
-        lblPrecio.setBounds(50, 480, 80, 22);
+        lblPrecio.setBounds(20, 480, 80, 30);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -426,9 +426,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
         txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdMembresia.setBorder(null);
-        txtIdMembresia.setOpaque(true);
         jPanel1.add(txtIdMembresia);
-        txtIdMembresia.setBounds(200, 100, 60, 30);
+        txtIdMembresia.setBounds(170, 170, 60, 30);
 
         txtPrecio.setEditable(true);
         txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
@@ -440,7 +439,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtPrecio);
-        txtPrecio.setBounds(130, 480, 100, 30);
+        txtPrecio.setBounds(100, 480, 100, 30);
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -451,21 +450,21 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtIdSocio);
-        txtIdSocio.setBounds(150, 170, 60, 30);
+        txtIdSocio.setBounds(120, 100, 60, 30);
 
         txtFechaFin.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaFin.setDateFormatString("dd/MM/yyyy");
         txtFechaFin.setInheritsPopupMenu(true);
         txtFechaFin.setOpaque(false);
         jPanel1.add(txtFechaFin);
-        txtFechaFin.setBounds(180, 400, 150, 26);
+        txtFechaFin.setBounds(150, 400, 150, 30);
 
         txtFechaInicio.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaInicio.setDateFormatString("dd/MM/yyyy");
         txtFechaInicio.setInheritsPopupMenu(true);
         txtFechaInicio.setOpaque(false);
         jPanel1.add(txtFechaInicio);
-        txtFechaInicio.setBounds(190, 330, 150, 26);
+        txtFechaInicio.setBounds(160, 330, 150, 30);
 
         cbCantidadPases.setBackground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -473,12 +472,12 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         cbCantidadPases.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8", "12", "20" }));
         cbCantidadPases.setToolTipText("");
         jPanel1.add(cbCantidadPases);
-        cbCantidadPases.setBounds(260, 240, 110, 40);
+        cbCantidadPases.setBounds(230, 240, 110, 30);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 530, 680);
+        jPanel1.setBounds(0, 0, 520, 680);
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
         cbMembresias.addActionListener(new java.awt.event.ActionListener() {
@@ -487,7 +486,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(cbMembresias);
-        cbMembresias.setBounds(246, 86, 200, 30);
+        cbMembresias.setBounds(250, 80, 200, 30);
 
         tblTablaMembresia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -533,7 +532,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
         jPanel2.add(txtFiltrar);
-        txtFiltrar.setBounds(48, 80, 180, 46);
+        txtFiltrar.setBounds(48, 80, 180, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE MEMBRESÍAS");
@@ -541,7 +540,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel2.setBounds(75, 17, 338, 36);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(532, 0, 510, 680);
+        jPanel2.setBounds(520, 0, 520, 680);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

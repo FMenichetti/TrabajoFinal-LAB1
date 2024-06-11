@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -39,7 +40,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         pintarColumnasTabla();
         limpiarTabla();
         txtFiltro.setEnabled(false);
-
+        // ======== QUITAR BORDES INTERNAL FRAME =========
+        quitarBordeJInternalFrame();
     }
 
     /**
@@ -53,10 +55,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         txtIdSocio = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         lblIdSocio = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
         lblEdad = new javax.swing.JLabel();
         lblDniSocio = new javax.swing.JLabel();
@@ -81,7 +81,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtFiltro = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(214, 236, 225));
         jPanel1.setLayout(null);
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
@@ -96,57 +96,47 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(txtIdSocio);
-        txtIdSocio.setBounds(150, 110, 200, 35);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel6.setText("jLabel3");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(410, 470, 122, 57);
+        txtIdSocio.setBounds(150, 110, 60, 30);
 
         lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblIdSocio.setText("ID SOCIO");
         jPanel1.add(lblIdSocio);
-        lblIdSocio.setBounds(25, 110, 120, 35);
+        lblIdSocio.setBounds(20, 110, 120, 35);
 
         lblNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblNombre.setText("NOMBRE");
         jPanel1.add(lblNombre);
-        lblNombre.setBounds(25, 280, 120, 35);
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel9.setText("jLabel3");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(410, 390, 122, 57);
+        lblNombre.setBounds(20, 230, 120, 35);
 
         lblApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblApellido.setText("APELLIDO");
         jPanel1.add(lblApellido);
-        lblApellido.setBounds(25, 330, 120, 35);
+        lblApellido.setBounds(20, 290, 120, 35);
 
         lblEdad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblEdad.setText("EDAD");
         jPanel1.add(lblEdad);
-        lblEdad.setBounds(30, 410, 120, 35);
+        lblEdad.setBounds(20, 350, 120, 35);
 
         lblDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblDniSocio.setText("DNI SOCIO");
         jPanel1.add(lblDniSocio);
-        lblDniSocio.setBounds(25, 190, 120, 35);
+        lblDniSocio.setBounds(20, 170, 120, 35);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("SOCIO");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(230, 20, 95, 35);
+        jLabel3.setBounds(230, 20, 95, 36);
 
         lblCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCorreo.setText("CORREO");
         jPanel1.add(lblCorreo);
-        lblCorreo.setBounds(30, 480, 120, 35);
+        lblCorreo.setBounds(20, 410, 120, 35);
 
         lblTelefono.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblTelefono.setText("TELEFONO");
         jPanel1.add(lblTelefono);
-        lblTelefono.setBounds(20, 550, 120, 35);
+        lblTelefono.setBounds(20, 470, 120, 35);
 
         txtTelefono.setBackground(new java.awt.Color(28, 89, 59));
         txtTelefono.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -155,7 +145,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtTelefono.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtTelefono.setOpaque(false);
         jPanel1.add(txtTelefono);
-        txtTelefono.setBounds(150, 550, 200, 35);
+        txtTelefono.setBounds(150, 470, 200, 35);
 
         txtCorreo.setBackground(new java.awt.Color(28, 89, 59));
         txtCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -164,7 +154,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtCorreo.setOpaque(false);
         jPanel1.add(txtCorreo);
-        txtCorreo.setBounds(150, 480, 200, 35);
+        txtCorreo.setBounds(150, 410, 200, 30);
 
         txtEdad.setBackground(new java.awt.Color(28, 89, 59));
         txtEdad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -173,7 +163,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtEdad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtEdad.setOpaque(false);
         jPanel1.add(txtEdad);
-        txtEdad.setBounds(150, 410, 200, 35);
+        txtEdad.setBounds(150, 350, 60, 30);
 
         txtApellido.setBackground(new java.awt.Color(28, 89, 59));
         txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -182,7 +172,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtApellido.setOpaque(false);
         jPanel1.add(txtApellido);
-        txtApellido.setBounds(150, 330, 200, 35);
+        txtApellido.setBounds(150, 290, 200, 30);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
         txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -191,7 +181,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNombre.setOpaque(false);
         jPanel1.add(txtNombre);
-        txtNombre.setBounds(150, 270, 200, 35);
+        txtNombre.setBounds(150, 230, 200, 30);
 
         txtDniSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -200,7 +190,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtDniSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtDniSocio.setOpaque(false);
         jPanel1.add(txtDniSocio);
-        txtDniSocio.setBounds(150, 190, 200, 35);
+        txtDniSocio.setBounds(150, 170, 200, 30);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -209,7 +199,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(410, 690, 100, 40);
+        btnEliminar.setBounds(400, 600, 100, 40);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.setText("jLabel1");
@@ -219,7 +209,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(380, 140, 160, 50);
+        btnBuscar.setBounds(320, 100, 150, 50);
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -228,7 +218,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(40, 690, 100, 40);
+        btnNuevo.setBounds(30, 600, 100, 40);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -237,7 +227,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(290, 690, 100, 40);
+        btnModificar.setBounds(280, 600, 100, 40);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -246,7 +236,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(160, 690, 100, 40);
+        btnGuardar.setBounds(150, 600, 100, 40);
+
+        jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IDSocio", "DNI", "Nombre", "Apellido" }));
         cbFiltro.addItemListener(new java.awt.event.ItemListener() {
@@ -297,16 +289,16 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -316,8 +308,8 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(136, Short.MAX_VALUE))
@@ -328,21 +320,18 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -744,7 +733,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             tabla.addRow(new Object[]{s.getIdSocio(), s.getDni(), s.getNombre(), s.getApellido()});
         }
     }
-
+// ================ QUITAR BORDES DE JINTERNAL ====================================
+    private void quitarBordeJInternalFrame() {
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
+    }
     // Método para manejar el evento de cambio en el JComboBox
 // Método para manejar el evento de entrada en el JTextField
 
@@ -757,8 +751,6 @@ public class VistaSocio extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

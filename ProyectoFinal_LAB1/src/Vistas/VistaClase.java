@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +44,8 @@ public class VistaClase extends javax.swing.JInternalFrame {
         pintarColumnasTabla();
         limpiarTabla();
         txtFiltro.setEnabled(false);
+        // --------- quitar bodreds de internal
+        quitarBordeJInternalFrame();
     }
 
     /**
@@ -54,17 +57,9 @@ public class VistaClase extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        cbFiltro = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbFiltro = new javax.swing.JTable();
-        txtFiltro = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         lblIdClase = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         lblEntrenador = new javax.swing.JLabel();
         lblHorario = new javax.swing.JLabel();
         lblCapacidad = new javax.swing.JLabel();
@@ -79,6 +74,136 @@ public class VistaClase extends javax.swing.JInternalFrame {
         btnModificar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JLabel();
         cbEntrenadores = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        cbFiltro = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbFiltro = new javax.swing.JTable();
+        txtFiltro = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+
+        jPanel1.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel1.setLayout(null);
+
+        lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdClase.setText("ID CLASE");
+        jPanel1.add(lblIdClase);
+        lblIdClase.setBounds(20, 110, 120, 35);
+
+        lblNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblNombre.setText("NOMBRE");
+        jPanel1.add(lblNombre);
+        lblNombre.setBounds(20, 180, 120, 35);
+
+        lblEntrenador.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblEntrenador.setText("ENTRENADOR");
+        jPanel1.add(lblEntrenador);
+        lblEntrenador.setBounds(20, 380, 130, 35);
+
+        lblHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblHorario.setText("HORARIO");
+        jPanel1.add(lblHorario);
+        lblHorario.setBounds(20, 240, 120, 35);
+
+        lblCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblCapacidad.setText("CAPACIDAD");
+        jPanel1.add(lblCapacidad);
+        lblCapacidad.setBounds(20, 310, 120, 35);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setText("CLASES");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(165, 20, 160, 36);
+
+        txtHorario.setBackground(new java.awt.Color(28, 89, 59));
+        txtHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtHorario.setForeground(new java.awt.Color(255, 255, 255));
+        txtHorario.setBorder(null);
+        txtHorario.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtHorario.setOpaque(false);
+        jPanel1.add(txtHorario);
+        txtHorario.setBounds(140, 240, 200, 30);
+
+        txtNombre.setBackground(new java.awt.Color(28, 89, 59));
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombre.setBorder(null);
+        txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNombre.setOpaque(false);
+        jPanel1.add(txtNombre);
+        txtNombre.setBounds(140, 180, 200, 30);
+
+        txtCapacidad.setBackground(new java.awt.Color(28, 89, 59));
+        txtCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtCapacidad.setForeground(new java.awt.Color(255, 255, 255));
+        txtCapacidad.setBorder(null);
+        txtCapacidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtCapacidad.setOpaque(false);
+        jPanel1.add(txtCapacidad);
+        txtCapacidad.setBounds(140, 310, 200, 30);
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(320, 100, 150, 50);
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNuevoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(30, 600, 100, 40);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(150, 600, 100, 40);
+
+        txtIdClase.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtIdClase.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdClase.setBorder(null);
+        txtIdClase.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdClase.setOpaque(false);
+        txtIdClase.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIdClaseKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtIdClase);
+        txtIdClase.setBounds(140, 110, 70, 30);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(280, 600, 100, 40);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(410, 600, 100, 40);
+
+        jPanel1.add(cbEntrenadores);
+        cbEntrenadores.setBounds(170, 380, 200, 30);
+
+        jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IdClase", "Nombre", "Horario", "Capacidad", "Entrenador" }));
         cbFiltro.addItemListener(new java.awt.event.ItemListener() {
@@ -122,194 +247,56 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE CLASES");
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setLayout(null);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel6.setText("jLabel3");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(410, 470, 122, 57);
-
-        lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblIdClase.setText("ID Clase");
-        jPanel1.add(lblIdClase);
-        lblIdClase.setBounds(25, 110, 120, 35);
-
-        lblNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblNombre.setText("Nombre");
-        jPanel1.add(lblNombre);
-        lblNombre.setBounds(30, 170, 120, 35);
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel9.setText("jLabel3");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(410, 390, 122, 57);
-
-        lblEntrenador.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblEntrenador.setText("Entrenador");
-        jPanel1.add(lblEntrenador);
-        lblEntrenador.setBounds(20, 360, 120, 35);
-
-        lblHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblHorario.setText("Horario");
-        jPanel1.add(lblHorario);
-        lblHorario.setBounds(30, 230, 120, 35);
-
-        lblCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblCapacidad.setText("Capacidad");
-        jPanel1.add(lblCapacidad);
-        lblCapacidad.setBounds(30, 300, 120, 35);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("CLASES");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(165, 20, 160, 35);
-
-        txtHorario.setBackground(new java.awt.Color(28, 89, 59));
-        txtHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtHorario.setForeground(new java.awt.Color(255, 255, 255));
-        txtHorario.setBorder(null);
-        txtHorario.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtHorario.setOpaque(false);
-        jPanel1.add(txtHorario);
-        txtHorario.setBounds(150, 230, 200, 35);
-
-        txtNombre.setBackground(new java.awt.Color(28, 89, 59));
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
-        txtNombre.setBorder(null);
-        txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNombre.setOpaque(false);
-        jPanel1.add(txtNombre);
-        txtNombre.setBounds(150, 170, 200, 35);
-
-        txtCapacidad.setBackground(new java.awt.Color(28, 89, 59));
-        txtCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtCapacidad.setForeground(new java.awt.Color(255, 255, 255));
-        txtCapacidad.setBorder(null);
-        txtCapacidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtCapacidad.setOpaque(false);
-        jPanel1.add(txtCapacidad);
-        txtCapacidad.setBounds(150, 300, 200, 35);
-
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
-        btnBuscar.setText("jLabel1");
-        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBuscarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(380, 140, 160, 50);
-
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
-        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNuevoMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(30, 600, 100, 40);
-
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
-        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(150, 600, 100, 40);
-
-        txtIdClase.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        txtIdClase.setForeground(new java.awt.Color(255, 255, 255));
-        txtIdClase.setBorder(null);
-        txtIdClase.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtIdClase.setOpaque(false);
-        txtIdClase.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIdClaseKeyReleased(evt);
-            }
-        });
-        jPanel1.add(txtIdClase);
-        txtIdClase.setBounds(150, 110, 200, 35);
-
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModificarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnModificar);
-        btnModificar.setBounds(280, 600, 100, 40);
-
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(410, 600, 100, 40);
-
-        jPanel1.add(cbEntrenadores);
-        cbEntrenadores.setBounds(150, 360, 210, 40);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
+                        .addGap(125, 125, 125)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(438, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(360, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -751,7 +738,12 @@ boolean flag = false;
             tabla.addRow(new Object[]{s.getIdClase(), s.getNombre(), s.getHorario(), s.getCapacidad(), s.getEntrenador().getNombre() + " " + s.getEntrenador().getApellido()});
         }
     }
-
+// ================= sacar bordes de internal ================
+        private void quitarBordeJInternalFrame() {
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
@@ -763,8 +755,6 @@ boolean flag = false;
     private javax.swing.JComboBox<String> cbFiltro;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
