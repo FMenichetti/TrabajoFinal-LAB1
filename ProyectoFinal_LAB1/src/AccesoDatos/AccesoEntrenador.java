@@ -1,5 +1,6 @@
 package AccesoDatos;
 
+import Entidades.Clase;
 import Entidades.Entrenador;
 import java.sql.*;
 import java.util.ArrayList;
@@ -191,11 +192,15 @@ public class AccesoEntrenador {
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            AccesoClase ac = new AccesoClase();
+            for (Clase clase : ac.listarClasesPorEntrenador(id)) {
+                ac.eliminarMultiplesClases(clase.getIdClase());
+            }
 
             int fila = ps.executeUpdate();
 
             if (fila == 1) {
-                JOptionPane.showMessageDialog(null, " Se eliminó el entrenador.");
+                JOptionPane.showMessageDialog(null, " Se eliminó el entrenador y sus clases correspondientes.");
 
             }
             ps.close();

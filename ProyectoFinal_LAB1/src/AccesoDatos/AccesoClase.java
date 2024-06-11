@@ -124,6 +124,31 @@ public class AccesoClase {
 
     }
 
+    public List<Clase> listarClasesPorEntrenador(int idEntrenador) {
+        List<Clase> clases = new ArrayList<Clase>();
+        String sql = "SELECT * FROM `clases` WHERE estado=1 AND idEntrenador=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEntrenador);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador trainer = entData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(rs.getBoolean("estado"));
+                clases.add(clase);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener clases" + e.getMessage());
+        }
+        return clases;
+
+    }
+
     public void modificarClase(Clase clase) {
         String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
         PreparedStatement ps = null;
@@ -166,9 +191,28 @@ public class AccesoClase {
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, " Se eliminó la clase.");
 
-            }else if(fila==0){
-             JOptionPane.showMessageDialog(null, "No existe la clase");
+            } else if (fila == 0) {
+                JOptionPane.showMessageDialog(null, "No existe la clase");
             }
+            ps.close();
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla clase");
+        }
+
+    }
+
+    public void eliminarMultiplesClases(int idClase) {
+
+        try {
+
+            String sql = "UPDATE clases SET estado = 0 WHERE idClase = ? AND estado=1";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idClase);
+
+            int fila = ps.executeUpdate();
+
             ps.close();
         } catch (SQLException e) {
 

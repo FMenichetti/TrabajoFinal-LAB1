@@ -302,6 +302,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
         //siguen un orden jerarquico de busqueda primero id despues dni
+        
+        
+        
         if (!txtId.getText().isEmpty()) {
 
             try {
@@ -352,6 +355,10 @@ public class Enrenador extends javax.swing.JInternalFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
 
+        
+        if (!btnGuardar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
         if (validarDatos()) {
             entrenador = new Entrenador();
             entrenador.setDni(txtDni.getText());
@@ -370,6 +377,10 @@ public class Enrenador extends javax.swing.JInternalFrame {
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
+        if (!btnModificar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
+        
         if (entrenador != null && validarDatos()) {
             entrenador.setDni(txtDni.getText());
             entrenador.setNombre(txtNombre.getText());
@@ -391,6 +402,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        
+        if (!btnEliminar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
+
         if (entrenador != null) {
 
             int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminarl al entrenador? ", "Confirmar Eliminacion", JOptionPane.YES_NO_OPTION);

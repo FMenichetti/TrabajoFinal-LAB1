@@ -1,12 +1,11 @@
-
 package Vistas;
 
+import Entidades.Clase;
 import java.awt.Event;
 import java.io.File;
 import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
 
 public class Menu extends javax.swing.JFrame {
 
@@ -318,7 +317,7 @@ public class Menu extends javax.swing.JFrame {
         m.setVisible(true);
         escritorio.add(m);
         m.moveToFront();
-        
+
         try {
             m.setMaximum(true);
         } catch (Exception e) {
@@ -345,15 +344,15 @@ public class Menu extends javax.swing.JFrame {
         s.setVisible(true);
         escritorio.add(s);
         s.moveToFront();
-        
+
         try {
             s.setMaximum(true);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_lblSociosMouseClicked
-
+    
     private void lblClasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClasesMouseClicked
-        despintarTodos();
+       /* despintarTodos();
         memFlag = false;
         socFlag = false;
         asFlag = false;
@@ -367,15 +366,15 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Clase c = new Clase();
+       Vistas.Clase c = new Vistas.Clase();
         c.setVisible(true);
         escritorio.add(c);
         c.moveToFront();
-        
+
         try {
             c.setMaximum(true);
         } catch (Exception e) {
-        }
+        }*/
     }//GEN-LAST:event_lblClasesMouseClicked
 
     private void lblAsistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAsistenciaMouseClicked
@@ -397,7 +396,7 @@ public class Menu extends javax.swing.JFrame {
         a.setVisible(true);
         escritorio.add(a);
         a.moveToFront();
-        
+
         try {
             a.setMaximum(true);
         } catch (Exception e) {
@@ -423,12 +422,12 @@ public class Menu extends javax.swing.JFrame {
         e.setVisible(true);
         escritorio.add(e);
         e.moveToFront();
-        
+
         try {
             e.setMaximum(true);
         } catch (Exception f) {
         }
-        
+
     }//GEN-LAST:event_lblEntrenadorMouseClicked
 
     public void despintarTodos() {
