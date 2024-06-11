@@ -38,7 +38,7 @@ public class AccesoInscripcion {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 insc.setIdInscripcion(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Inscripcion registrada con exito");
+                JOptionPane.showMessageDialog(null, "Asistencia registrada con exito. ID: " + insc.getIdInscripcion());
             }
             ps.close();
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class AccesoInscripcion {
         return inscripciones;
 
     }
-    
+
     //Listar especiales
     public List<Inscripcion> listarInscripcionesPorConsulta(String consulta) {
         List<Inscripcion> inscripciones = new ArrayList<>();
@@ -89,7 +89,7 @@ public class AccesoInscripcion {
             }
             ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion: " + e.getMessage());
         }
         return inscripciones;
     }
@@ -100,12 +100,12 @@ public class AccesoInscripcion {
     }
 
     public List<Inscripcion> listarAsistenciasPorIdSocio() {
-        String consulta = "SELECT * FROM inscripcion ORDER BY idSocio ASC;";
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
         return listarInscripcionesPorConsulta(consulta);
     }
 
     public List<Inscripcion> listarAsistenciasPorIdClases() {
-        String consulta = "SELECT * FROM inscripcion ORDER BY idClase ASC;";
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
         return listarInscripcionesPorConsulta(consulta);
     }
 
@@ -113,9 +113,6 @@ public class AccesoInscripcion {
         String consulta = "SELECT * FROM inscripcion ORDER BY fechaInscripcion ASC;";
         return listarInscripcionesPorConsulta(consulta);
     }
-
-
-
 
     public Inscripcion buscarInscripcionPorId(int id) {
         Inscripcion insc = null;
@@ -145,7 +142,35 @@ public class AccesoInscripcion {
 
         return insc;
     }
-   
+
+    public Inscripcion buscarInscripcionPorIdSocio(int idSocio) {
+        Inscripcion insc = null;
+
+        String sql = "SELECT * FROM inscripcion WHERE idSocio=? LIMIT 1";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                insc = new Inscripcion();
+                insc.setIdInscripcion(rs.getInt("idInscripcion"));
+                insc.setClase(ac.buscarClase(rs.getInt("idClase")));
+                insc.setSocio(as.buscarSocio(rs.getInt("idSocio")));
+                insc.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ninguna inscripción para el socio con id " + idSocio);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion: " + e);
+        }
+
+        return insc;
+    }
+
     public void modificarInscripcion(Inscripcion insc) {
         String sql = "UPDATE inscripcion SET idClase = ? , idSocio = ?, fechaInscripcion = ? WHERE idInscripcion = ?";
 
