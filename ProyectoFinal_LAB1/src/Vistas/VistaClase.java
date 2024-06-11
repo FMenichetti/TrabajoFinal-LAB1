@@ -320,6 +320,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
 
         if (!txtIdClase.isEnabled()) {
             txtIdClase.setEnabled(true);
+            btnGuardar.setEnabled(false);
             txtIdClase.requestFocus();
             return;
         }
@@ -335,7 +336,14 @@ public class VistaClase extends javax.swing.JInternalFrame {
             if (clase != null) {
                 cargarDatosTxt(clase);
                 ocultarModificar();
+                activarCampos();
             }
+            if (clase == null) {
+                btnModificar.setEnabled(false);
+                txtIdClase.setText("");
+                txtIdClase.requestFocus();
+            }
+            resetFiltros();
 
         } catch (Exception e) {
             System.out.println("" + e);
@@ -352,6 +360,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
             ocultarGuardar();
             txtIdClase.setEnabled(false);
             txtIdClase.requestFocus();
+            resetFiltros();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "" + e);
         }
@@ -373,8 +382,11 @@ public class VistaClase extends javax.swing.JInternalFrame {
             if (cargarClase(clase)) {
 
                 ac.modificarClase(clase);
+                limpiarCampos();
             }
             txtIdClase.requestFocus();
+            ocultarBotonesMenosNuevo();
+            resetFiltros();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
         }
@@ -404,6 +416,9 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 ac.eliminarClase(clase.getIdClase());
             }
             txtIdClase.requestFocus();
+            ocultarBotonesMenosNuevo();
+            resetFiltros();
+            limpiarCampos();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
@@ -416,6 +431,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         ocultarGuardar();
         ocultarEliminar();
         ocultarModificar();
+        limpiarCamposMenosId();
     }//GEN-LAST:event_txtIdClaseKeyReleased
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
@@ -435,6 +451,8 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 limpiarCampos();
             }
             txtIdClase.requestFocus();
+            ocultarBotonesMenosNuevo();
+            resetFiltros();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
         }
@@ -514,6 +532,9 @@ public class VistaClase extends javax.swing.JInternalFrame {
 
                 clase = ac.buscarClase(id);
                 cargarDatosTxt(clase);
+                activarCampos();
+                ocultarModificar();
+                ocultarEliminar();
             }
     }//GEN-LAST:event_tbFiltroMouseClicked
     }
@@ -532,8 +553,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         //Validaciones campos solo letras
         if (validaSoloLetras(txtNombre.getText()) && validaciones) {
             clase.setNombre(txtNombre.getText());
-            entrenador = (Entrenador) cbEntrenadores.getSelectedItem();
-            clase.setEntrenador(entrenador);
+
         } else {
             JOptionPane.showMessageDialog(this, "Los campos nombre y apellido reciben solo letras");
             return false;
@@ -541,17 +561,26 @@ public class VistaClase extends javax.swing.JInternalFrame {
 
         //Validacion numerica
         if (validaNatural(txtCapacidad.getText()) && validaciones) {
-            clase.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
+            clase.setCapacidad(Integer.parseInt(txtCapacidad.getText().trim()));
         } else {
             JOptionPane.showMessageDialog(this, "El campo capacidad  debe ser numerico y estar entre 1-99");
             return false;
         }
 
         //Validacion Hora
-        if (validaHora(txtHorario.getText()) && validaciones) {
-            clase.setHorario(LocalTime.of(Integer.parseInt(txtHorario.getText()), 0));
+        if (validaHora(txtHorario.getText().substring(0, 2)) && validaciones) {
+            clase.setHorario(LocalTime.of(Integer.parseInt((txtHorario.getText().substring(0, 2))), 0));
         } else {
-            JOptionPane.showMessageDialog(this, "El campo capacidad  debe ser numerico y estar entre 1-99");
+            JOptionPane.showMessageDialog(this, "El campo horario  debe ser numerico y estar entre 0 y 23");
+            return false;
+        }
+
+        //Validacion cb entrenadores
+        if (validaciones && cbEntrenadores.getSelectedIndex() > 0) {
+            entrenador = (Entrenador) cbEntrenadores.getSelectedItem();
+            clase.setEntrenador(entrenador);
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un entrenador");
             return false;
         }
 
@@ -593,6 +622,12 @@ public class VistaClase extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(false);
         }
     }
+    private void ocultarBotonesMenosNuevo(){
+        
+           btnGuardar.setEnabled(false);
+           btnModificar.setEnabled(false);
+           btnEliminar.setEnabled(false);
+    }
 
     private void desactivarCampos() {
 
@@ -617,15 +652,18 @@ public class VistaClase extends javax.swing.JInternalFrame {
         cbEntrenadores.setSelectedIndex(-1);
         txtHorario.setText("");
     }
+     private void limpiarCamposMenosId() {
+        txtCapacidad.setText("");
+        txtNombre.setText("");
+        cbEntrenadores.setSelectedIndex(-1);
+        txtHorario.setText("");
+    }
 
     private void cargarDatosTxt(Clase clase) {
         txtIdClase.setText(String.valueOf(clase.getIdClase()));
         txtCapacidad.setText(String.valueOf(clase.getCapacidad()));
         txtNombre.setText(clase.getNombre());
-        //txtEntrenador.setText(clase.getEntrenador().getNombre() + " " + clase.getEntrenador().getApellido());
-        txtHorario.setText(String.valueOf(clase.getHorario() + "Hs"));
-        //String e = clase.getEntrenador().getNombre() + " " + clase.getEntrenador().getApellido();
-        //cargarEntrenadoresCombo();
+        txtHorario.setText(String.valueOf(clase.getHorario() + " Hs"));
         cargarEntrenadoresCombo();
         // Establecer el entrenador seleccionado en el JComboBox
         for (int i = 0; i < cbEntrenadores.getItemCount(); i++) {
@@ -643,6 +681,11 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 && !txtNombre.getText().isEmpty()
                 //&& !txtEntrenador.getText().isEmpty()
                 && !txtHorario.getText().isEmpty();
+    }
+
+    private void resetFiltros() {
+        txtFiltro.setText("");
+        cbFiltro.setSelectedIndex(0);
     }
 
     //=========================Metodos de Validaciones====================
