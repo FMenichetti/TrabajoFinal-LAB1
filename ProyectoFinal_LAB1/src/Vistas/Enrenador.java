@@ -4,6 +4,7 @@ import AccesoDatos.AccesoEntrenador;
 import Entidades.Entrenador;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class Enrenador extends javax.swing.JInternalFrame {
@@ -28,7 +29,8 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtTabla.setEnabled(false);
         jtablaEntrenadores.setDefaultEditor(Object.class, null);
         txtTabla.setText("Escriba aqui...");
-
+        // sacar los bordes del internal
+        quitarBordeJInternalFrame();
     }
 
     /**
@@ -53,11 +55,6 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtApellido = new javax.swing.JTextField();
         txtEspecialidad = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
@@ -71,48 +68,47 @@ public class Enrenador extends javax.swing.JInternalFrame {
 
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(214, 236, 225));
         jPanel1.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel7.setText("Dni:");
+        jLabel7.setText("DNI");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(40, 190, 50, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel8.setText("Nombre:");
+        jLabel8.setText("NOMBRE");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(40, 360, 90, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel10.setText("Especialidad:");
+        jLabel10.setText("ESPECIALIDAD");
         jPanel1.add(jLabel10);
-        jLabel10.setBounds(40, 430, 120, 30);
+        jLabel10.setBounds(40, 430, 130, 30);
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel13.setText("Apellido:");
+        jLabel13.setText("APELLIDO");
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(40, 280, 79, 30);
+        jLabel13.setBounds(40, 280, 90, 30);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
-        btnBuscar.setText("jLabel1");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
             }
         });
         jPanel1.add(btnBuscar);
-        btnBuscar.setBounds(350, 130, 160, 70);
+        btnBuscar.setBounds(350, 110, 150, 50);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("Entrenador");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(230, 20, 147, 35);
+        jLabel3.setBounds(180, 30, 147, 36);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel18.setText("ID Entrenador:");
+        jLabel18.setText("ID ENTRENADOR");
         jPanel1.add(jLabel18);
-        jLabel18.setBounds(40, 110, 116, 30);
+        jLabel18.setBounds(40, 110, 148, 30);
 
         txtId.setBackground(new java.awt.Color(28, 89, 59));
         txtId.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -121,7 +117,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtId.setOpaque(false);
         jPanel1.add(txtId);
-        txtId.setBounds(180, 110, 100, 40);
+        txtId.setBounds(210, 110, 80, 30);
 
         txtDni.setBackground(new java.awt.Color(28, 89, 59));
         txtDni.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -130,7 +126,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtDni.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtDni.setOpaque(false);
         jPanel1.add(txtDni);
-        txtDni.setBounds(180, 190, 100, 40);
+        txtDni.setBounds(100, 190, 150, 30);
 
         txtApellido.setBackground(new java.awt.Color(28, 89, 59));
         txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -139,7 +135,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtApellido.setOpaque(false);
         jPanel1.add(txtApellido);
-        txtApellido.setBounds(180, 280, 100, 40);
+        txtApellido.setBounds(140, 280, 200, 30);
 
         txtEspecialidad.setBackground(new java.awt.Color(28, 89, 59));
         txtEspecialidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -148,7 +144,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtEspecialidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtEspecialidad.setOpaque(false);
         jPanel1.add(txtEspecialidad);
-        txtEspecialidad.setBounds(180, 430, 100, 40);
+        txtEspecialidad.setBounds(180, 430, 200, 30);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
         txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -157,32 +153,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNombre.setOpaque(false);
         jPanel1.add(txtNombre);
-        txtNombre.setBounds(180, 360, 100, 40);
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel19.setText("jLabel3");
-        jPanel1.add(jLabel19);
-        jLabel19.setBounds(170, 420, 122, 57);
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel12.setText("jLabel3");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(170, 100, 122, 57);
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel20.setText("jLabel3");
-        jPanel1.add(jLabel20);
-        jLabel20.setBounds(170, 180, 122, 57);
-
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel21.setText("jLabel3");
-        jPanel1.add(jLabel21);
-        jLabel21.setBounds(170, 270, 122, 57);
-
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
-        jLabel22.setText("jLabel3");
-        jPanel1.add(jLabel22);
-        jLabel22.setBounds(170, 350, 122, 57);
+        txtNombre.setBounds(140, 360, 100, 30);
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -191,7 +162,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(30, 530, 100, 50);
+        btnNuevo.setBounds(40, 540, 100, 30);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -200,7 +171,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(140, 530, 140, 50);
+        btnGuardar.setBounds(150, 540, 100, 30);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -209,19 +180,21 @@ public class Enrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(260, 540, 130, 33);
+        btnModificar.setBounds(260, 540, 100, 30);
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(380, 540, 100, 40);
+        btnEliminar.setBounds(380, 540, 100, 33);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 530, 620);
+        jPanel1.setBounds(0, 0, 520, 680);
+
+        jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "dni", "apellido", "nombre", "especialidad", "seleccione" }));
         jComboBox1.setSelectedIndex(5);
@@ -280,20 +253,19 @@ public class Enrenador extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(114, 114, 114))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,15 +274,15 @@ public class Enrenador extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(532, 0, 510, 750);
+        jPanel2.setBounds(520, 0, 520, 680);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -617,7 +589,12 @@ public class Enrenador extends javax.swing.JInternalFrame {
             modeloTabla.addRow(new Object[]{entrenadore.getIdEntrenador(), entrenadore.getDni(), entrenadore.getNombre(), entrenadore.getApellido(), entrenadore.getEspecialidad()});
         }
     }
-
+// ================= sacar bordes de internal ================
+        private void quitarBordeJInternalFrame() {
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
     private javax.swing.JLabel btnEliminar;
@@ -626,14 +603,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel btnNuevo;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
