@@ -382,23 +382,17 @@
             <Component class="javax.swing.JTable" name="tblTablaMembresia">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="4">
-                    <Column editable="false" title="Membres&#xed;a" type="java.lang.Object"/>
-                    <Column editable="false" title="Socio" type="java.lang.Object"/>
-                    <Column editable="false" title="Pases" type="java.lang.Object"/>
-                    <Column editable="false" title="Inicio" type="java.lang.Object"/>
+                  <Table columnCount="6" rowCount="4">
+                    <Column editable="true" title="Membres&#xed;a" type="java.lang.Object"/>
+                    <Column editable="true" title="Socio" type="java.lang.Object"/>
+                    <Column editable="true" title="Pases" type="java.lang.Object"/>
+                    <Column editable="true" title="Inicio" type="java.lang.Object"/>
                     <Column editable="false" title="Fin" type="java.lang.Object"/>
                     <Column editable="false" title="Precio" type="java.lang.Object"/>
-                    <Column editable="false" title="Estado" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -435,6 +429,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblTablaMembresiaMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

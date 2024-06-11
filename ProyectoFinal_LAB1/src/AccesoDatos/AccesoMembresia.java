@@ -24,10 +24,10 @@ public class AccesoMembresia {
     }
 
     public void crearMembresia(Membresia membresia) {
-
+        
         if (null != buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
 
-            JOptionPane.showMessageDialog(null, "esa membresia ya existe");
+            JOptionPane.showMessageDialog(null, "El socio ya tiene una membresía activa");
             return;
         }
 
@@ -76,7 +76,6 @@ public class AccesoMembresia {
                 membresia.setCosto(rs.getDouble("costo"));
                 membresia.setSocio(socio);
             } else {
-                JOptionPane.showMessageDialog(null, "No existe la membresía para el socio con ID: " + idSocio);
             }
             ps.close();
         } catch (SQLException e) {
@@ -84,6 +83,7 @@ public class AccesoMembresia {
         }
         return membresia;
     }
+    
 
     public List<Membresia> listarMembresia() {
         List<Membresia> membresias = new ArrayList<>();
@@ -123,7 +123,7 @@ public class AccesoMembresia {
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Membresía modificada");
+                JOptionPane.showMessageDialog(null, "Membresía actualizada");
             } else {
                 JOptionPane.showMessageDialog(null, "La membresía no existe");
             }

@@ -15,15 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Entidades.Socio;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.JTextComponent;
 
 public class VistaMembresia extends javax.swing.JInternalFrame {
 
@@ -33,17 +27,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloTabla;
 
     // ==================== CONSTRUCTOR ====================
-    
     public VistaMembresia() {
         initComponents();
+
+        inicializarTxtFiltrar();
+
+        //inicializar vista
+        inicializarVista();
+        inicializarTabla();
+        tblTablaMembresia.setDefaultEditor(Object.class, null);
+
         accesoSocio = new AccesoSocio();
         accesoMembresia = new AccesoMembresia();
 
         // Deshabilitar botones guardar y modificar al abrir la vista
         btnGuardar.setEnabled(false);
         btnModificar.setEnabled(false);
-
-        inicializarTabla();
 
         //llenar combos
         llenarComboPases();
@@ -55,17 +54,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         // Eliminar el borde del JInternalFrame
         quitarBordeJInternalFrame();
 
-        //inicializar vista
-        inicializarVista();
-
-        //agregar listeners a los campos
-        agregarListeners();
-
-        inicializarTxtFiltrar();
     }
 
     // ==================== METODOS ========================
-    
     //hacer foco en idSocio
     private void inicializarVista() {
         // Solicitar foco en txtIdSocio después de que el componente sea visible
@@ -73,6 +64,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             txtIdSocio.requestFocusInWindow();
             bloquearCamposInicio();
             txtFiltrar.setEnabled(false);
+            btnBuscar.setEnabled(true);
         });
     }
 
@@ -86,6 +78,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Fecha de Fin");
         modeloTabla.addColumn("Costo");
         tblTablaMembresia.setModel(modeloTabla); // Asociar el modelo de tabla a la tabla visual
+
     }
 
     //limpiar campos
@@ -132,6 +125,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         cbCantidadPases.setEnabled(false);
         txtPrecio.setEditable(false);
         btnEliminar.setEnabled(false);
+        btnGuardar.setEnabled(false);
     }
 
     //habilitar campos
@@ -226,45 +220,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         return true;
     }
 
-    private void agregarListeners() {
-        // Agregar DocumentListener a los campos de fecha y precio
-        agregarDocumentListener((JTextField) txtFechaInicio.getDateEditor().getUiComponent());
-        agregarDocumentListener((JTextField) txtFechaFin.getDateEditor().getUiComponent());
-        agregarDocumentListener(txtPrecio);
-
-        // Agregar ActionListener a JComboBox de cantidad de pases
-        cbCantidadPases.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anularBotonGuardar();
-            }
-        });
-    }
-
-    private void agregarDocumentListener(JTextComponent textComponent) {
-        textComponent.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                anularBotonGuardar();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                anularBotonGuardar();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                anularBotonGuardar();
-            }
-        });
-    }
-
-    //anular boton guardar
-    private void anularBotonGuardar() {
-
-    }
-
     //iniciar campo de filtro dinamico
     private void inicializarTxtFiltrar() {
         txtFiltrar.setText("Escriba aquí...");
@@ -283,7 +238,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         });
     }
 
-    //pintar tabla
+    //listar tabla
     public void listarTabla(List<Membresia> listaMembresias) {
         DefaultTableModel modeloTabla = (DefaultTableModel) tblTablaMembresia.getModel();
         limpiarTabla(); // Limpiar la tabla antes de agregar nuevas filas
@@ -301,7 +256,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         }
     }
 
-    //filtrado dinamico
+    //filtrado por criterio
     private List<Membresia> filtrarMembresias(String criterio, String filtro) {
         return accesoMembresia.listarMembresia().stream()
                 .filter(m -> {
@@ -323,6 +278,31 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    private boolean validarFechas() {
+        java.util.Date fechaInicioUtil = txtFechaInicio.getDate();
+        java.util.Date fechaFinUtil = txtFechaFin.getDate();
+
+        if (fechaInicioUtil != null && fechaFinUtil != null) {
+            java.sql.Date fechaInicio = new java.sql.Date(fechaInicioUtil.getTime());
+            java.sql.Date fechaFin = new java.sql.Date(fechaFinUtil.getTime());
+
+            if (fechaInicio.after(fechaFin)) {
+                JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser posterior a la fecha de fin.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else if (fechaFin.equals(fechaInicio)) {
+                JOptionPane.showMessageDialog(this, "La fecha de inicio no puede ser igual a la fecha de fin.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else {
+                // Las fechas son válidas
+                return true;
+            }
+        } else {
+            // Una o ambas fechas son nulas
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione la fecha de inicio y la fecha de fin.", "Error de fecha", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
     // ==================== INIT COMPONENTS ====================
@@ -502,21 +482,26 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
         tblTablaMembresia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Membresía", "Socio", "Pases", "Inicio", "Fin", "Precio", "Estado"
+                "Membresía", "Socio", "Pases", "Inicio", "Fin", "Precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                true, true, true, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblTablaMembresia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTablaMembresiaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblTablaMembresia);
@@ -555,6 +540,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     // ==================== BOTONES ====================
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        if (!btnBuscar.isEnabled()) {
+            return; // No hacer nada si el botón de buscar está desactivado
+        }
         String idSocioStr = txtIdSocio.getText().trim();
         if (idSocioStr.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo ID Socio está vacío");
@@ -569,6 +557,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 habilitarCampos();
                 btnModificar.setEnabled(true);
                 btnEliminar.setEnabled(true);
+            } else {
+                // Preguntar al usuario si está seguro de crear una nueva membresía
+                int confirm = JOptionPane.showConfirmDialog(this, "No se encontró una membresía para este ID. ¿Desea crear una membresía nueva?", "Confirmar creación", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Guardar el ID antes de limpiar el campo
+                    String idSocioPrevio = txtIdSocio.getText();
+                    limpiarCampos();
+                    // Restaurar el ID previo
+                    txtIdSocio.setText(idSocioPrevio);
+                    habilitarCampos();
+                    btnGuardar.setEnabled(true);
+                    btnModificar.setEnabled(false);
+                    btnEliminar.setEnabled(false);
+                    btnBuscar.setEnabled(false);
+
+                }
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
@@ -579,6 +583,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         limpiarCampos();
         habilitarCampos();
         btnGuardar.setEnabled(true);
+        btnBuscar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         txtIdSocio.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoMouseClicked
 
@@ -587,7 +594,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             return; // No hacer nada si el botón de guardar está desactivado
         }
         //chequear campos competos
-        if (comprobarCamposCompletos()) {
+        if (comprobarCamposCompletos() && validarFechas()) {
             // Recolectar los datos de los campos
             String idSocioStr = txtIdSocio.getText();
             String cantidadPasesString = (String) cbCantidadPases.getSelectedItem();
@@ -612,12 +619,15 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
                 // Llamar al método para crear la membresía en la base de datos o donde sea necesario
                 accesoMembresia.crearMembresia(nuevaMembresia);
+                System.out.println("a ver");
+                inicializarVista();
 
             } catch (NumberFormatException e) {
                 // Manejar el caso en que el ID del socio ingresado no sea un número válido
                 JOptionPane.showMessageDialog(this, "El ID del socio debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             limpiarCampos();
+            inicializarVista();
         }
 
     }//GEN-LAST:event_btnGuardarMouseClicked
@@ -668,6 +678,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
             // Limpiar los campos después de modificar la membresía
             limpiarCampos();
+            inicializarVista();
+            btnModificar.setEnabled(false);
 
         } catch (NumberFormatException e) {
             // Manejar el caso en que el ID del socio ingresado no sea un número válido
@@ -689,32 +701,33 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
         String idSocioStr = txtIdSocio.getText().trim();
         if (idSocioStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe elegir un socio para eliminar");
+            JOptionPane.showMessageDialog(this, "Debe elegir una membresía para eliminar");
             return;
         }
         try {
-            int idSocio = Integer.parseInt(idSocioStr);
-            Membresia membresia = accesoMembresia.buscarMembresiaPorIdSocio(idSocio);
+            int idSocio = Integer.parseInt(idSocioStr); // Esto debe ser el ID de socio
+            Membresia membresia = accesoMembresia.buscarMembresiaPorIdSocio(idSocio); // Buscar membresía por ID de membresía
             if (membresia != null) {
                 cargarDatos(membresia);
-                // Preguntar al usuario si está seguro de modificar la membresía
+                // Preguntar al usuario si está seguro de eliminar la membresía
 
                 int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar la membresía número " + membresia.getIdMembresia() + "?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
                 if (confirm != JOptionPane.YES_OPTION) {
                     return; // Si el usuario no confirma, salir del método
                 }
 
-                // Llamar al método para modificar la membresía en la base de datos
-                accesoMembresia.eliminarMembresia(idSocio);
+                // Llamar al método para eliminar la membresía en la base de datos
+                accesoMembresia.eliminarMembresia(membresia.getIdMembresia());
 
-                // Limpiar los campos después de modificar la membresía
+                // Limpiar los campos después de eliminar la membresía
                 limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la membresía con el ID proporcionado.");
             }
         } catch (NumberFormatException e) {
-            // Manejar el caso en que el ID del socio ingresado no sea un número válido
-            JOptionPane.showMessageDialog(this, "El ID del socio y el ID de la membresía deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Manejar el caso en que el ID de la membresía ingresado no sea un número válido
+            JOptionPane.showMessageDialog(this, "El ID de la membresía debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     // ==================== EVENTOS =======================
@@ -776,6 +789,30 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             txtFiltrar.setForeground(Color.GRAY);
         }
     }//GEN-LAST:event_txtFiltrarFocusLost
+
+    private void tblTablaMembresiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaMembresiaMouseClicked
+        if (evt.getClickCount() == 2) { //escuchar el doble click
+            int row = tblTablaMembresia.getSelectedRow();
+            if (row != -1) {
+                //rescatamos la info de la columna socio q es la 1
+                int idSocio = (int) tblTablaMembresia.getValueAt(row, 1);
+
+                try {
+                    Membresia membresia = accesoMembresia.buscarMembresiaPorIdSocio(idSocio);
+                    if (membresia != null) {
+                        cargarDatos(membresia);
+                        txtIdSocio.setText(String.valueOf(idSocio)); //pintar idSocio 
+                        habilitarCampos();
+                        btnModificar.setEnabled(true);
+                        btnEliminar.setEnabled(true);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
+                }
+            }
+        }
+
+    }//GEN-LAST:event_tblTablaMembresiaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
