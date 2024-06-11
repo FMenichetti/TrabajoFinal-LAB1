@@ -496,4 +496,49 @@ public class AccesoClase {
         }
         return clases;
     }
+
+    public void eliminarMultiplesClases(int idClase) {
+
+        try {
+
+            String sql = "UPDATE clases SET estado = 0 WHERE idClase = ? AND estado=1";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idClase);
+
+            int fila = ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla clase");
+        }
+
+    }
+
+    public List<Clase> listarClasesPorEntrenador(int idEntrenador) {
+        List<Clase> clases = new ArrayList<Clase>();
+        String sql = "SELECT * FROM `clases` WHERE estado=1 AND idEntrenador=?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idEntrenador);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Clase clase = new Clase();
+                clase.setIdClase(rs.getInt("idClase"));
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador trainer = entData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(rs.getBoolean("estado"));
+                clases.add(clase);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener clases" + e.getMessage());
+        }
+        return clases;
+
+    }
+
 }
