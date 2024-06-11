@@ -9,14 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class AccesoMembresia {
 
-    private Connection con;
+    private final Connection con;
     AccesoSocio as;
 
     public AccesoMembresia() {
@@ -26,12 +25,12 @@ public class AccesoMembresia {
 
     public void crearMembresia(Membresia membresia) {
         
-        if ( null!=buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
-            
-            JOptionPane.showMessageDialog(null, "esa membresia ya existe");
-            return ;
+        if (null != buscarMembresiaPorIdSocio(membresia.getSocio().getIdSocio())) {
+
+            JOptionPane.showMessageDialog(null, "El socio ya tiene una membresía activa");
+            return;
         }
-        
+
         String sql = "INSERT INTO `membresia`(`idSocio`, `cantidadPases`, `fechaInicio`, `fechaFin`, `costo`, `estado`) VALUES (?,?,?,?,?,1)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -77,7 +76,6 @@ public class AccesoMembresia {
                 membresia.setCosto(rs.getDouble("costo"));
                 membresia.setSocio(socio);
             } else {
-                JOptionPane.showMessageDialog(null, "No existe la membresía para el socio con ID: " + idSocio);
             }
             ps.close();
         } catch (SQLException e) {
@@ -85,6 +83,7 @@ public class AccesoMembresia {
         }
         return membresia;
     }
+    
 
     public List<Membresia> listarMembresia() {
         List<Membresia> membresias = new ArrayList<>();
@@ -95,11 +94,12 @@ public class AccesoMembresia {
             while (rs.next()) {
                 Membresia membresia = new Membresia();
                 membresia.setIdMembresia(rs.getInt("idMembresia"));
-                Socio socio = as.buscarSocio(rs.getInt("idSocio"));
+                membresia.setIdSocio(rs.getInt("idSocio")); // Asigna directamente el ID del socio
                 membresia.setCantidadPases(rs.getInt("cantidadPases"));
                 membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
                 membresia.setCosto(rs.getDouble("costo"));
+                membresia.setEstado(rs.getBoolean("estado"));
                 membresias.add(membresia);
             }
             ps.close();
@@ -123,7 +123,7 @@ public class AccesoMembresia {
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Membresía modificada");
+                JOptionPane.showMessageDialog(null, "Membresía actualizada");
             } else {
                 JOptionPane.showMessageDialog(null, "La membresía no existe");
             }
@@ -152,8 +152,57 @@ public class AccesoMembresia {
 
     }
 
-    
-    
-    
-    
+    //Listar especiales
+    public List<Membresia> listarMembresiaPorConsulta(String consulta) {
+        List<Membresia> membresias = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Membresia membresia = new Membresia();
+                membresia.setIdMembresia(rs.getInt("idMembresia"));
+                membresia.setIdSocio(rs.getInt("idSocio"));
+                membresia.setCantidadPases(rs.getInt("cantidadPases"));
+                membresia.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                membresia.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                membresia.setCosto(rs.getDouble("costo"));
+                membresias.add(membresia);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+        }
+        return membresias;
+    }
+
+    public List<Membresia> listarMembresiaPorId() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY idMembresia ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorIdSocio() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY idSocio ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorCantidadPases() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY cantidadPases ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorFechaInicio() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY fechaInicio ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorFechaFin() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY fechaFin ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
+    public List<Membresia> listarMembresiaPorCosto() {
+        String consulta = "SELECT * FROM membresia WHERE estado = 1 ORDER BY costo ASC;";
+        return listarMembresiaPorConsulta(consulta);
+    }
+
 }

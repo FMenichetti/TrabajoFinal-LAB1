@@ -75,7 +75,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="115" max="32767" attributes="0"/>
                   <Component id="lblMembresia" min="-2" pref="67" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="lblSocios" min="-2" pref="67" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="lblClases" min="-2" pref="67" max="-2" attributes="0"/>

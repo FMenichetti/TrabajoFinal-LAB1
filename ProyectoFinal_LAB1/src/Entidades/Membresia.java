@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Membresia {
     //Atributos
     private int idMembresia;
+    private int idSocio;
     private Socio socio;
     private int cantidadPases;
     private LocalDate fechaInicio;
@@ -26,6 +27,16 @@ public class Membresia {
         this.estado = estado;
     }
     
+    //Constructor con idSocio entero
+    public Membresia(int idSocio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
+        this.idSocio = idSocio;
+        this.cantidadPases = cantidadPases;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.costo = costo;
+        this.estado = estado;
+    }
+    
     
     //Constructor completo
     public Membresia(int idMembresia, Socio socio, int cantidadPases, LocalDate fechaInicio, LocalDate fechaFin, double costo, boolean estado) {
@@ -39,6 +50,13 @@ public class Membresia {
     }
 
     //Metodos Getters & Setters
+    public int getIdSocio() {
+        return idSocio;
+    }
+
+    public void setIdSocio(int idSocio) {
+        this.idSocio = idSocio;
+    }
     public int getIdMembresia() {
         return idMembresia;
     }
@@ -75,7 +93,7 @@ public class Membresia {
     public void setCosto(double costo) {
         this.costo = costo;
     }
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
     public void setEstado(boolean estado) {
