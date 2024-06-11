@@ -265,7 +265,20 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             new String [] {
                 "Id Socio", "Dni", "Nombre", "Apellido"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbFiltroMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbFiltro);
 
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -508,6 +521,22 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         
         }
     }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void tbFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFiltroMouseClicked
+        // TODO add your handling code here:
+          socio = new Socio();
+
+        if (evt.getClickCount() == 2) {
+            int filaSeleccionada = tbFiltro.getSelectedRow();
+
+            if (filaSeleccionada != -1) {
+                int id = (Integer) tabla.getValueAt(filaSeleccionada, 0);
+
+                socio = as.buscarSocio(id);
+                cargarDatosTxt(socio);
+            }
+    }     
+    }//GEN-LAST:event_tbFiltroMouseClicked
 
 ///=============Metodos================
     private void cargarDatosTxt(Socio socio) {

@@ -18,6 +18,7 @@ public class AccesoSocio {
     
     public AccesoSocio() {
         con = Conexion.getConexion();
+        
     }
     
     public void guardarSocio(Socio socio) {
@@ -180,6 +181,7 @@ public class AccesoSocio {
             int fila = ps.executeUpdate();
             
             if (fila == 1) {
+                
                 JOptionPane.showMessageDialog(null, "Baja logica al socio.");
             }
             ps.close();
