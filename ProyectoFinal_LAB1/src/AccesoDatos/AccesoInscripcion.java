@@ -31,8 +31,8 @@ public class AccesoInscripcion {
         String sql = "INSERT INTO inscripcion (`idClase`, `idSocio`, `fechaInscripcion`) VALUES (?,?,?); ";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, insc.getSocio().getIdSocio());
-            ps.setInt(2, insc.getClase().getIdClase());
+            ps.setInt(2, insc.getSocio().getIdSocio());
+            ps.setInt(1, insc.getClase().getIdClase());
             ps.setDate(3, Date.valueOf(insc.getFechaInscripcion()));
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -178,8 +178,8 @@ public class AccesoInscripcion {
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, insc.getSocio().getIdSocio());
-            ps.setInt(2, insc.getClase().getIdClase());
+            ps.setInt(2, insc.getSocio().getIdSocio());
+            ps.setInt(1, insc.getClase().getIdClase());
             ps.setDate(3, Date.valueOf(insc.getFechaInscripcion()));
             ps.setInt(4, insc.getIdInscripcion());
             int exito = ps.executeUpdate();

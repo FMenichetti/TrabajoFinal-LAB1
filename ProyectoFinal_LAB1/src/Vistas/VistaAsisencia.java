@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import AccesoDatos.AccesoClase;
@@ -24,7 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-
 public class VistaAsisencia extends javax.swing.JInternalFrame {
 
     // entidades 
@@ -43,7 +41,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     // TABLA
     private DefaultTableModel tabla;
     List<Inscripcion> inscripciones;
-
+    
     public VistaAsisencia() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -74,7 +72,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         LocalDate fechaMinima = LocalDate.of(2024, 1, 1);
         java.util.Date formatoParaElJc = java.sql.Date.valueOf(fechaMinima);
         dcFecha.setMinSelectableDate(formatoParaElJc);
-
+        
     }
 
     /**
@@ -379,7 +377,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             i = acInscripcion.buscarInscripcionPorId(codigo);
             if (i != null) {
                 editables();
-
+                
                 Date fechaDeInscripcion = new Date(0);
                 fechaDeInscripcion = Date.valueOf(i.getFechaInscripcion());
                 txtIdClase.setText(i.getClase().getIdClase() + "");
@@ -399,6 +397,8 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 // cambiar estados de botones
                 btnEliminar.setEnabled(true); // se activa en el caso que si exista la asist a buscar
                 btnModificar.setEnabled(true);// se activa en el caso que si exista la asist a buscar
+                txtIdSocio.setEnabled(false);
+                
             } else {
                 limpiarCampos();
             }
@@ -415,6 +415,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         editables();
         txtIdAsistencia1.setText("Automatico");
         btnAgregarMembresia.setVisible(false);
+        txtIdSocio.setEnabled(true);
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
@@ -424,7 +425,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             return;
         }
         paraGuardar();
-
+        
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -434,7 +435,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         if (!btnEliminar.isEnabled()) {
             return;
         }
-
+        
         if (validaEntero(txtIdAsistencia1.getText())) {
             codigo = Integer.parseInt(txtIdAsistencia1.getText());
             // Preguntar al usuario si está seguro de eliminar la asistencia
@@ -447,7 +448,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(false); // si se encuentra y elimina una insc, se cambia el estado del btn
             btnModificar.setEnabled(false); // y el btn de modificar
         }
-
+        
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -465,14 +466,14 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void txtBuscarListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarListaKeyReleased
         String filtro = txtBuscarLista.getText().trim();
         String seleccion = (String) cbListar.getSelectedItem();
-
+        
         List<Inscripcion> listaFiltrada = filtrarAsistencias(seleccion, filtro);
         listarTabla(listaFiltrada);
     }//GEN-LAST:event_txtBuscarListaKeyReleased
 
     private void cbListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListarActionPerformed
         String seleccion = (String) cbListar.getSelectedItem();
-
+        
         if (seleccion.equals("Id Asistencia")) {
             // Llamar al método para listar todas las membresías
             List<Inscripcion> inscripciones = acInscripcion.listarInscripciones();
@@ -514,14 +515,14 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         // ----------------------------- AGREGAR MEMBRESIA ---------------------------------
 
     }//GEN-LAST:event_btnAgregarMembresiaActionPerformed
- // seleccionar row y mostar en txts
+    // seleccionar row y mostar en txts
     private void tblAsistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAsistenciaMouseClicked
         if (evt.getClickCount() == 2) { //escuchar el doble click
             int row = tblAsistencia.getSelectedRow();
             if (row != -1) {
                 //rescatamos la info de la columna inscripcion q es la 1
                 int id = Integer.parseInt(tblAsistencia.getValueAt(row, 0).toString());
-
+                
                 try {
                     Inscripcion in = acInscripcion.buscarInscripcionPorId(id);
                     if (in != null) {
@@ -540,26 +541,26 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void txtIdAsistencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsistencia1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdAsistencia1ActionPerformed
-
+    
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);
-
+        
         if (verPases.getCantidadPases() <= 0) {
             return false;
         } else {
             return true;
         }
-
+        
     }
-
+    
     public void restarPases(int id) {
         Entidades.Membresia restarPase = new Entidades.Membresia();
         restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
         restarPase.setCantidadPases(restarPase.getCantidadPases() - 1);
         acMembresia.modificarMembresia(restarPase);
-
+        
     }
-
+    
     public void paraModificar() {
         int codigo, idClase, idSocio, confirm;
         Entidades.Clase c = new Entidades.Clase();
@@ -595,11 +596,12 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 noEditables();
                 btnModificar.setEnabled(false); // se cambian los estados de los botones para no tener problemas
                 btnEliminar.setEnabled(false); // al intentar modificar o eliminar algo que no este escrito
+              
             }
-
+            
         }
     }
-
+    
     public void paraGuardar() { // validar que el miembro tenga pases disponibles
         Inscripcion nueva = new Inscripcion();
         int idSocio, idClase;
@@ -644,6 +646,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             txtIdAsistencia1.setEditable(true);
             txtIdAsistencia1.setText("");
             limpiarCampos();
+          txtIdSocio.setEnabled(true);
             return true;
         }
         return false;
@@ -661,14 +664,14 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtPases.setBackground(verdeTransparente);
         // el id asistencia pasa a ser no editable
         txtIdAsistencia1.setEditable(false);
-
+        
         txtIdAsistencia1.setBackground(verdeTransparente);
         editorJcalendar.setBackground(verdeTransparente);
     }
 
 // SETEAR EN NO EDITABLE LOS TXT
     public void noEditables() {
-
+        
         txtIdClase.setEditable(false);
         txtIdSocio.setEditable(false);
         dcFecha.setEnabled(false);
@@ -715,7 +718,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
 
     //METODO PARA VALIDAR Entero
     private boolean validaEntero(String nro) {
-
+        
         Pattern patron = Pattern.compile("^[0-9]+$");
         Matcher m = patron.matcher(nro);
         return m.matches();
@@ -728,7 +731,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtIdAsistencia1.setText("");
         txtIdSocio.setText("");
         txtPases.setText("");
-
+        
     }
 
     // -------------------------------TABLA-------------------------------------
@@ -739,7 +742,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         tabla.addColumn("Socio");
         tabla.addColumn("Fecha");
         tblAsistencia.setDefaultEditor(Object.class, null);
-
+        
     }
 
     //Limpieza de la tabla
@@ -761,19 +764,19 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             editorJcalendar.setDate(fecha);
             Entidades.Membresia me = new Entidades.Membresia();
             me = acMembresia.buscarMembresiaPorIdSocio(Integer.parseInt(txtIdSocio.getText()));
-            if (me != null ) {
+            if (me != null) {
                 txtPases.setText(String.valueOf(me.getCantidadPases()));
-            }else{
+            } else {
                 txtPases.setText("No tiene Membresia");
             }
-
+            
         }
     }
 
     // ---------------------- empezamos a pintar las row segun los metodos de ac ------------------------------
     //filtrado por criterio
     private List<Inscripcion> filtrarAsistencias(String criterio, String filtro) {
-
+        
         return acInscripcion.listarInscripciones().stream()
                 .filter(i -> {
                     switch (criterio) {
@@ -804,7 +807,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 ins.getFechaInscripcion()
             });
         }
-
+        
     }
 
     //llenar combo membresias
@@ -820,13 +823,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void inicializarTxtFiltrar() {
         txtBuscarLista.setText("Escriba aquí...");
         txtBuscarLista.setForeground(Color.GRAY);
-
+        
         txtBuscarLista.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtBuscarListaFocusGained(evt);
             }
-
+            
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtBuscarListaFocusLost(evt);
