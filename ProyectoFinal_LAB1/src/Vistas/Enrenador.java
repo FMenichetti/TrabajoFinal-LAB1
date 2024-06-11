@@ -27,9 +27,10 @@ public class Enrenador extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("especialidad");
         txtTabla.setEnabled(false);
         jtablaEntrenadores.setDefaultEditor(Object.class, null);
+        txtTabla.setText("Escriba aqui...");
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -249,8 +250,23 @@ public class Enrenador extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtablaEntrenadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtablaEntrenadoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtablaEntrenadores);
 
+        txtTabla.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTablaFocusLost(evt);
+            }
+        });
+        txtTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTablaMouseClicked(evt);
+            }
+        });
         txtTabla.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTablaKeyReleased(evt);
@@ -302,9 +318,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
         //siguen un orden jerarquico de busqueda primero id despues dni
-        
-        
-        
+
         if (!txtId.getText().isEmpty()) {
 
             try {
@@ -355,7 +369,6 @@ public class Enrenador extends javax.swing.JInternalFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
 
-        
         if (!btnGuardar.isEnabled()) {
             return; // No hacer nada si el botón  está desactivado
         }
@@ -380,7 +393,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         if (!btnModificar.isEnabled()) {
             return; // No hacer nada si el botón  está desactivado
         }
-        
+
         if (entrenador != null && validarDatos()) {
             entrenador.setDni(txtDni.getText());
             entrenador.setNombre(txtNombre.getText());
@@ -402,7 +415,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        
+
         if (!btnEliminar.isEnabled()) {
             return; // No hacer nada si el botón  está desactivado
         }
@@ -500,6 +513,46 @@ public class Enrenador extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_txtTablaKeyReleased
+
+    private void txtTablaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTablaFocusLost
+        // TODO add your handling code here:
+        if (txtTabla.isEnabled()) {
+            txtTabla.setText("Escriba aqui...");
+        }
+
+
+    }//GEN-LAST:event_txtTablaFocusLost
+
+    private void txtTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTablaMouseClicked
+        // TODO add your handling code here:
+        if (txtTabla.isEnabled()) {
+            txtTabla.setText("");
+        }
+    }//GEN-LAST:event_txtTablaMouseClicked
+
+    private void jtablaEntrenadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtablaEntrenadoresMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            int row = jtablaEntrenadores.getSelectedRow();
+            if (row != -1) {
+                Integer id = Integer.valueOf(jtablaEntrenadores.getValueAt(row, 0).toString());
+
+                try {
+                    if (id != null) {
+                        entrenador = acceso.buscarEntrenador(id);
+
+                        cargarDatosTxt(entrenador);
+                        btnEliminar.setEnabled(true);
+                        btnModificar.setEnabled(true);
+                    }
+
+                } catch (Exception e) {
+                }
+            }
+
+        }
+
+    }//GEN-LAST:event_jtablaEntrenadoresMouseClicked
 
     private void cargarDatosTxt(Entrenador entrenado) {
         if (entrenador != null) {
