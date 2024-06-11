@@ -2,6 +2,7 @@
 package Vistas;
 
 import java.awt.Event;
+import java.awt.Toolkit;
 import java.io.File;
 import java.net.URL;
 import javax.swing.Icon;
@@ -39,7 +40,10 @@ public class Menu extends javax.swing.JFrame {
             URL imagenEntrenador = new URL("https://raw.githubusercontent.com/FMenichetti/TrabajoFinal-LAB1/37fa8fa4d270cd25a3339014b742db8329d0ec87/ProyectoFinal_LAB1/Botones/Botones_sin_pulsar/ENTRENADOR_MENU.png");
             ImageIcon iconEntrenador = new ImageIcon(imagenEntrenador);
             lblEntrenador.setIcon(iconEntrenador);
-
+            
+            // ICONO DE LA APP
+            setIconImage(new ImageIcon(getClass().getResource("/Botones/Botones_internos/logoGYM.png")).getImage());
+            
         } catch (Exception e) {
             System.out.println("no " + e);
         }
@@ -63,8 +67,10 @@ public class Menu extends javax.swing.JFrame {
         escritorio = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GYM");
         setMaximumSize(new java.awt.Dimension(1280, 720));
         setPreferredSize(new java.awt.Dimension(1280, 720));
+        setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
 
         jpFondoBtn.setBackground(new java.awt.Color(102, 102, 102));
@@ -470,7 +476,7 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
