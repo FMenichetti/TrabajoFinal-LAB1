@@ -49,8 +49,6 @@ public class Asisencia extends javax.swing.JInternalFrame {
     // TABLA
     private DefaultTableModel tabla;
     List<Inscripcion> inscripciones;
-    
-    
 
     public Asisencia() {
         initComponents();
@@ -69,7 +67,9 @@ public class Asisencia extends javax.swing.JInternalFrame {
         //---------------TABLA---------------------
         tabla = new DefaultTableModel();
         inscripciones = new ArrayList<>();
+        //bloqueo de edicion de tabla
         pintarColumnasTabla();
+
         // INICIALIZAMOS COMBO BOX
         llenarComboBoxMembresias();
         // pintar txt buscar
@@ -80,6 +80,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         LocalDate fechaMinima = LocalDate.of(2024, 1, 1);
         java.util.Date formatoParaElJc = java.sql.Date.valueOf(fechaMinima);
         dcFecha.setMinSelectableDate(formatoParaElJc);
+
     }
 
     /**
@@ -260,8 +261,26 @@ public class Asisencia extends javax.swing.JInternalFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblAsistencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAsistenciaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAsistencia);
+        if (tblAsistencia.getColumnModel().getColumnCount() > 0) {
+            tblAsistencia.getColumnModel().getColumn(0).setResizable(false);
+            tblAsistencia.getColumnModel().getColumn(1).setResizable(false);
+            tblAsistencia.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("Lista de Asistencias");
@@ -360,7 +379,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
             }
             i = acInscripcion.buscarInscripcionPorId(codigo);
             if (i != null) {
-               editables();
+                editables();
 
                 Date fechaDeInscripcion = new Date(0);
                 fechaDeInscripcion = Date.valueOf(i.getFechaInscripcion());
@@ -373,11 +392,11 @@ public class Asisencia extends javax.swing.JInternalFrame {
                 if (me != null) {
                     txtPases.setText(me.getCantidadPases() + "");
                     btnAgregarMembresia.setVisible(false);
-                }else{
+                } else {
                     txtPases.setText("No tiene Membresia");
                     btnAgregarMembresia.setVisible(true);
                 }
-                
+
                 // cambiar estados de botones
                 btnEliminar.setEnabled(true); // se activa en el caso que si exista la asist a buscar
                 btnModificar.setEnabled(true);// se activa en el caso que si exista la asist a buscar
@@ -486,7 +505,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarListaFocusGained
 
     private void txtBuscarListaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarListaFocusLost
-         if (txtBuscarLista.getText().isEmpty()) {
+        if (txtBuscarLista.getText().isEmpty()) {
             txtBuscarLista.setText("Escriba aquí...");
             txtBuscarLista.setForeground(Color.GRAY);
         }
@@ -494,12 +513,34 @@ public class Asisencia extends javax.swing.JInternalFrame {
 
     private void btnAgregarMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMembresiaActionPerformed
         // ----------------------------- AGREGAR MEMBRESIA ---------------------------------
-     
+
     }//GEN-LAST:event_btnAgregarMembresiaActionPerformed
+ // seleccionar row y mostar en txts
+    private void tblAsistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAsistenciaMouseClicked
+        if (evt.getClickCount() == 2) { //escuchar el doble click
+            int row = tblAsistencia.getSelectedRow();
+            if (row != -1) {
+                //rescatamos la info de la columna inscripcion q es la 1
+                int id = Integer.parseInt(tblAsistencia.getValueAt(row, 0).toString());
+
+                try {
+                    Inscripcion in = acInscripcion.buscarInscripcionPorId(id);
+                    if (in != null) {
+                        pintarTxtSegunTabla(in);
+                        editables();
+                        btnModificar.setEnabled(true);
+                        btnEliminar.setEnabled(true);
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
+                }
+            }
+        }
+    }//GEN-LAST:event_tblAsistenciaMouseClicked
 
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);
-        
+
         if (verPases.getCantidadPases() <= 0) {
             return false;
         } else {
@@ -593,7 +634,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         }
     }
 
- //REACTIVAR BOTON BUSCAR
+    //REACTIVAR BOTON BUSCAR
     public boolean reactivarBusqueda() {
         if (!txtIdAsistencia1.isEditable()) {
             noEditables();
@@ -617,7 +658,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         txtPases.setBackground(verdeTransparente);
         // el id asistencia pasa a ser no editable
         txtIdAsistencia1.setEditable(false);
-        
+
         txtIdAsistencia1.setBackground(verdeTransparente);
         editorJcalendar.setBackground(verdeTransparente);
     }
@@ -694,6 +735,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         tabla.addColumn("Clase");
         tabla.addColumn("Socio");
         tabla.addColumn("Fecha");
+        tblAsistencia.setDefaultEditor(Object.class, null);
 
     }
 
@@ -705,20 +747,39 @@ public class Asisencia extends javax.swing.JInternalFrame {
         }
     }
 
+    //cargar datos a los campos de textos
+    private void pintarTxtSegunTabla(Inscripcion in) {
+        if (in != null) {
+            txtIdAsistencia1.setText(String.valueOf(in.getIdInscripcion()));
+            txtIdClase.setText(String.valueOf(in.getClase().getIdClase()));
+            txtIdSocio.setText(String.valueOf(in.getSocio().getIdSocio()));
+            //convertir LocalDate a Date
+            Date fecha = Date.valueOf(in.getFechaInscripcion());
+            editorJcalendar.setDate(fecha);
+            Entidades.Membresia me = new Entidades.Membresia();
+            me = acMembresia.buscarMembresiaPorIdSocio(Integer.parseInt(txtIdSocio.getText()));
+            if (me != null ) {
+                txtPases.setText(String.valueOf(me.getCantidadPases()));
+            }else{
+                txtPases.setText("No tiene Membresia");
+            }
+
+        }
+    }
+
     // ---------------------- empezamos a pintar las row segun los metodos de ac ------------------------------
-    
     //filtrado por criterio
     private List<Inscripcion> filtrarAsistencias(String criterio, String filtro) {
-        
+
         return acInscripcion.listarInscripciones().stream()
                 .filter(i -> {
                     switch (criterio) {
                         case "Id Asistencia":
                             return String.valueOf(i.getIdInscripcion()).contains(filtro);
                         case "Clase":
-                            return  i.getClase().getNombre().toLowerCase().contains(filtro.toLowerCase());
+                            return i.getClase().getNombre().toLowerCase().contains(filtro.toLowerCase());
                         case "Socio":
-                            String nombreCompleto = i.getSocio().getNombre()+" "+i.getSocio().getApellido();
+                            String nombreCompleto = i.getSocio().getNombre() + " " + i.getSocio().getApellido();
                             return nombreCompleto.toLowerCase().contains(filtro.toLowerCase());
                         case "Fecha":
                             return i.getFechaInscripcion().toString().contains(filtro);
@@ -728,7 +789,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
                 })
                 .collect(Collectors.toList());
     }
-    
+
     //pintar tabla
     public void listarTabla(List<Inscripcion> listaAsistencias) {
         limpiarTabla(); // Limpiar la tabla antes de agregar nuevas filas
@@ -736,12 +797,13 @@ public class Asisencia extends javax.swing.JInternalFrame {
             tabla.addRow(new Object[]{
                 ins.getIdInscripcion(),
                 ins.getClase().getNombre(),
-                ins.getSocio().getNombre() +" "+ ins.getSocio().getApellido(),
+                ins.getSocio().getNombre() + " " + ins.getSocio().getApellido(),
                 ins.getFechaInscripcion()
             });
         }
-            
+
     }
+
     //llenar combo membresias
     private void llenarComboBoxMembresias() {
         cbListar.addItem("Seleccione aquí...");
@@ -750,7 +812,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
         cbListar.addItem("Socio");
         cbListar.addItem("Fecha");
     }
-    
+
     //iniciar campo de filtro dinamico
     private void inicializarTxtFiltrar() {
         txtBuscarLista.setText("Escriba aquí...");
