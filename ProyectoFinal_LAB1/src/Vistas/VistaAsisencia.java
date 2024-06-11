@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package Vistas;
 
 import AccesoDatos.AccesoClase;
@@ -27,11 +24,8 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Fabri
- */
-public class Asisencia extends javax.swing.JInternalFrame {
+
+public class VistaAsisencia extends javax.swing.JInternalFrame {
 
     // entidades 
     Inscripcion i = null;
@@ -50,7 +44,7 @@ public class Asisencia extends javax.swing.JInternalFrame {
     private DefaultTableModel tabla;
     List<Inscripcion> inscripciones;
 
-    public Asisencia() {
+    public VistaAsisencia() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();

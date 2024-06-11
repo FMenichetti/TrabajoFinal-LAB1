@@ -368,7 +368,7 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Clase c = new Clase();
+        VistaClase c = new VistaClase();
         c.setVisible(true);
         escritorio.add(c);
         c.moveToFront();
@@ -394,7 +394,7 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Asisencia a = new Asisencia();
+        VistaAsisencia a = new VistaAsisencia();
         a.setVisible(true);
         escritorio.add(a);
         a.moveToFront();
