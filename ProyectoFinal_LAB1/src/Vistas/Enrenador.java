@@ -1,20 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
 
-/**
- *
- * @author Fabri
- */
+import AccesoDatos.AccesoEntrenador;
+import Entidades.Entrenador;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class Enrenador extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Enrenador
-     */
+    DefaultTableModel modeloTabla = new DefaultTableModel();
+
+    private Entrenador entrenador = null;
+    private AccesoEntrenador acceso = new AccesoEntrenador();
+
     public Enrenador() {
+
         initComponents();
+        btnGuardar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        jtablaEntrenadores.setModel(modeloTabla);
+        modeloTabla.addColumn("id");
+        modeloTabla.addColumn("dni");
+        modeloTabla.addColumn("nombre");
+        modeloTabla.addColumn("apellido");
+        modeloTabla.addColumn("especialidad");
+        txtTabla.setEnabled(false);
+        jtablaEntrenadores.setDefaultEditor(Object.class, null);
+        txtTabla.setText("Escriba aqui...");
+
     }
 
     /**
@@ -26,21 +40,612 @@ public class Enrenador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        txtDni = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtEspecialidad = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JLabel();
+        btnModificar = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtablaEntrenadores = new javax.swing.JTable();
+        txtTabla = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+
+        getContentPane().setLayout(null);
+
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setText("Dni:");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(40, 190, 50, 30);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setText("Nombre:");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(40, 360, 90, 30);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel10.setText("Especialidad:");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(40, 430, 120, 30);
+
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel13.setText("Apellido:");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(40, 280, 79, 30);
+
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
+        btnBuscar.setText("jLabel1");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(350, 130, 160, 70);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setText("Entrenador");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(230, 20, 147, 35);
+
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel18.setText("ID Entrenador:");
+        jPanel1.add(jLabel18);
+        jLabel18.setBounds(40, 110, 116, 30);
+
+        txtId.setBackground(new java.awt.Color(28, 89, 59));
+        txtId.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtId.setForeground(new java.awt.Color(255, 255, 255));
+        txtId.setBorder(null);
+        txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtId.setOpaque(false);
+        jPanel1.add(txtId);
+        txtId.setBounds(180, 110, 100, 40);
+
+        txtDni.setBackground(new java.awt.Color(28, 89, 59));
+        txtDni.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtDni.setForeground(new java.awt.Color(255, 255, 255));
+        txtDni.setBorder(null);
+        txtDni.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtDni.setOpaque(false);
+        jPanel1.add(txtDni);
+        txtDni.setBounds(180, 190, 100, 40);
+
+        txtApellido.setBackground(new java.awt.Color(28, 89, 59));
+        txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtApellido.setForeground(new java.awt.Color(255, 255, 255));
+        txtApellido.setBorder(null);
+        txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtApellido.setOpaque(false);
+        jPanel1.add(txtApellido);
+        txtApellido.setBounds(180, 280, 100, 40);
+
+        txtEspecialidad.setBackground(new java.awt.Color(28, 89, 59));
+        txtEspecialidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtEspecialidad.setForeground(new java.awt.Color(255, 255, 255));
+        txtEspecialidad.setBorder(null);
+        txtEspecialidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtEspecialidad.setOpaque(false);
+        jPanel1.add(txtEspecialidad);
+        txtEspecialidad.setBounds(180, 430, 100, 40);
+
+        txtNombre.setBackground(new java.awt.Color(28, 89, 59));
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombre.setBorder(null);
+        txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNombre.setOpaque(false);
+        jPanel1.add(txtNombre);
+        txtNombre.setBounds(180, 360, 100, 40);
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
+        jLabel19.setText("jLabel3");
+        jPanel1.add(jLabel19);
+        jLabel19.setBounds(170, 420, 122, 57);
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
+        jLabel12.setText("jLabel3");
+        jPanel1.add(jLabel12);
+        jLabel12.setBounds(170, 100, 122, 57);
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
+        jLabel20.setText("jLabel3");
+        jPanel1.add(jLabel20);
+        jLabel20.setBounds(170, 180, 122, 57);
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
+        jLabel21.setText("jLabel3");
+        jPanel1.add(jLabel21);
+        jLabel21.setBounds(170, 270, 122, 57);
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/txtfield_id.png"))); // NOI18N
+        jLabel22.setText("jLabel3");
+        jPanel1.add(jLabel22);
+        jLabel22.setBounds(170, 350, 122, 57);
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNuevoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(30, 530, 100, 50);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(140, 530, 140, 50);
+
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(260, 540, 130, 33);
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR.png"))); // NOI18N
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(380, 540, 100, 40);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 530, 620);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "dni", "apellido", "nombre", "especialidad", "seleccione" }));
+        jComboBox1.setSelectedIndex(5);
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
+        jtablaEntrenadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jtablaEntrenadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtablaEntrenadoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtablaEntrenadores);
+
+        txtTabla.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTablaFocusLost(evt);
+            }
+        });
+        txtTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTablaMouseClicked(evt);
+            }
+        });
+        txtTabla.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTablaKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setText("Lista de entrenadores");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 68, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(136, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(532, 0, 510, 750);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+        //siguen un orden jerarquico de busqueda primero id despues dni
+
+        if (!txtId.getText().isEmpty()) {
+
+            try {
+                int id = Integer.valueOf(txtId.getText());
+                entrenador = acceso.buscarEntrenador(id);
+
+                cargarDatosTxt(entrenador);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(rootPane, "ingrese un id valido " + e);
+            } catch (Exception a) {
+                JOptionPane.showMessageDialog(rootPane, "ERROR:" + a);
+            }
+        } else if (!txtDni.getText().isEmpty()) {
+            try {
+                //en este caso no hace falta parsearlo por que el dni ya viene como varchar
+                entrenador = acceso.buscarEntrenadorPorDni(txtDni.getText());
+                cargarDatosTxt(entrenador);
+
+            } catch (Exception b) {
+                JOptionPane.showMessageDialog(rootPane, "ERROR:" + b);
+            }
+
+        } else if (txtDni.getText().isEmpty() && txtId.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Ingrese un id o un dni");
+
+        }
+        if (entrenador != null) {
+            btnEliminar.setEnabled(true);
+            btnModificar.setEnabled(true);
+
+        }
+
+
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
+        limpiarDatos();
+        txtId.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        txtApellido.setEnabled(true);
+        txtEspecialidad.setEnabled(true);
+        txtNombre.setEnabled(true);
+        btnModificar.setEnabled(false);
+
+
+    }//GEN-LAST:event_btnNuevoMouseClicked
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+
+        if (!btnGuardar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
+        if (validarDatos()) {
+            entrenador = new Entrenador();
+            entrenador.setDni(txtDni.getText());
+            entrenador.setNombre(txtNombre.getText());
+            entrenador.setApellido(txtApellido.getText());
+            entrenador.setEspecialidad(txtEspecialidad.getText());
+            entrenador.setEstado(true);
+            acceso.guardarEntrenador(entrenador);
+            txtId.setEnabled(true);
+            limpiarDatos();
+            txtId.setEnabled(true);
+            btnGuardar.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        // TODO add your handling code here:
+        if (!btnModificar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
+
+        if (entrenador != null && validarDatos()) {
+            entrenador.setDni(txtDni.getText());
+            entrenador.setNombre(txtNombre.getText());
+            entrenador.setApellido(txtApellido.getText());
+            entrenador.setEspecialidad(txtEspecialidad.getText());
+
+            // Preguntar al usuario si está seguro de modificar la membresía
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea modificar al entrenador? ", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return; // Si el usuario no confirma, salir del método
+            }
+            acceso.modificarEntrenador(entrenador);
+            limpiarDatos();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "rompio");
+        }
+
+
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+
+        if (!btnEliminar.isEnabled()) {
+            return; // No hacer nada si el botón  está desactivado
+        }
+
+        if (entrenador != null) {
+
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminarl al entrenador? ", "Confirmar Eliminacion", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return; // Si el usuario no confirma, salir del método
+            }
+            acceso.eliminarEntrenador(entrenador.getIdEntrenador());
+            limpiarDatos();
+            btnEliminar.setEnabled(false);
+        } else {
+
+            JOptionPane.showMessageDialog(rootPane, "Debe buscar un entrenador para eliminarlo");
+            btnEliminar.setEnabled(false);
+        }
+
+
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        List<Entrenador> entrenadores = null;
+        jComboBox1.removeItem("seleccione");
+        txtTabla.setEnabled(true);
+        switch (jComboBox1.getSelectedIndex()) {
+
+            case 0:
+                entrenadores = acceso.listarEntrenador();
+                pintarTabla(entrenadores);
+
+                break;
+            case 1:
+                entrenadores = acceso.listarEntrenadorporDni();
+                pintarTabla(entrenadores);
+
+                break;
+            case 2:
+                entrenadores = acceso.listarEntrenadorporNombre();
+                pintarTabla(entrenadores);
+
+                break;
+            case 3:
+                entrenadores = acceso.listarEntrenadorporApellido();
+                pintarTabla(entrenadores);
+
+                break;
+            case 4:
+                entrenadores = acceso.listarEntrenadorporEspecialidad();
+                pintarTabla(entrenadores);
+
+                break;
+            default:
+                throw new AssertionError();
+        }
+
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void txtTablaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTablaKeyReleased
+        // TODO add your handling code here:
+        List<Entrenador> entrenadores = null;
+        try {
+            switch (jComboBox1.getSelectedIndex()) {
+
+                case 0:
+                    entrenadores = acceso.listarEntrenadorIdFiltro(Integer.valueOf(txtTabla.getText().trim()));
+                    pintarTabla(entrenadores);
+                    break;
+                case 1:
+                    entrenadores = acceso.listarEntrenadorporDniFiltro(txtTabla.getText().trim());
+                    pintarTabla(entrenadores);
+                    break;
+                case 2:
+                    entrenadores = acceso.listarEntrenadorporApellidoFiltro(txtTabla.getText().trim());
+                    pintarTabla(entrenadores);
+
+                    break;
+                case 3:
+                    entrenadores = acceso.listarEntrenadorporNombreFiltro(txtTabla.getText().trim());
+                    pintarTabla(entrenadores);
+                    break;
+
+                case 4:
+                    entrenadores = acceso.listarEntrenadorporEspecialidadFiltro(txtTabla.getText().trim());
+                    pintarTabla(entrenadores);
+
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } catch (Exception E) {
+            System.out.println("" + E);
+        }
+
+    }//GEN-LAST:event_txtTablaKeyReleased
+
+    private void txtTablaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTablaFocusLost
+        // TODO add your handling code here:
+        if (txtTabla.isEnabled()) {
+            txtTabla.setText("Escriba aqui...");
+        }
+
+
+    }//GEN-LAST:event_txtTablaFocusLost
+
+    private void txtTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTablaMouseClicked
+        // TODO add your handling code here:
+        if (txtTabla.isEnabled()) {
+            txtTabla.setText("");
+        }
+    }//GEN-LAST:event_txtTablaMouseClicked
+
+    private void jtablaEntrenadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtablaEntrenadoresMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            int row = jtablaEntrenadores.getSelectedRow();
+            if (row != -1) {
+                Integer id = Integer.valueOf(jtablaEntrenadores.getValueAt(row, 0).toString());
+
+                try {
+                    if (id != null) {
+                        entrenador = acceso.buscarEntrenador(id);
+
+                        cargarDatosTxt(entrenador);
+                        btnEliminar.setEnabled(true);
+                        btnModificar.setEnabled(true);
+                    }
+
+                } catch (Exception e) {
+                }
+            }
+
+        }
+
+    }//GEN-LAST:event_jtablaEntrenadoresMouseClicked
+
+    private void cargarDatosTxt(Entrenador entrenado) {
+        if (entrenador != null) {
+            txtId.setText(entrenador.getIdEntrenador() + "");
+            txtDni.setText(entrenador.getDni());
+            txtNombre.setText(entrenador.getNombre());
+            txtApellido.setText(entrenador.getApellido());
+            txtEspecialidad.setText(entrenador.getEspecialidad());
+
+        }
+
+    }
+
+    private void limpiarDatos() {
+        entrenador = null;
+        txtId.setText("");
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtEspecialidad.setText("");
+        btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+
+    }
+
+    private boolean validarDatos() {
+        if (txtDni.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese un dni valido");
+            txtDni.requestFocus();
+            return false;
+        } else if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre");
+            txtNombre.requestFocus();
+            return false;
+        } else if (txtApellido.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese un apellido");
+            txtApellido.requestFocus();
+            return false;
+
+        } else if (txtEspecialidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese una especialidad");
+            txtEspecialidad.requestFocus();
+            return false;
+
+        }
+
+        //---------------------------
+        return true;
+    }
+
+    private void limpiartabla() {
+        int filas = modeloTabla.getRowCount() - 1;
+        for (int i = filas; i >= 0; i--) {
+            modeloTabla.removeRow(i);
+        }
+    }
+
+    private void pintarTabla(List<Entrenador> entrenadores) {
+        limpiartabla();
+        for (Entrenador entrenadore : entrenadores) {
+
+            modeloTabla.addRow(new Object[]{entrenadore.getIdEntrenador(), entrenadore.getDni(), entrenadore.getNombre(), entrenadore.getApellido(), entrenadore.getEspecialidad()});
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBuscar;
+    private javax.swing.JLabel btnEliminar;
+    private javax.swing.JLabel btnGuardar;
+    private javax.swing.JLabel btnModificar;
+    private javax.swing.JLabel btnNuevo;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtablaEntrenadores;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtDni;
+    private javax.swing.JTextField txtEspecialidad;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTabla;
     // End of variables declaration//GEN-END:variables
 }
