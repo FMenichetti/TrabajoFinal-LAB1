@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 public class AccesoEntrenador {
 
-    
     private Connection con;
 
     public AccesoEntrenador() {
@@ -33,17 +32,15 @@ public class AccesoEntrenador {
             //el resultset empieza detras de la primera columna y se fija si tiene un columna al frente
             //devuelve booleano
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Entrenador añadido");  
+                JOptionPane.showMessageDialog(null, "Entrenador añadido");
 
             }
             //cerramos la conexion
             ps.close();
-        } 
-        catch(SQLIntegrityConstraintViolationException x){
+        } catch (SQLIntegrityConstraintViolationException x) {
             JOptionPane.showMessageDialog(null, "El entrenador ya esta cargado");
-        }
-        catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador "+ e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador " + e);
 
         } catch (Exception e) {
             System.out.println("error general");
@@ -82,7 +79,7 @@ public class AccesoEntrenador {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
             System.out.println(e);
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error general");
             System.out.println(e);
         }
@@ -115,7 +112,7 @@ public class AccesoEntrenador {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error general");
             System.out.println(e);
         }
@@ -147,7 +144,7 @@ public class AccesoEntrenador {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error general");
             System.out.println(e);
         }
@@ -167,7 +164,7 @@ public class AccesoEntrenador {
             ps.setString(3, entrenador.getApellido());
             ps.setString(4, entrenador.getEspecialidad());
             ps.setInt(5, entrenador.getIdEntrenador());
-            
+
             int exito = ps.executeUpdate();
 
             if (exito == 1) {
@@ -179,7 +176,7 @@ public class AccesoEntrenador {
         } catch (SQLException e) {
 
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador" + e);
-        }catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error general");
             System.out.println(e);
         }
@@ -208,5 +205,298 @@ public class AccesoEntrenador {
         }
 
     }
-    
+
+    public List<Entrenador> listarEntrenadorIdFiltro(int id) {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 AND CAST(idEntrenador AS CHARACTER) LIKE concat('%',?,'%') ORDER by `idEntrenador` ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporDni() {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 ORDER by `dni`  ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporDniFiltro(String dni) {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 AND `dni` LIKE concat('%',?,'%')   ORDER by `dni` ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, dni);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporNombre() {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 ORDER by `nombre`  ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporNombreFiltro(String nombre) {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 and nombre LIKE  concat('%',?,'%') ORDER by `nombre` ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporApellido() {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 ORDER by `apellido`  ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporApellidoFiltro(String apellido) {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 and apellido LIKE  concat('%',?,'%') ORDER by `apellido` ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, apellido);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporEspecialidad() {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 ORDER by `especialidad`  ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
+    public List<Entrenador> listarEntrenadorporEspecialidadFiltro(String especialidad) {
+        List<Entrenador> lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM entrenadores WHERE estado = 1 and especialidad LIKE  concat('%',?,'%') ORDER by `especialidad` ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, especialidad);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Entrenador entrenador = new Entrenador();
+
+                entrenador.setIdEntrenador(rs.getInt("idEntrenador"));
+                entrenador.setDni(rs.getString("dni"));
+                entrenador.setNombre(rs.getString("nombre"));
+                entrenador.setApellido(rs.getString("apellido"));
+                entrenador.setEspecialidad(rs.getString("especialidad"));
+                entrenador.setEstado(true);
+                lista.add(entrenador);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla entrenador");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error general");
+            System.out.println(e);
+        }
+
+        return lista;
+    }
+
 }
