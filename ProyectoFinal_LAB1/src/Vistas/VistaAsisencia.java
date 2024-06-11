@@ -240,7 +240,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnAgregarMembresia);
-        btnAgregarMembresia.setBounds(460, 310, 80, 30);
+        btnAgregarMembresia.setBounds(440, 310, 80, 30);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
 
