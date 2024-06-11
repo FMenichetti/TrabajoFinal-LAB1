@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -37,7 +38,7 @@ public class AccesoInscripcion {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 insc.setIdInscripcion(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Inscripcion registrada con exito");
+                JOptionPane.showMessageDialog(null, "Asistencia registrada con exito. ID: " + insc.getIdInscripcion());
             }
             ps.close();
         } catch (SQLException e) {
@@ -70,6 +71,49 @@ public class AccesoInscripcion {
 
     }
 
+    //Listar especiales
+    public List<Inscripcion> listarInscripcionesPorConsulta(String consulta) {
+        List<Inscripcion> inscripciones = new ArrayList<>();
+        try {
+            PreparedStatement ps = con.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Inscripcion inscripcion = new Inscripcion();
+                inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
+                Clase cla = ac.buscarClase(rs.getInt("idClase"));
+                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
+                inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
+                inscripcion.setClase(cla);
+                inscripcion.setSocio(soc);
+                inscripciones.add(inscripcion);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion: " + e.getMessage());
+        }
+        return inscripciones;
+    }
+
+    public List<Inscripcion> listarAsistenciasPorId() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
+    }
+
+    public List<Inscripcion> listarAsistenciasPorIdSocio() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
+    }
+
+    public List<Inscripcion> listarAsistenciasPorIdClases() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
+    }
+
+    public List<Inscripcion> listarAsistenciasPorFecha() {
+        String consulta = "SELECT * FROM inscripcion ORDER BY fechaInscripcion ASC;";
+        return listarInscripcionesPorConsulta(consulta);
+    }
+
     public Inscripcion buscarInscripcionPorId(int id) {
         Inscripcion insc = null;
 
@@ -87,13 +131,41 @@ public class AccesoInscripcion {
                 insc.setClase(ac.buscarClase(rs.getInt("idClase")));
                 insc.setSocio(as.buscarSocio(rs.getInt("idSocio")));
                 insc.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "No existe la Inscripcion");
             }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion" + e);
+        }
+
+        return insc;
+    }
+
+    public Inscripcion buscarInscripcionPorIdSocio(int idSocio) {
+        Inscripcion insc = null;
+
+        String sql = "SELECT * FROM inscripcion WHERE idSocio=? LIMIT 1";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idSocio);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                insc = new Inscripcion();
+                insc.setIdInscripcion(rs.getInt("idInscripcion"));
+                insc.setClase(ac.buscarClase(rs.getInt("idClase")));
+                insc.setSocio(as.buscarSocio(rs.getInt("idSocio")));
+                insc.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ninguna inscripción para el socio con id " + idSocio);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion: " + e);
         }
 
         return insc;
@@ -120,7 +192,7 @@ public class AccesoInscripcion {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion"+ e);
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripcion" + e);
         }
 
     }
