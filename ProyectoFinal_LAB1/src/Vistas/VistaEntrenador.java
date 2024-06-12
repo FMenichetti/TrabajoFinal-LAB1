@@ -2,19 +2,19 @@ package Vistas;
 
 import AccesoDatos.AccesoEntrenador;
 import Entidades.Entrenador;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-public class Enrenador extends javax.swing.JInternalFrame {
+public class VistaEntrenador extends javax.swing.JInternalFrame {
 
     DefaultTableModel modeloTabla = new DefaultTableModel();
-
     private Entrenador entrenador = null;
     private AccesoEntrenador acceso = new AccesoEntrenador();
 
-    public Enrenador() {
+    public VistaEntrenador() {
 
         initComponents();
         btnGuardar.setEnabled(false);
@@ -106,7 +106,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setText("ENTRENADOR");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 30, 220, 36);
+        jLabel3.setBounds(180, 30, 220, 35);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel18.setText("ID ENTRENADOR");
@@ -128,6 +128,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtDni.setBorder(null);
         txtDni.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtDni.setOpaque(false);
+        txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtDni);
         txtDni.setBounds(100, 190, 150, 30);
 
@@ -137,6 +142,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtApellido.setBorder(null);
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtApellido.setOpaque(false);
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtApellido);
         txtApellido.setBounds(140, 280, 200, 30);
 
@@ -146,6 +156,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtEspecialidad.setBorder(null);
         txtEspecialidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtEspecialidad.setOpaque(false);
+        txtEspecialidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEspecialidadKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtEspecialidad);
         txtEspecialidad.setBounds(180, 430, 200, 30);
 
@@ -155,6 +170,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtNombre.setBorder(null);
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNombre.setOpaque(false);
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNombre);
         txtNombre.setBounds(140, 360, 100, 30);
 
@@ -243,11 +263,6 @@ public class Enrenador extends javax.swing.JInternalFrame {
         jPanel2.add(jScrollPane1);
         jScrollPane1.setBounds(44, 136, 413, 463);
 
-        txtTabla.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTablaFocusLost(evt);
-            }
-        });
         txtTabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtTablaMouseClicked(evt);
@@ -264,7 +279,7 @@ public class Enrenador extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("LISTA DE ENTRENADORES");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(46, 26, 410, 36);
+        jLabel2.setBounds(46, 26, 410, 35);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
@@ -368,8 +383,6 @@ public class Enrenador extends javax.swing.JInternalFrame {
             }
             acceso.modificarEntrenador(entrenador);
             limpiarDatos();
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "rompio");
         }
 
 
@@ -475,20 +488,11 @@ public class Enrenador extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txtTablaKeyReleased
 
-    private void txtTablaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTablaFocusLost
-        // TODO add your handling code here:
-        if (txtTabla.isEnabled()) {
-            txtTabla.setText("Escriba aqui...");
-        }
-
-
-    }//GEN-LAST:event_txtTablaFocusLost
-
     private void txtTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTablaMouseClicked
         // TODO add your handling code here:
-        if (txtTabla.isEnabled()) {
+     
             txtTabla.setText("");
-        }
+        
     }//GEN-LAST:event_txtTablaMouseClicked
 
     private void jtablaEntrenadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtablaEntrenadoresMouseClicked
@@ -514,6 +518,31 @@ public class Enrenador extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jtablaEntrenadoresMouseClicked
+
+    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Permitir solo números y retroceso
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Ignorar la tecla
+        }
+
+    }//GEN-LAST:event_txtDniKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        // TODO add your handling code here:
+        esCaracter(evt);
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // TODO add your handling code here:
+        esCaracter(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtEspecialidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecialidadKeyTyped
+        // TODO add your handling code here:
+        esCaracter(evt);
+    }//GEN-LAST:event_txtEspecialidadKeyTyped
 
     private void cargarDatosTxt(Entrenador entrenado) {
         if (entrenador != null) {
@@ -579,11 +608,23 @@ public class Enrenador extends javax.swing.JInternalFrame {
         }
     }
 // ================= sacar bordes de internal ================
-        private void quitarBordeJInternalFrame() {
+
+    private void quitarBordeJInternalFrame() {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
     }
+
+    private void esCaracter(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        // Permitir solo números y retroceso
+        if (Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Ignorar la tecla
+        }
+
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnBuscar;
     private javax.swing.JLabel btnEliminar;

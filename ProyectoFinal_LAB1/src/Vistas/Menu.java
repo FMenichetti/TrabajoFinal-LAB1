@@ -1,11 +1,8 @@
 
 package Vistas;
 
-import java.awt.Event;
-import java.awt.Toolkit;
-import java.io.File;
+
 import java.net.URL;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 
@@ -413,7 +410,7 @@ public class Menu extends javax.swing.JFrame {
         }
         escritorio.removeAll();
         escritorio.repaint();
-        Enrenador e = new Enrenador();
+        VistaEntrenador e = new VistaEntrenador();
         e.setVisible(true);
         escritorio.add(e);
         e.moveToFront();
