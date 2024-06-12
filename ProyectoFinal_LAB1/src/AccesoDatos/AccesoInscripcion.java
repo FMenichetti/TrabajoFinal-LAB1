@@ -48,7 +48,7 @@ public class AccesoInscripcion {
 
     public List<Inscripcion> listarInscripciones() {
         List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
-        String sql = "SELECT DISTINCT inscripcion.* FROM socios,inscripcion,clases WHERE socios.estado=1 AND clases.estado=1";
+        String sql = "SELECT DISTINCT inscripcion.* FROM socios,inscripcion,clases ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -56,7 +56,7 @@ public class AccesoInscripcion {
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
                 Clase cla = ac.buscarClase(rs.getInt("idClase"));
-                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
+                Socio soc = as.buscarSocioCompleto(rs.getInt("idSocio"));
                 inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
                 inscripcion.setClase(cla);
                 inscripcion.setSocio(soc);
@@ -80,7 +80,7 @@ public class AccesoInscripcion {
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
                 Clase cla = ac.buscarClase(rs.getInt("idClase"));
-                Socio soc = as.buscarSocio(rs.getInt("idSocio"));
+                Socio soc = as.buscarSocioCompleto(rs.getInt("idSocio"));
                 inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
                 inscripcion.setClase(cla);
                 inscripcion.setSocio(soc);
@@ -128,7 +128,7 @@ public class AccesoInscripcion {
                 insc = new Inscripcion();
                 insc.setIdInscripcion(id);
                 insc.setClase(ac.buscarClase(rs.getInt("idClase")));
-                insc.setSocio(as.buscarSocio(rs.getInt("idSocio")));
+                insc.setSocio(as.buscarSocioCompleto(rs.getInt("idSocio")));
                 insc.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
 
             } else {
