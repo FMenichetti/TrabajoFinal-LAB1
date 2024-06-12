@@ -104,12 +104,17 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtPases = new javax.swing.JTextField();
         lblPases = new javax.swing.JLabel();
         btnAgregarMembresia = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         cbListar = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAsistencia = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtBuscarLista = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+
+        setBorder(null);
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(214, 236, 225));
         jPanel1.setLayout(null);
@@ -242,13 +247,23 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jPanel1.add(btnAgregarMembresia);
         btnAgregarMembresia.setBounds(440, 310, 80, 30);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(-3, -4, 540, 690);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 540, 680);
+
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel2.setLayout(null);
 
         cbListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbListarActionPerformed(evt);
             }
         });
+        jPanel2.add(cbListar);
+        cbListar.setBounds(252, 80, 199, 30);
 
         tblAsistencia.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -281,8 +296,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             tblAsistencia.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jPanel2.add(jScrollPane1);
+        jScrollPane1.setBounds(44, 142, 407, 463);
+
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setText("Lista de Asistencias");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(128, 26, 262, 36);
 
         txtBuscarLista.setBackground(new java.awt.Color(28, 89, 59));
         txtBuscarLista.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -303,57 +323,15 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 txtBuscarListaKeyReleased(evt);
             }
         });
+        jPanel2.add(txtBuscarLista);
+        txtBuscarLista.setBounds(44, 80, 190, 30);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtBuscarLista, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbListar, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(120, 120, 120))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBuscarLista, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(cbListar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
+        jPanel2.add(jLabel4);
+        jLabel4.setBounds(-3, 0, 490, 680);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 28, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 8, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(536, 0, 490, 680);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -843,9 +821,11 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private javax.swing.JLabel btnNuevo;
     private javax.swing.JComboBox<String> cbListar;
     private com.toedter.calendar.JDateChooser dcFecha;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

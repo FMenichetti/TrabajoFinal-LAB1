@@ -66,7 +66,7 @@ public class Menu extends javax.swing.JFrame {
         lblAsistencia = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         escritorio = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GYM");
@@ -89,7 +89,7 @@ public class Menu extends javax.swing.JFrame {
                 lblEntrenadorMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblEntrenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 200, 67));
+        jpFondoBtn.add(lblEntrenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 200, 67));
 
         lblMembresia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -102,7 +102,7 @@ public class Menu extends javax.swing.JFrame {
                 lblMembresiaMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, 200, 67));
+        jpFondoBtn.add(lblMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 200, 67));
 
         lblSocios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -115,7 +115,7 @@ public class Menu extends javax.swing.JFrame {
                 lblSociosMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 200, 67));
+        jpFondoBtn.add(lblSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 200, 67));
 
         lblClases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -128,7 +128,7 @@ public class Menu extends javax.swing.JFrame {
                 lblClasesMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 200, 67));
+        jpFondoBtn.add(lblClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 200, 67));
 
         lblAsistencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -141,30 +141,28 @@ public class Menu extends javax.swing.JFrame {
                 lblAsistenciaMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 200, 67));
+        jpFondoBtn.add(lblAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 200, 67));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_menu.png"))); // NOI18N
-        jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 289, 680));
+        jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 720));
 
         escritorio.setBackground(new java.awt.Color(214, 236, 225));
+        escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setPreferredSize(new java.awt.Dimension(1200, 720));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,13 +170,13 @@ public class Menu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
             .addComponent(jpFondoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -501,8 +499,8 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel escritorio;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jpFondoBtn;
     private javax.swing.JLabel lblAsistencia;
     private javax.swing.JLabel lblClases;
