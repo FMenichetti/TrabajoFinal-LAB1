@@ -418,6 +418,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         try {
             if (txtIdSocio.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe completar el campo ID para eliminacion de Socio");
+                txtIdSocio.setText("");
+                txtIdSocio.requestFocus();
+                return;
+            }
+            if ( !validaNatural(txtIdSocio.getText()) ) {
+                JOptionPane.showMessageDialog(this, "El campo id debe ser un numero natural");
+                txtIdSocio.setText("");
+                txtIdSocio.requestFocus();
                 return;
             }
             socio = (((Socio) as.buscarSocio(Integer.parseInt(txtIdSocio.getText()))));

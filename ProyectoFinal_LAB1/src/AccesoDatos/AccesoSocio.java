@@ -86,7 +86,7 @@ public class AccesoSocio {
         }
         return socio;
     }
-    
+
     public Socio buscarSocioPorDni(String dni) {
         Socio socio = null;
         String sql = "SELECT idSocio,dni,nombre,apellido,edad,correo,telefono FROM socios WHERE dni = ? AND estado=1";
@@ -148,6 +148,11 @@ public class AccesoSocio {
     
     public boolean modificarSocio(Socio socio) {
         boolean flag = false;
+        //Comparo id de parametro con id de busqueda
+         if ( socio.getIdSocio() == buscarSocio(socio.getIdSocio()).getIdSocio()) {
+            JOptionPane.showMessageDialog(null, "Cuidado, ya existe un socio con ese dni");
+            return false;
+        } else {
         
         String sql = "UPDATE socios SET dni = ?, nombre = ?, apellido = ?, edad = ? , correo = ? , telefono = ?  WHERE idSocio = ?";
         
@@ -176,6 +181,7 @@ public class AccesoSocio {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socio"+e);
         }
         return flag;
+    }
     }
     
     public boolean eliminarSocio(int id) {
@@ -287,6 +293,7 @@ public class AccesoSocio {
         }
         return socios;
     }
+    
     public List<Socio> listarSocioApellidoOrdenado() {
         List<Socio> socios = new ArrayList<>();
         

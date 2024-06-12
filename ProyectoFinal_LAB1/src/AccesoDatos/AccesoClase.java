@@ -28,7 +28,7 @@ public class AccesoClase {
         //usamos comodines para hacerlo generico
         boolean flag = false;
         if (existeClase(cla)) {
-            JOptionPane.showMessageDialog(null, "ya existe la clase");
+            JOptionPane.showMessageDialog(null, "El entrenador ya tiene clase agendada en ese horario");
             return false;
         } else {
 
@@ -68,7 +68,7 @@ public class AccesoClase {
     }
 
     public Clase buscarClase(int id) {
-        Clase clase = null;
+        Clase clase = new Clase();
 
         String sql = "SELECT nombre,idEntrenador,horario,capacidad,estado FROM clases WHERE idClase=? AND estado=1";
         PreparedStatement ps = null;
@@ -130,10 +130,16 @@ public class AccesoClase {
     }
 
     public boolean modificarClase(Clase clase) {
+        
+        boolean flag = false;
+        if (existeClase(clase)) {
+            JOptionPane.showMessageDialog(null, "El entrenador ya tiene clase agendada en ese horario");
+            return false;
+        } else {
+        
         String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
         PreparedStatement ps = null;
 
-        boolean flag = false;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, clase.getNombre());
@@ -157,6 +163,7 @@ public class AccesoClase {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
         }
         return flag;
+    }
     }
 
     //borrado logico de clase

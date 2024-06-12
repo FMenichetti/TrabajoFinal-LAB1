@@ -354,7 +354,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-boolean flag = false;
+        boolean flag = false;
         // TODO add your handling code here:
         if (!btnModificar.isEnabled()) {
             return;
@@ -363,20 +363,28 @@ boolean flag = false;
         try {
             if (!camposLlenos()) {
                 JOptionPane.showMessageDialog(this, "Debe completar todos los campos");
+                txtIdClase.setText("");
+                txtIdClase.requestFocus();
+                return;
+            }
+            if ( !validaNatural(txtIdClase.getText()) ) {
+                JOptionPane.showMessageDialog(this, "El campo id debe ser un numero natural");
+                txtIdClase.setText("");
+                txtIdClase.requestFocus();
                 return;
             }
             //modificar Clase(clase);
             if (cargarClase(clase)) {
 
-                ac.modificarClase(clase);
-                limpiarCampos();
+                flag = ac.modificarClase(clase);
             }
             txtIdClase.requestFocus();
-            if ( flag) {
+            if (flag) {
+                limpiarCampos();
                 ocultarBotonesMenosNuevo();
-            resetFiltros();
+                resetFiltros();
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
         }
@@ -393,10 +401,21 @@ boolean flag = false;
         try {
             if (txtIdClase.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe completar el campo ID para eliminacion de Clase");
+                txtIdClase.setText("");
+                txtIdClase.requestFocus();
                 return;
             }
-            clase = (((Clase) ac.buscarClase(Integer.parseInt(txtIdClase.getText()))));
-
+            if ( !validaNatural(txtIdClase.getText()) ) {
+                JOptionPane.showMessageDialog(this, "El campo id debe ser un numero natural");
+                txtIdClase.setText("");
+                txtIdClase.requestFocus();
+                return;
+            }
+            
+            
+                
+                clase = (((Clase) ac.buscarClase(Integer.parseInt(txtIdClase.getText()))));
+            
             if (clase == null) {
                 return;
             }
@@ -406,15 +425,15 @@ boolean flag = false;
             if (opcion == 0) {
                 ac.eliminarClase(clase.getIdClase());
             }
+            if (flag) {
             txtIdClase.requestFocus();
             ocultarBotonesMenosNuevo();
-            if ( flag) {
                 ocultarBotonesMenosNuevo();
-            resetFiltros();
+                resetFiltros();
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
+            JOptionPane.showMessageDialog(this, "Error al eliminar clase: " + e);
         }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
@@ -441,13 +460,14 @@ boolean flag = false;
             }
             //cargarClase(clase);
             if (cargarClase(clase)) {
-                ac.guardarClase(clase);
-                limpiarCampos();
+                flag = ac.guardarClase(clase);
+
             }
             txtIdClase.requestFocus();
-            if ( flag) {
+            if (flag) {
                 ocultarBotonesMenosNuevo();
-            resetFiltros();
+                resetFiltros();
+                limpiarCampos();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar clase: " + e);
@@ -551,7 +571,7 @@ boolean flag = false;
             clase.setNombre(txtNombre.getText());
 
         } else {
-            JOptionPane.showMessageDialog(this, "Los campos nombre y apellido reciben solo letras");
+            JOptionPane.showMessageDialog(this, "El campo nombre recibe solo letras");
             return false;
         }
 
@@ -567,7 +587,7 @@ boolean flag = false;
         if (validaHora(txtHorario.getText().substring(0, 2)) && validaciones) {
             clase.setHorario(LocalTime.of(Integer.parseInt((txtHorario.getText().substring(0, 2))), 0));
         } else {
-            JOptionPane.showMessageDialog(this, "El campo horario  debe ser numerico y estar entre 0 y 23");
+            JOptionPane.showMessageDialog(this, "El campo horario debe ser un numero de dos digitos y estar entre 00 y 23");
             return false;
         }
 
@@ -589,9 +609,11 @@ boolean flag = false;
 
     private void cargarEntrenadoresCombo() {
         // Despliegue de lista de entrenadores
+        cbEntrenadores.removeAllItems();
         for (Entrenador e : ae.listarEntrenador()) {
             cbEntrenadores.addItem(e);
         }
+        cbEntrenadores.setSelectedIndex(1);
     }
 
     //=================Manejo de Botones================
@@ -618,11 +640,12 @@ boolean flag = false;
             btnEliminar.setEnabled(false);
         }
     }
-    private void ocultarBotonesMenosNuevo(){
-        
-           btnGuardar.setEnabled(false);
-           btnModificar.setEnabled(false);
-           btnEliminar.setEnabled(false);
+
+    private void ocultarBotonesMenosNuevo() {
+
+        btnGuardar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
 
     private void desactivarCampos() {
@@ -648,7 +671,8 @@ boolean flag = false;
         cbEntrenadores.setSelectedIndex(-1);
         txtHorario.setText("");
     }
-     private void limpiarCamposMenosId() {
+
+    private void limpiarCamposMenosId() {
         txtCapacidad.setText("");
         txtNombre.setText("");
         cbEntrenadores.setSelectedIndex(-1);
@@ -739,7 +763,8 @@ boolean flag = false;
         }
     }
 // ================= sacar bordes de internal ================
-        private void quitarBordeJInternalFrame() {
+
+    private void quitarBordeJInternalFrame() {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);

@@ -81,7 +81,7 @@ public class Entrenador {
 
     @Override
     public String toString() {
-        return "Entrenador: " + nombre + " + apellido: " + apellido + ")";
+        return  nombre + " " + apellido ;
     }
     
     
