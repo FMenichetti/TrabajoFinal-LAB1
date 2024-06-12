@@ -164,11 +164,11 @@ public class Menu extends javax.swing.JFrame {
         lblFrases.setText("Frase del dia");
         lblFrases.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         escritorio.add(lblFrases);
-        lblFrases.setBounds(50, 40, 920, 103);
+        lblFrases.setBounds(40, 40, 930, 103);
 
         jlFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
         escritorio.add(jlFondo);
-        jlFondo.setBounds(0, 0, 1018, 680);
+        jlFondo.setBounds(-10, 0, 1030, 680);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
