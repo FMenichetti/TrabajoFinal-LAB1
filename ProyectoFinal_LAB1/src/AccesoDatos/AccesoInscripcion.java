@@ -69,6 +69,30 @@ public class AccesoInscripcion {
         return inscripciones;
 
     }
+    
+    public List<Inscripcion> listarTodasInscripciones() {
+        List<Inscripcion> inscripciones = new ArrayList<Inscripcion>();
+        String sql = "SELECT DISTINCT inscripcion.* FROM socios,inscripcion,clases ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Inscripcion inscripcion = new Inscripcion();
+                inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
+                Clase cla = ac.buscarTodasLasClases(rs.getInt("idClase"));
+                Socio soc = as.buscarSocioCompleto(rs.getInt("idSocio"));
+                inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
+                inscripcion.setClase(cla);
+                inscripcion.setSocio(soc);
+                inscripciones.add(inscripcion);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener Inscripciones" + e.getMessage());
+        }
+        return inscripciones;
+
+    }
 
     //Listar especiales
     public List<Inscripcion> listarInscripcionesPorConsulta(String consulta) {
@@ -79,7 +103,7 @@ public class AccesoInscripcion {
             while (rs.next()) {
                 Inscripcion inscripcion = new Inscripcion();
                 inscripcion.setIdInscripcion(rs.getInt("idInscripcion"));
-                Clase cla = ac.buscarClase(rs.getInt("idClase"));
+                Clase cla = ac.buscarTodasLasClases(rs.getInt("idClase"));
                 Socio soc = as.buscarSocioCompleto(rs.getInt("idSocio"));
                 inscripcion.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
                 inscripcion.setClase(cla);
@@ -99,12 +123,12 @@ public class AccesoInscripcion {
     }
 
     public List<Inscripcion> listarAsistenciasPorIdSocio() {
-        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        String consulta = "SELECT * FROM inscripcion ORDER BY idSocio ASC;";
         return listarInscripcionesPorConsulta(consulta);
     }
 
     public List<Inscripcion> listarAsistenciasPorIdClases() {
-        String consulta = "SELECT * FROM inscripcion ORDER BY idInscripcion ASC;";
+        String consulta = "SELECT * FROM inscripcion ORDER BY idClase ASC;";
         return listarInscripcionesPorConsulta(consulta);
     }
 
