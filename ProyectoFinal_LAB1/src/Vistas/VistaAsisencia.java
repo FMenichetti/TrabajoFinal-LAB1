@@ -4,6 +4,7 @@ import AccesoDatos.AccesoClase;
 import AccesoDatos.AccesoInscripcion;
 import AccesoDatos.AccesoMembresia;
 import AccesoDatos.AccesoSocio;
+import Entidades.Clase;
 import Entidades.Inscripcion;
 import Entidades.Socio;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -22,10 +23,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class VistaAsisencia extends javax.swing.JInternalFrame {
 
+    // bandera para modificar pases
+    boolean tieneMembresia;
+    boolean existeClase;
     // entidades 
     Inscripcion i = null;
     Entidades.Membresia m = null;
     Socio socioABuscar = null;
+    Clase claseABuscar = null;
     // accesos
     AccesoInscripcion acInscripcion = new AccesoInscripcion();
     AccesoClase acClase = new AccesoClase();
@@ -39,7 +44,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     // TABLA
     private DefaultTableModel tabla;
     List<Inscripcion> inscripciones;
-    
+
     public VistaAsisencia() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -70,7 +75,8 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         LocalDate fechaMinima = LocalDate.of(2024, 1, 1);
         java.util.Date formatoParaElJc = java.sql.Date.valueOf(fechaMinima);
         dcFecha.setMinSelectableDate(formatoParaElJc);
-        
+        // bandera para ver si tiene membresia
+
     }
 
     /**
@@ -353,12 +359,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             i = acInscripcion.buscarInscripcionPorId(codigo);
             if (i != null) {
                 editables();
-                
+
                 Date fechaDeInscripcion = new Date(0);
                 fechaDeInscripcion = Date.valueOf(i.getFechaInscripcion());
                 txtIdClase.setText(i.getClase().getIdClase() + "");
                 txtIdSocio.setText(i.getSocio().getIdSocio() + "");
                 // ===========================================
+                claseBuscadaMet(i.getClase().getIdClase());
                 socioBuscado(i.getSocio().getIdSocio());
                 // ===========================================
                 dcFecha.setDate(fechaDeInscripcion);
@@ -377,7 +384,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 btnEliminar.setEnabled(true); // se activa en el caso que si exista la asist a buscar
                 btnModificar.setEnabled(true);// se activa en el caso que si exista la asist a buscar
                 //txtIdSocio.setEnabled(false);
-                
+
             } else {
                 limpiarCampos();
             }
@@ -404,7 +411,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             return;
         }
         paraGuardar();
-        
+
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -414,7 +421,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         if (!btnEliminar.isEnabled()) {
             return;
         }
-        
+
         if (validaEntero(txtIdAsistencia1.getText())) {
             codigo = Integer.parseInt(txtIdAsistencia1.getText());
             // Preguntar al usuario si está seguro de eliminar la asistencia
@@ -427,7 +434,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(false); // si se encuentra y elimina una insc, se cambia el estado del btn
             btnModificar.setEnabled(false); // y el btn de modificar
         }
-        
+
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -445,22 +452,22 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void txtBuscarListaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarListaKeyReleased
         String filtro = txtBuscarLista.getText().trim();
         String seleccion = (String) cbListar.getSelectedItem();
-        
+
         List<Inscripcion> listaFiltrada = filtrarAsistencias(seleccion, filtro);
         listarTabla(listaFiltrada);
     }//GEN-LAST:event_txtBuscarListaKeyReleased
 
     private void cbListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListarActionPerformed
         String seleccion = (String) cbListar.getSelectedItem();
-        
+
         if (seleccion.equals("Id Asistencia")) {
             // Llamar al método para listar todas las membresías
-            List<Inscripcion> inscripciones = acInscripcion.listarInscripciones();
+            List<Inscripcion> inscripciones = acInscripcion.listarTodasInscripciones();
             listarTabla(inscripciones);
             txtBuscarLista.setEditable(true);
         } else if (seleccion.equals("Clase")) {
             // Llamar al método para listar todas las membresías ordenadas por ID de socio
-            List<Inscripcion> inscripciones = acInscripcion.listarAsistenciasPorIdClases();
+            List<Inscripcion> inscripciones = acInscripcion.listarTodasInscripciones();
             listarTabla(inscripciones);
             txtBuscarLista.setEditable(true);
         } else if (seleccion.equals("Socio")) {
@@ -501,7 +508,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             if (row != -1) {
                 //rescatamos la info de la columna inscripcion q es la 1
                 int id = Integer.parseInt(tblAsistencia.getValueAt(row, 0).toString());
-                
+
                 try {
                     Inscripcion in = acInscripcion.buscarInscripcionPorId(id);
                     if (in != null) {
@@ -509,6 +516,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                         editables();
                         btnModificar.setEnabled(true);
                         btnEliminar.setEnabled(true);
+                        Socio aBuscar;
+                        aBuscar = acSocio.buscarSocioCompleto(Integer.parseInt(txtIdSocio.getText()));
+                        socioBuscado(aBuscar.getIdSocio());
                     }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
@@ -520,34 +530,37 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void txtIdAsistencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsistencia1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdAsistencia1ActionPerformed
-    
+
     public boolean verificarPases(int id) {
         Entidades.Membresia verPases = acMembresia.buscarMembresiaPorIdSocio(id);
-        
+
         if (verPases.getCantidadPases() <= 0) {
             return false;
         } else {
             return true;
         }
-        
+
     }
+
     // restamos los pases del socio de la membresia 
     public void restarPases(int id) {
         Entidades.Membresia restarPase = new Entidades.Membresia();
         restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
         restarPase.setCantidadPases(restarPase.getCantidadPases() - 1);
         acMembresia.modificarMembresia(restarPase);
-        
+
     }
+
     // sumamos los pases al socio de la membresia
-      public void sumarPases(int id) {
-        Entidades.Membresia restarPase = new Entidades.Membresia();
-        restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
-        restarPase.setCantidadPases(restarPase.getCantidadPases() + 1);
-        acMembresia.modificarMembresia(restarPase);
-        
+    public void sumarPases(int id) {
+        Entidades.Membresia sumarPase = new Entidades.Membresia();
+        sumarPase = acMembresia.buscarMembresiaPorIdSocio(id);
+
+        sumarPase.setCantidadPases(sumarPase.getCantidadPases() + 1);
+        acMembresia.modificarMembresia(sumarPase);
+
     }
-    
+
     public void paraModificar() {
         int codigo, idClase, idSocio, confirm;
         Entidades.Clase c = new Entidades.Clase();
@@ -563,8 +576,17 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 idClase = Integer.parseInt(txtIdClase.getText());
                 idSocio = Integer.parseInt(txtIdSocio.getText());
                 // =============================================================
-                    modificarPases(Integer.parseInt(txtIdSocio.getText()));
+
+                modificarPases(Integer.parseInt(txtIdSocio.getText()));
+
                 // =============================================================
+                //##############################################################
+//                if (!existeClase) {
+//                    JOptionPane.showMessageDialog(null, "salio verificando claseee");
+//                    return;
+//                }
+                modificarCapacidadClase(Integer.parseInt(txtIdClase.getText()));
+                //##############################################################
                 c = acClase.buscarClase(idClase);
                 s = acSocio.buscarSocio(idSocio);
                 if (c == null) {
@@ -586,12 +608,12 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 noEditables();
                 btnModificar.setEnabled(false); // se cambian los estados de los botones para no tener problemas
                 btnEliminar.setEnabled(false); // al intentar modificar o eliminar algo que no este escrito
-              
+                tieneMembresia = false;  //>>>>>>>>>>>>>>>>
             }
-            
+
         }
     }
-    
+
     public void paraGuardar() { // validar que el miembro tenga pases disponibles
         Inscripcion nueva = new Inscripcion();
         int idSocio, idClase;
@@ -601,28 +623,39 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             Entidades.Clase c = acClase.buscarClase(idClase);
             Entidades.Socio s = acSocio.buscarSocio(idSocio);
             Entidades.Membresia me = acMembresia.buscarMembresiaPorIdSocio(idSocio);
+            // que exista la membresia
             if (me == null) {
                 JOptionPane.showMessageDialog(null, "El socio no tiene membresia");
                 return;
             }
+            // que exista la clase
             if (c == null) {
                 txtIdClase.requestFocus();
                 //txtIdClase.setText("");
                 return;
             }
+            // que exista el socio
             if (s == null) {
                 txtIdSocio.requestFocus();
                 //txtIdSocio.setText("");
                 return;
             }
+            // que no tenga 0 pases
             if (!verificarPases(idSocio)) {
                 JOptionPane.showMessageDialog(null, "El socio no tiene pasaes disponibles");
                 return;
             }
+            // que tenga algo de capacidad
+            if (!verificarCapacidadDeClase(c.getIdClase())) {
+                JOptionPane.showMessageDialog(null, "La clase ya no tiene mas cupos!");
+                return;
+            }
+            restarCapacidadClase(c.getIdClase());
             nueva.setClase(c);
             nueva.setSocio(s);
             nueva.setFechaInscripcion(dcFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             i = nueva;
+
             restarPases(idSocio);
             acInscripcion.guardarInscripcion(i);
             limpiarCampos();
@@ -636,7 +669,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             txtIdAsistencia1.setEditable(true);
             txtIdAsistencia1.setText("");
             limpiarCampos();
-          txtIdSocio.setEnabled(true);
+            txtIdSocio.setEnabled(true);
             return true;
         }
         return false;
@@ -654,14 +687,14 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtPases.setBackground(verdeTransparente);
         // el id asistencia pasa a ser no editable
         txtIdAsistencia1.setEditable(false);
-        
+
         txtIdAsistencia1.setBackground(verdeTransparente);
         editorJcalendar.setBackground(verdeTransparente);
     }
 
 // SETEAR EN NO EDITABLE LOS TXT
     public void noEditables() {
-        
+
         txtIdClase.setEditable(false);
         txtIdSocio.setEditable(false);
         dcFecha.setEnabled(false);
@@ -708,7 +741,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
 
     //METODO PARA VALIDAR Entero
     private boolean validaEntero(String nro) {
-        
+
         Pattern patron = Pattern.compile("^[0-9]+$");
         Matcher m = patron.matcher(nro);
         return m.matches();
@@ -721,28 +754,97 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtIdAsistencia1.setText("");
         txtIdSocio.setText("");
         txtPases.setText("");
-        
+
     }
 
     // ==================================== METODO PARA CUANDO MODIFICA EL ID SOCIO =========================================
-    public Socio socioBuscado(int id){
+    public Socio socioBuscado(int id) {
         socioABuscar = acSocio.buscarSocio(id);
         return socioABuscar;
     }
     // METODO PARA CUANDO MODIFICA EL ID SOCIO
-    
-    public void modificarPases(int id){
-        Socio so = new Socio();
+
+    public void modificarPases(int id) {
+        Socio so = null;
         so = acSocio.buscarSocio(id);
-        int anterior = socioABuscar.getIdSocio();
-        int nuevo = so.getIdSocio();
-    
-        if (nuevo != anterior) {
-            restarPases(nuevo);
-            sumarPases(anterior);
+
+        try {
+            int anterior = socioABuscar.getIdSocio();
+            int nuevo = so.getIdSocio();
+            if (so == null || socioABuscar == null) {
+                JOptionPane.showMessageDialog(null, "Uno de los socios no tiene membresia, no se puede modificar...");
+                return;
+            }
+            if (nuevo != anterior) {
+                restarPases(nuevo);
+                sumarPases(anterior);
+                tieneMembresia = true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Uno de los socios no tiene membresia, no se puede modificar... CATCHHHHH ");
+            tieneMembresia = false;
         }
-        
+
     }
+    // ################################### METODO PARA RESTAR CAPACIDAD DE CLASES ##################################################
+
+    public boolean verificarCapacidadDeClase(int id) {
+        Clase verCapacidad = acClase.buscarClase(id);
+        if (verCapacidad.getCapacidad() <= 0) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public Clase claseBuscadaMet(int id) {
+
+        claseABuscar = acClase.buscarClase(id);
+        return claseABuscar;
+
+    }
+
+    public void modificarCapacidadClase(int id) {
+        Clase cl = null;
+        cl = acClase.buscarClase(id);
+
+        try {
+            int anterior = claseABuscar.getIdClase();
+            int nuevo = cl.getIdClase();
+            if (cl == null || socioABuscar == null) {
+                JOptionPane.showMessageDialog(null, "Una de las clases no esta activa, no se puede modificar");
+                return;
+            }
+            if (nuevo != anterior) {
+                restarCapacidadClase(nuevo);
+                sumarCapacidadClase(anterior);
+                existeClase = true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Una de las clases no esta activa, no se puede modificar CATCH");
+            existeClase = false;
+        }
+
+    }
+
+    public void restarCapacidadClase(int id) {
+        Clase restarCapacidad = new Clase();
+        restarCapacidad = acClase.buscarClase(id);
+        restarCapacidad.setCapacidad(restarCapacidad.getCapacidad() - 1);
+        acClase.modificarClaseFabri(restarCapacidad);
+
+    }
+
+    // sumamos la capcidad de clase si la quiere modificar
+    public void sumarCapacidadClase(int id) {
+        Clase sumarCapacidad = new Clase();
+        sumarCapacidad = acClase.buscarClase(id);
+        sumarCapacidad.setCapacidad(sumarCapacidad.getCapacidad() + 1);
+        acClase.modificarClaseFabri(sumarCapacidad);
+
+    }
+
     // -------------------------------TABLA-------------------------------------
     private void pintarColumnasTabla() {
         tblAsistencia.setModel(tabla);
@@ -751,7 +853,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         tabla.addColumn("Socio");
         tabla.addColumn("Fecha");
         tblAsistencia.setDefaultEditor(Object.class, null);
-        
+
     }
 
     //Limpieza de la tabla
@@ -778,15 +880,15 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             } else {
                 txtPases.setText("No tiene Membresia");
             }
-            
+
         }
     }
 
     // ---------------------- empezamos a pintar las row segun los metodos de ac ------------------------------
     //filtrado por criterio
     private List<Inscripcion> filtrarAsistencias(String criterio, String filtro) {
-        
-        return acInscripcion.listarInscripciones().stream()
+
+        return acInscripcion.listarTodasInscripciones().stream()
                 .filter(i -> {
                     switch (criterio) {
                         case "Id Asistencia":
@@ -816,7 +918,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 ins.getFechaInscripcion()
             });
         }
-        
+
     }
 
     //llenar combo membresias
@@ -832,13 +934,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     private void inicializarTxtFiltrar() {
         txtBuscarLista.setText("Escriba aquí...");
         txtBuscarLista.setForeground(Color.GRAY);
-        
+
         txtBuscarLista.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtBuscarListaFocusGained(evt);
             }
-            
+
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtBuscarListaFocusLost(evt);

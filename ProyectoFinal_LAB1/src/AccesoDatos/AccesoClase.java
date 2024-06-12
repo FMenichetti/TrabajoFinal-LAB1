@@ -101,6 +101,43 @@ public class AccesoClase {
         return clase;
 
     }
+    
+    public Clase buscarTodasLasClases(int id) {
+        Clase clase = new Clase();
+
+        String sql = "SELECT nombre,idEntrenador,horario,capacidad,estado FROM clases WHERE idClase=?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                clase = new Clase();
+
+                clase.setIdClase(id);
+                clase.setNombre(rs.getString("nombre"));
+                Entrenador trainer = entData.buscarEntrenador(rs.getInt("idEntrenador"));
+                clase.setHorario(rs.getTime("horario").toLocalTime());
+                clase.setCapacidad(rs.getInt("capacidad"));
+                clase.setEstado(rs.getBoolean("estado"));
+                clase.setEntrenador(trainer);
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "no existe la clase");
+            }
+
+            ps.close();
+        } catch (SQLException E) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clase");
+        }
+
+        return clase;
+
+    }
 
     public List<Clase> listarClases() {
         List<Clase> clases = new ArrayList<Clase>();
@@ -162,6 +199,38 @@ public class AccesoClase {
         }
         return flag;
     }
+    }
+    
+      public void modificarClaseFabri(Clase clase) {
+        
+
+        String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, clase.getNombre());
+            ps.setInt(2, clase.getEntrenador().getIdEntrenador());
+            ps.setTime(3, Time.valueOf(clase.getHorario()));
+            ps.setInt(4, clase.getCapacidad());
+            ps.setBoolean(5, clase.isEstado());
+            ps.setInt(6, clase.getIdClase());
+
+            int exito = ps.executeUpdate();
+
+            if (exito == 1) {
+                
+                JOptionPane.showMessageDialog(null, "Clase modificada");
+            } else {
+                JOptionPane.showMessageDialog(null, "La clase no existe");
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
+        }
+        
+    
     }
 
     //borrado logico de clase
