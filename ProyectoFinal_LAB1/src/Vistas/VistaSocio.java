@@ -322,9 +322,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
-        if ( !txtIdSocio.isEnabled() ) {
-        txtIdSocio.setEnabled(true);
-        txtIdSocio.requestFocus();
+        if (!txtIdSocio.isEnabled()) {
+            txtIdSocio.setEnabled(true);
+            txtIdSocio.requestFocus();
             return;
         }
         socio = null;
@@ -381,10 +381,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             //modificar Socio(socio);
             if (cargarSocio(socio)) {
 
-               flag = as.modificarSocio(socio);
+                flag = as.modificarSocio(socio);
             }
             txtIdSocio.requestFocus();
-            if( flag )limpiarCampos();
+            if (flag) {
+                limpiarCampos();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
@@ -405,7 +407,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 txtIdSocio.requestFocus();
                 return;
             }
-            if ( !validaEnteroPositivo(txtIdSocio.getText()) ) {
+            if (!validaEnteroPositivo(txtIdSocio.getText())) {
                 JOptionPane.showMessageDialog(this, "El campo id debe ser un numero natural");
                 txtIdSocio.setText("");
                 txtIdSocio.requestFocus();
@@ -437,7 +439,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     private void txtIdSocioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdSocioKeyReleased
         // TODO add your handling code here:
-       ocultarGuardar();
+        ocultarGuardar();
         ocultarEliminar();
         ocultarModificar();
         limpiarCamposMenosId();
@@ -457,10 +459,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             }
             //cargarSocio(socio);
             if (cargarSocio(socio)) {
-               flag =  as.guardarSocio(socio);
+                flag = as.guardarSocio(socio);
             }
             txtIdSocio.requestFocus();
-            if(flag )limpiarCampos();
+            if (flag) {
+                limpiarCampos();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
         }
@@ -474,16 +478,16 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         //Listar completo en todas las opciones
         switch (seleccion) {
             case "IDSocio":
-                listarTabla( as.listarSocioIdOrdenado() );
+                listarTabla(as.listarSocioIdOrdenado());
                 break;
             case "DNI":
-               listarTabla( as.listarSocioDniOrdenado() );
+                listarTabla(as.listarSocioDniOrdenado());
                 break;
             case "Nombre":
-                listarTabla( as.listarSocioNombreOrdenado() );
+                listarTabla(as.listarSocioNombreOrdenado());
                 break;
             case "Apellido":
-                listarTabla( as.listarSocioApellidoOrdenado() );
+                listarTabla(as.listarSocioApellidoOrdenado());
                 break;
         }
         txtFiltro.setEnabled(true);
@@ -493,31 +497,31 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String seleccion = (String) cbFiltro.getSelectedItem();
         String text = txtFiltro.getText();
-        
+
         if (text.trim().length() == 0) {
             return;
-        } 
+        }
         //Listar where txt == 
         switch (seleccion) {
             case "IDSocio":
-                listarTabla( as.listarSocioIdFiltro(Integer.parseInt(text)));
+                listarTabla(as.listarSocioIdFiltro(Integer.parseInt(text)));
                 break;
             case "DNI":
-                listarTabla( as.listarSocioDniFiltro(text));
+                listarTabla(as.listarSocioDniFiltro(text));
                 break;
             case "Nombre":
-                 listarTabla( as.listarSocioNombreFiltro(text));
+                listarTabla(as.listarSocioNombreFiltro(text));
                 break;
             case "Apellido":
-                 listarTabla( as.listarSocioApellidoFiltro(text));
+                listarTabla(as.listarSocioApellidoFiltro(text));
                 break;
-        
+
         }
     }//GEN-LAST:event_txtFiltroKeyReleased
 
     private void tbFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFiltroMouseClicked
         // TODO add your handling code here:
-          socio = new Socio();
+        socio = new Socio();
 
         if (evt.getClickCount() == 2) {
             int filaSeleccionada = tbFiltro.getSelectedRow();
@@ -531,7 +535,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 ocultarModificar();
                 ocultarEliminar();
             }
-    }     
+        }
     }//GEN-LAST:event_tbFiltroMouseClicked
 
 ///=============Metodos================
@@ -611,6 +615,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setText("");
         txtTelefono.setText("");
     }
+
     private void limpiarCamposMenosId() {
         txtDniSocio.setText("");
         txtNombre.setText("");
@@ -644,11 +649,12 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             btnEliminar.setEnabled(false);
         }
     }
-      private void ocultarBotonesMenosNuevo(){
-        
-           btnGuardar.setEnabled(false);
-           btnModificar.setEnabled(false);
-           btnEliminar.setEnabled(false);
+
+    private void ocultarBotonesMenosNuevo() {
+
+        btnGuardar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
 
     private void desactivarCampos() {
@@ -668,7 +674,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setEditable(true);
         txtTelefono.setEditable(true);
     }
-    
+
     private void resetFiltros() {
         txtFiltro.setText("");
         cbFiltro.setSelectedIndex(0);
@@ -723,12 +729,13 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     public void listarTabla(List<Socio> lista) {
         limpiarTabla();
-        for (Socio s : lista ) {
+        for (Socio s : lista) {
 
             tabla.addRow(new Object[]{s.getIdSocio(), s.getDni(), s.getNombre(), s.getApellido()});
         }
     }
 // ================ QUITAR BORDES DE JINTERNAL ====================================
+
     private void quitarBordeJInternalFrame() {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();

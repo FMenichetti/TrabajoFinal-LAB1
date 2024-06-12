@@ -13,7 +13,10 @@ public class Menu extends javax.swing.JFrame {
     private boolean entFlag = false;
     private boolean claFlag = false;
     private boolean asFlag = false;
-
+    
+    
+    //============== CONSTRUCTOR ================
+    
     public Menu() {
         initComponents();
         try {
@@ -56,50 +59,24 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jpFondoBtn = new javax.swing.JPanel();
-        lblEntrenador = new javax.swing.JLabel();
-        lblMembresia = new javax.swing.JLabel();
         lblSocios = new javax.swing.JLabel();
+        lblEntrenador = new javax.swing.JLabel();
         lblClases = new javax.swing.JLabel();
+        lblMembresia = new javax.swing.JLabel();
         lblAsistencia = new javax.swing.JLabel();
+        jlLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         escritorio = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jlFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GYM");
-        setMaximumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1280, 721));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
 
         jpFondoBtn.setBackground(new java.awt.Color(102, 102, 102));
         jpFondoBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblEntrenador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEntrenadorMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblEntrenadorMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblEntrenadorMouseExited(evt);
-            }
-        });
-        jpFondoBtn.add(lblEntrenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 200, 67));
-
-        lblMembresia.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblMembresiaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblMembresiaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMembresiaMouseExited(evt);
-            }
-        });
-        jpFondoBtn.add(lblMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 200, 67));
 
         lblSocios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,7 +89,20 @@ public class Menu extends javax.swing.JFrame {
                 lblSociosMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 200, 67));
+        jpFondoBtn.add(lblSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 210, 67));
+
+        lblEntrenador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEntrenadorMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEntrenadorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEntrenadorMouseExited(evt);
+            }
+        });
+        jpFondoBtn.add(lblEntrenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 210, 67));
 
         lblClases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -125,7 +115,20 @@ public class Menu extends javax.swing.JFrame {
                 lblClasesMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 200, 67));
+        jpFondoBtn.add(lblClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 210, 67));
+
+        lblMembresia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMembresiaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblMembresiaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblMembresiaMouseExited(evt);
+            }
+        });
+        jpFondoBtn.add(lblMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 210, 67));
 
         lblAsistencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -138,7 +141,16 @@ public class Menu extends javax.swing.JFrame {
                 lblAsistenciaMouseExited(evt);
             }
         });
-        jpFondoBtn.add(lblAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 200, 67));
+        jpFondoBtn.add(lblAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 210, 67));
+
+        jlLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Logo.png"))); // NOI18N
+        jlLogo.setText("jLabel1");
+        jlLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jlLogoMouseReleased(evt);
+            }
+        });
+        jpFondoBtn.add(jlLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 180, 160));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_menu.png"))); // NOI18N
         jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 720));
@@ -146,20 +158,19 @@ public class Menu extends javax.swing.JFrame {
         escritorio.setBackground(new java.awt.Color(214, 236, 225));
         escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
+        jlFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18))
+                .addComponent(jlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, Short.MAX_VALUE)
+                .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,7 +180,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,6 +433,13 @@ public class Menu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_lblEntrenadorMouseClicked
 
+    private void jlLogoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLogoMouseReleased
+        escritorio.removeAll();
+        escritorio.repaint();
+        escritorio.add(jlFondo);
+        
+    }//GEN-LAST:event_jlLogoMouseReleased
+
     public void despintarTodos() {
         //membresia
         try {
@@ -497,7 +515,8 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel escritorio;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jlFondo;
+    private javax.swing.JLabel jlLogo;
     private javax.swing.JPanel jpFondoBtn;
     private javax.swing.JLabel lblAsistencia;
     private javax.swing.JLabel lblClases;
