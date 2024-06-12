@@ -114,11 +114,11 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Entrenador"/>
+            <Property name="text" type="java.lang.String" value="ENTRENADOR"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="180" y="30" width="-1" height="-1"/>
+              <AbsoluteConstraints x="180" y="30" width="220" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -459,11 +459,11 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Lista de entrenadores"/>
+            <Property name="text" type="java.lang.String" value="LISTA DE ENTRENADORES"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="120" y="26" width="-1" height="-1"/>
+              <AbsoluteConstraints x="46" y="26" width="410" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

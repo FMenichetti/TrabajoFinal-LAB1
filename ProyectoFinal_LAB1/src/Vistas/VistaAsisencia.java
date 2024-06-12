@@ -149,9 +149,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         btnModificar.setBounds(270, 600, 100, 40);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("Asistencia");
+        jLabel3.setText("ASISTENCIA");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(160, 30, 140, 36);
+        jLabel3.setBounds(160, 30, 190, 36);
 
         txtIdClase.setBackground(new java.awt.Color(28, 89, 59));
         txtIdClase.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -211,7 +211,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         dcFecha.setBounds(250, 310, 180, 30);
 
         txtIdAsistencia1.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdAsistencia1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdAsistencia1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtIdAsistencia1.setForeground(new java.awt.Color(255, 255, 255));
         txtIdAsistencia1.setBorder(null);
         txtIdAsistencia1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -300,9 +300,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jScrollPane1.setBounds(44, 142, 407, 463);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel2.setText("Lista de Asistencias");
+        jLabel2.setText("LISTA DE ASISTENCIAS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(128, 26, 262, 36);
+        jLabel2.setBounds(60, 30, 380, 36);
 
         txtBuscarLista.setBackground(new java.awt.Color(28, 89, 59));
         txtBuscarLista.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N

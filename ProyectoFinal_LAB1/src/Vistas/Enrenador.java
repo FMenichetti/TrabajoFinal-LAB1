@@ -104,9 +104,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
         btnBuscar.setBounds(350, 110, 150, 50);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("Entrenador");
+        jLabel3.setText("ENTRENADOR");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 30, 147, 36);
+        jLabel3.setBounds(180, 30, 220, 36);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel18.setText("ID ENTRENADOR");
@@ -262,9 +262,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
         txtTabla.setBounds(44, 80, 170, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel2.setText("Lista de entrenadores");
+        jLabel2.setText("LISTA DE ENTRENADORES");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(120, 26, 286, 36);
+        jLabel2.setBounds(46, 26, 410, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
