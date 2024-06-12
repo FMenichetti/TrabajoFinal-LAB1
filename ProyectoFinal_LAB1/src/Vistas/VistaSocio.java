@@ -305,7 +305,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbFiltro);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(44, 136, 407, 463);
+        jScrollPane1.setBounds(40, 160, 407, 463);
 
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -317,9 +317,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(28, 89, 59));
-        jLabel2.setText("LISTA DE MEMBRESÍAS");
+        jLabel2.setText("LISTA DE SOCIOS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(70, 30, 338, 36);
+        jLabel2.setBounds(110, 20, 260, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel4.setText("jLabel4");

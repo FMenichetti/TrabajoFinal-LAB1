@@ -576,7 +576,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(75, 17, 338, 36);
+        jLabel2.setBounds(80, 20, 338, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);

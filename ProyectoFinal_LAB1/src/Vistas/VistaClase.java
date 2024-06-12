@@ -268,7 +268,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbFiltro);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(35, 128, 420, 463);
+        jScrollPane1.setBounds(40, 150, 420, 463);
 
         txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

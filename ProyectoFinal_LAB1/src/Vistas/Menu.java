@@ -17,6 +17,7 @@ public class Menu extends javax.swing.JFrame {
     //============== CONSTRUCTOR ================
     public Menu() {
         initComponents();
+        fraseDiaria();
 
         try {
             //membresia

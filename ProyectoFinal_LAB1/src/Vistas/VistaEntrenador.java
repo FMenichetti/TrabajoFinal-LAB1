@@ -270,7 +270,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtablaEntrenadores);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(44, 136, 413, 463);
+        jScrollPane1.setBounds(40, 160, 413, 463);
 
         txtTabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
