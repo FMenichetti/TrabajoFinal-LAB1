@@ -50,7 +50,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         });
         //iniciar tabla        
         inicializarTabla();
-        
+
         //color texto
         configurarColorTexto();
 
@@ -71,7 +71,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Membresia");
         modeloTabla.addColumn("Socio");
-        modeloTabla.addColumn("Cantidad de Pases");
+        modeloTabla.addColumn("Pases");
         modeloTabla.addColumn("Fecha de Inicio");
         modeloTabla.addColumn("Fecha de Fin");
         modeloTabla.addColumn("Costo");
@@ -99,23 +99,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
     }
-    
-    
+
     //configurar color texto
     private void configurarColorTexto() {
-    Color blanco = new Color(255, 255, 255);
+        Color blanco = new Color(255, 255, 255);
 
-    //color de texto
-    txtIdSocio.setForeground(blanco);
-    txtIdMembresia.setForeground(blanco);
-    txtPrecio.setForeground(blanco);
+        //color de texto
+        txtIdSocio.setForeground(blanco);
+        txtIdMembresia.setForeground(blanco);
+        txtPrecio.setForeground(blanco);
 
-    // JDateChooser
-    JTextFieldDateEditor editorFechaInicio = (JTextFieldDateEditor) txtFechaInicio.getDateEditor();
-    editorFechaInicio.setForeground(blanco);
-    JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
-    editorFechaFin.setForeground(blanco);
-}
+        // JDateChooser
+        JTextFieldDateEditor editorFechaInicio = (JTextFieldDateEditor) txtFechaInicio.getDateEditor();
+        editorFechaInicio.setForeground(blanco);
+        JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
+        editorFechaFin.setForeground(blanco);
+    }
 
     //bloquear todos los campos excepto txtIdSocio al iniciar
     private void bloquearCamposInicio() {
@@ -165,18 +164,31 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     //cargar datos a los campos de textos
     private void cargarDatos(Membresia membresia) {
         if (membresia != null) {
-            txtIdMembresia.setText(String.valueOf(membresia.getIdMembresia()));
-            cbCantidadPases.setSelectedItem(String.valueOf(membresia.getCantidadPases()));
+        txtIdMembresia.setText(String.valueOf(membresia.getIdMembresia()));
 
-            //convertir LocalDate a Date
-            Date fechaInicio = Date.valueOf(membresia.getFechaInicio());
-            Date fechaFin = Date.valueOf(membresia.getFechaFin());
+        // Obtener el valor de cantidad de pases de la membresía
+        String cantidadPases = String.valueOf(membresia.getCantidadPases());
 
-            txtFechaInicio.setDate(fechaInicio);
-            txtFechaFin.setDate(fechaFin);
-            txtPrecio.setText(String.valueOf(membresia.getCosto()));
+        // Obtener el modelo actual del ComboBox
+        DefaultComboBoxModel<String> modelo = (DefaultComboBoxModel<String>) cbCantidadPases.getModel();
 
+        // Verificar si el valor de cantidadPases está en el modelo del ComboBox
+        if (modelo.getIndexOf(cantidadPases) != -1) {
+            cbCantidadPases.setSelectedItem(cantidadPases);
+        } else {
+            // Si el valor no está en el modelo, podrías añadirlo o seleccionar una opción por defecto
+            modelo.addElement(cantidadPases); // Agregar el valor al ComboBox
+            cbCantidadPases.setSelectedItem(cantidadPases); // Seleccionar el valor agregado
         }
+
+        // Convertir LocalDate a Date
+        Date fechaInicio = Date.valueOf(membresia.getFechaInicio());
+        Date fechaFin = Date.valueOf(membresia.getFechaFin());
+
+        txtFechaInicio.setDate(fechaInicio);
+        txtFechaFin.setDate(fechaFin);
+        txtPrecio.setText(String.valueOf(membresia.getCosto()));
+    }
     }
 
     //configuar calendario
@@ -200,7 +212,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         String[] opciones = {"Selecciona uno...", "8", "12", "20"};
         DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>(opciones);
         cbCantidadPases.setModel(modeloCombo);
-        cbCantidadPases.setSelectedIndex(0); // Esto asegura que el primer elemento sea el seleccionado por defecto
+        cbCantidadPases.setSelectedIndex(0); //el primer elemento es el seleccionado por defecto
 
     }
 
@@ -298,7 +310,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 })
                 .collect(Collectors.toList());
     }
-    
+
     //validacion de fechas
     private boolean validarFechas() {
         java.util.Date fechaInicioUtil = txtFechaInicio.getDate();
@@ -411,6 +423,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
         txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdMembresia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtIdMembresia.setDisabledTextColor(new java.awt.Color(143, 198, 171));
         jPanel1.add(txtIdMembresia);
         txtIdMembresia.setBounds(173, 174, 60, 30);
 
@@ -418,6 +431,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
         txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtPrecio.setBorder(null);
+        txtPrecio.setDisabledTextColor(new java.awt.Color(143, 198, 171));
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrecioKeyTyped(evt);
@@ -428,7 +442,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIdSocio.setBorder(null);
+        txtIdSocio.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        txtIdSocio.setDisabledTextColor(new java.awt.Color(143, 198, 171));
         txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdSocioKeyTyped(evt);
@@ -698,7 +713,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPrecioKeyTyped
 
     // ==================== BOTONES ====================
-    
+
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (!btnModificar.isEnabled()) {
             return; //no hace nada si el boton de modificar esta desactivado
@@ -726,9 +741,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
             //verificar si se realizaron cambios
             if (membresiaExistente.getCantidadPases() == cantidadPases
-                && membresiaExistente.getFechaInicio().equals(fechaInicio)
-                && membresiaExistente.getFechaFin().equals(fechaFin)
-                && membresiaExistente.getCosto() == precio) {
+                    && membresiaExistente.getFechaInicio().equals(fechaInicio)
+                    && membresiaExistente.getFechaFin().equals(fechaFin)
+                    && membresiaExistente.getCosto() == precio) {
                 JOptionPane.showMessageDialog(this, "Usted no modifico ningún campo", "Información", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
@@ -861,7 +876,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         if (!btnBuscar.isEnabled()) {
             return; // No hacer nada si el botón de buscar está desactivado
         }
-        
+
         if (!txtIdMembresia.isEnabled()) {
             txtIdMembresia.setEnabled(true);
             txtIdSocio.requestFocus();
