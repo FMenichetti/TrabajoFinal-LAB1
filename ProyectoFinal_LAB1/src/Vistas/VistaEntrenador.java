@@ -75,21 +75,25 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         jPanel1.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(28, 89, 59));
         jLabel7.setText("DNI");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(40, 190, 50, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(28, 89, 59));
         jLabel8.setText("NOMBRE");
         jPanel1.add(jLabel8);
         jLabel8.setBounds(40, 360, 90, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(28, 89, 59));
         jLabel10.setText("ESPECIALIDAD");
         jPanel1.add(jLabel10);
         jLabel10.setBounds(40, 430, 130, 30);
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(28, 89, 59));
         jLabel13.setText("APELLIDO");
         jPanel1.add(jLabel13);
         jLabel13.setBounds(40, 280, 90, 30);
@@ -104,17 +108,19 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         btnBuscar.setBounds(350, 110, 150, 50);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
         jLabel3.setText("ENTRENADOR");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 30, 220, 35);
+        jLabel3.setBounds(180, 30, 220, 36);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(28, 89, 59));
         jLabel18.setText("ID ENTRENADOR");
         jPanel1.add(jLabel18);
         jLabel18.setBounds(40, 110, 148, 30);
 
         txtId.setBackground(new java.awt.Color(28, 89, 59));
-        txtId.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtId.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setBorder(null);
         txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -123,7 +129,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         txtId.setBounds(210, 110, 80, 30);
 
         txtDni.setBackground(new java.awt.Color(28, 89, 59));
-        txtDni.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtDni.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtDni.setForeground(new java.awt.Color(255, 255, 255));
         txtDni.setBorder(null);
         txtDni.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -137,7 +143,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         txtDni.setBounds(100, 190, 150, 30);
 
         txtApellido.setBackground(new java.awt.Color(28, 89, 59));
-        txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtApellido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(255, 255, 255));
         txtApellido.setBorder(null);
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -151,7 +157,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         txtApellido.setBounds(140, 280, 200, 30);
 
         txtEspecialidad.setBackground(new java.awt.Color(28, 89, 59));
-        txtEspecialidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtEspecialidad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtEspecialidad.setForeground(new java.awt.Color(255, 255, 255));
         txtEspecialidad.setBorder(null);
         txtEspecialidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -165,7 +171,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         txtEspecialidad.setBounds(180, 430, 200, 30);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setBorder(null);
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -185,7 +191,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(40, 540, 100, 30);
+        btnNuevo.setBounds(30, 610, 100, 30);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -194,7 +200,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(150, 540, 100, 30);
+        btnGuardar.setBounds(150, 610, 100, 30);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,7 +209,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(260, 540, 100, 30);
+        btnModificar.setBounds(270, 610, 100, 30);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -212,18 +218,21 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(380, 540, 100, 33);
+        btnEliminar.setBounds(390, 610, 100, 33);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(-3, -4, 530, 690);
+        jLabel1.setBounds(-3, -4, 530, 710);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 520, 680);
+        jPanel1.setBounds(0, 0, 520, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        jComboBox1.setBackground(new java.awt.Color(28, 89, 59));
+        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jComboBox1.setForeground(new java.awt.Color(28, 89, 59));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "dni", "apellido", "nombre", "especialidad", "seleccione" }));
         jComboBox1.setSelectedIndex(5);
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -261,7 +270,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtablaEntrenadores);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(44, 136, 413, 463);
+        jScrollPane1.setBounds(40, 160, 413, 463);
 
         txtTabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -277,16 +286,17 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
         txtTabla.setBounds(44, 80, 170, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE ENTRENADORES");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(46, 26, 410, 35);
+        jLabel2.setBounds(46, 26, 410, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(-13, 0, 520, 680);
+        jLabel4.setBounds(-13, 0, 520, 700);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(520, 0, 520, 680);
+        jPanel2.setBounds(520, 0, 520, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

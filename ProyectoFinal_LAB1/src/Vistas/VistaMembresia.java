@@ -50,9 +50,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         });
         //iniciar tabla        
         inicializarTabla();
-        
+
         //color texto
-        configurarColorLabel();
         configurarColorTexto();
 
         //iniciar filtro dinamico
@@ -72,7 +71,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Membresia");
         modeloTabla.addColumn("Socio");
-        modeloTabla.addColumn("Cantidad de Pases");
+        modeloTabla.addColumn("Pases");
         modeloTabla.addColumn("Fecha de Inicio");
         modeloTabla.addColumn("Fecha de Fin");
         modeloTabla.addColumn("Costo");
@@ -100,48 +99,22 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
     }
-    
-    //configurar color texto
-    private void configurarColorLabel() {
-        Color verde = new Color(28, 89, 59);
 
-        //color de texto
-        txtIdSocio.setForeground(verde);
-        txtIdMembresia.setForeground(verde);
-        txtPrecio.setForeground(verde);
-
-        // Etiquetas
-        lblSocio.setForeground(verde);
-        lblMembresia.setForeground(verde);
-        lblFechaInicio.setForeground(verde);
-        lblFechaFin.setForeground(verde);
-        lblPrecio.setForeground(verde);
-        lblCantidadPases.setForeground(verde);
-        jLabel2.setForeground(verde);
-        jLabel3.setForeground(verde);
-
-        // ComboBox
-        cbCantidadPases.setForeground(verde);
-        cbMembresias.setForeground(verde);
-
-        
-    }
-    
     //configurar color texto
     private void configurarColorTexto() {
-    Color blanco = new Color(255, 255, 255);
+        Color blanco = new Color(255, 255, 255);
 
-    //color de texto
-    txtIdSocio.setForeground(blanco);
-    txtIdMembresia.setForeground(blanco);
-    txtPrecio.setForeground(blanco);
+        //color de texto
+        txtIdSocio.setForeground(blanco);
+        txtIdMembresia.setForeground(blanco);
+        txtPrecio.setForeground(blanco);
 
-    // JDateChooser
-    JTextFieldDateEditor editorFechaInicio = (JTextFieldDateEditor) txtFechaInicio.getDateEditor();
-    editorFechaInicio.setForeground(blanco);
-    JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
-    editorFechaFin.setForeground(blanco);
-}
+        // JDateChooser
+        JTextFieldDateEditor editorFechaInicio = (JTextFieldDateEditor) txtFechaInicio.getDateEditor();
+        editorFechaInicio.setForeground(blanco);
+        JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
+        editorFechaFin.setForeground(blanco);
+    }
 
     //bloquear todos los campos excepto txtIdSocio al iniciar
     private void bloquearCamposInicio() {
@@ -191,18 +164,31 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     //cargar datos a los campos de textos
     private void cargarDatos(Membresia membresia) {
         if (membresia != null) {
-            txtIdMembresia.setText(String.valueOf(membresia.getIdMembresia()));
-            cbCantidadPases.setSelectedItem(String.valueOf(membresia.getCantidadPases()));
+        txtIdMembresia.setText(String.valueOf(membresia.getIdMembresia()));
 
-            //convertir LocalDate a Date
-            Date fechaInicio = Date.valueOf(membresia.getFechaInicio());
-            Date fechaFin = Date.valueOf(membresia.getFechaFin());
+        // Obtener el valor de cantidad de pases de la membresía
+        String cantidadPases = String.valueOf(membresia.getCantidadPases());
 
-            txtFechaInicio.setDate(fechaInicio);
-            txtFechaFin.setDate(fechaFin);
-            txtPrecio.setText(String.valueOf(membresia.getCosto()));
+        // Obtener el modelo actual del ComboBox
+        DefaultComboBoxModel<String> modelo = (DefaultComboBoxModel<String>) cbCantidadPases.getModel();
 
+        // Verificar si el valor de cantidadPases está en el modelo del ComboBox
+        if (modelo.getIndexOf(cantidadPases) != -1) {
+            cbCantidadPases.setSelectedItem(cantidadPases);
+        } else {
+            // Si el valor no está en el modelo, podrías añadirlo o seleccionar una opción por defecto
+            modelo.addElement(cantidadPases); // Agregar el valor al ComboBox
+            cbCantidadPases.setSelectedItem(cantidadPases); // Seleccionar el valor agregado
         }
+
+        // Convertir LocalDate a Date
+        Date fechaInicio = Date.valueOf(membresia.getFechaInicio());
+        Date fechaFin = Date.valueOf(membresia.getFechaFin());
+
+        txtFechaInicio.setDate(fechaInicio);
+        txtFechaFin.setDate(fechaFin);
+        txtPrecio.setText(String.valueOf(membresia.getCosto()));
+    }
     }
 
     //configuar calendario
@@ -226,7 +212,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         String[] opciones = {"Selecciona uno...", "8", "12", "20"};
         DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>(opciones);
         cbCantidadPases.setModel(modeloCombo);
-        cbCantidadPases.setSelectedIndex(0); // Esto asegura que el primer elemento sea el seleccionado por defecto
+        cbCantidadPases.setSelectedIndex(0); //el primer elemento es el seleccionado por defecto
 
     }
 
@@ -325,6 +311,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 .collect(Collectors.toList());
     }
 
+    //validacion de fechas
     private boolean validarFechas() {
         java.util.Date fechaInicioUtil = txtFechaInicio.getDate();
         java.util.Date fechaFinUtil = txtFechaFin.getDate();
@@ -361,16 +348,16 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         lblFechaInicio = new javax.swing.JLabel();
         lblFechaFin = new javax.swing.JLabel();
         lblSocio = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
+        txtIdMembresia = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtIdSocio = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
-        txtIdMembresia = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
-        txtIdSocio = new javax.swing.JTextField();
         txtFechaFin = new com.toedter.calendar.JDateChooser();
         txtFechaInicio = new com.toedter.calendar.JDateChooser();
         cbCantidadPases = new javax.swing.JComboBox<>();
@@ -389,21 +376,81 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel1.setLayout(null);
 
         lblMembresia.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblMembresia.setForeground(new java.awt.Color(28, 89, 59));
         lblMembresia.setText("ID MEMBRESÍA");
+        jPanel1.add(lblMembresia);
+        lblMembresia.setBounds(23, 184, 140, 22);
 
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblCantidadPases.setForeground(new java.awt.Color(28, 89, 59));
         lblCantidadPases.setText("CANTIDAD DE PASES");
+        jPanel1.add(lblCantidadPases);
+        lblCantidadPases.setBounds(23, 254, 184, 22);
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblFechaInicio.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaInicio.setText("FECHA INICIO");
+        jPanel1.add(lblFechaInicio);
+        lblFechaInicio.setBounds(23, 334, 130, 22);
 
         lblFechaFin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblFechaFin.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaFin.setText("FECHA FIN");
+        jPanel1.add(lblFechaFin);
+        lblFechaFin.setBounds(23, 404, 100, 22);
 
         lblSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblSocio.setText("ID SOCIO");
+        jPanel1.add(lblSocio);
+        lblSocio.setBounds(23, 114, 90, 22);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
+        jLabel3.setText("MEMBRESÍA");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(183, 24, 178, 36);
+
+        lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(28, 89, 59));
+        lblPrecio.setText("PRECIO");
+        jPanel1.add(lblPrecio);
+        lblPrecio.setBounds(23, 484, 80, 30);
+
+        txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdMembresia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txtIdMembresia.setDisabledTextColor(new java.awt.Color(143, 198, 171));
+        jPanel1.add(txtIdMembresia);
+        txtIdMembresia.setBounds(173, 174, 60, 30);
+
+        txtPrecio.setEditable(true);
+        txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
+        txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPrecio.setBorder(null);
+        txtPrecio.setDisabledTextColor(new java.awt.Color(143, 198, 171));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtPrecio);
+        txtPrecio.setBounds(103, 484, 100, 30);
+
+        txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdSocio.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        txtIdSocio.setDisabledTextColor(new java.awt.Color(143, 198, 171));
+        txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdSocioKeyTyped(evt);
+            }
+        });
+        jPanel1.add(txtIdSocio);
+        txtIdSocio.setBounds(123, 104, 60, 30);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -411,12 +458,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnBuscarMouseClicked(evt);
             }
         });
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("MEMBRESÍA");
-
-        lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblPrecio.setText("PRECIO");
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(303, 94, 150, 50);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -424,6 +467,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnEliminarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(403, 604, 110, 50);
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -431,6 +476,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnNuevoMouseClicked(evt);
             }
         });
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(33, 604, 110, 50);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -438,6 +485,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnGuardarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(153, 604, 110, 50);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -445,162 +494,35 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnModificarMouseClicked(evt);
             }
         });
-
-        txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIdMembresia.setBorder(null);
-
-        txtPrecio.setEditable(true);
-        txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
-        txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPrecio.setBorder(null);
-        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioKeyTyped(evt);
-            }
-        });
-
-        txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIdSocio.setBorder(null);
-        txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdSocioKeyTyped(evt);
-            }
-        });
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(273, 604, 110, 50);
 
         txtFechaFin.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaFin.setDateFormatString("dd/MM/yyyy");
         txtFechaFin.setInheritsPopupMenu(true);
         txtFechaFin.setOpaque(false);
+        jPanel1.add(txtFechaFin);
+        txtFechaFin.setBounds(153, 404, 150, 30);
 
         txtFechaInicio.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaInicio.setDateFormatString("dd/MM/yyyy");
         txtFechaInicio.setInheritsPopupMenu(true);
         txtFechaInicio.setOpaque(false);
+        jPanel1.add(txtFechaInicio);
+        txtFechaInicio.setBounds(163, 334, 150, 30);
 
         cbCantidadPases.setBackground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbCantidadPases.setForeground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8", "12", "20" }));
         cbCantidadPases.setToolTipText("");
+        jPanel1.add(cbCantidadPases);
+        cbCantidadPases.setBounds(233, 244, 110, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(jLabel3))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(273, 273, 273)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(303, 303, 303)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblCantidadPases))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(403, 403, 403)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel3)
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(lblSocio))
-                            .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(48, 48, 48)
-                        .addComponent(lblMembresia)
-                        .addGap(128, 128, 128)
-                        .addComponent(lblFechaInicio)
-                        .addGap(48, 48, 48)
-                        .addComponent(lblFechaFin)
-                        .addGap(58, 58, 58)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(90, 90, 90)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(404, 404, 404)
-                        .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(254, 254, 254)
-                        .addComponent(lblCantidadPases))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 0, 510, 700);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 510, 700);
@@ -608,6 +530,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        cbMembresias.setBackground(new java.awt.Color(28, 89, 59));
+        cbMembresias.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbMembresias.setForeground(new java.awt.Color(28, 89, 59));
         cbMembresias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMembresiasActionPerformed(evt);
@@ -663,9 +588,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFiltrar.setBounds(48, 80, 180, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(75, 17, 338, 36);
+        jLabel2.setBounds(80, 20, 338, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
@@ -787,7 +713,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPrecioKeyTyped
 
     // ==================== BOTONES ====================
-    
+
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (!btnModificar.isEnabled()) {
             return; //no hace nada si el boton de modificar esta desactivado
@@ -815,9 +741,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
 
             //verificar si se realizaron cambios
             if (membresiaExistente.getCantidadPases() == cantidadPases
-                && membresiaExistente.getFechaInicio().equals(fechaInicio)
-                && membresiaExistente.getFechaFin().equals(fechaFin)
-                && membresiaExistente.getCosto() == precio) {
+                    && membresiaExistente.getFechaInicio().equals(fechaInicio)
+                    && membresiaExistente.getFechaFin().equals(fechaFin)
+                    && membresiaExistente.getCosto() == precio) {
                 JOptionPane.showMessageDialog(this, "Usted no modifico ningún campo", "Información", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
@@ -950,7 +876,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         if (!btnBuscar.isEnabled()) {
             return; // No hacer nada si el botón de buscar está desactivado
         }
-        
+
         if (!txtIdMembresia.isEnabled()) {
             txtIdMembresia.setEnabled(true);
             txtIdSocio.requestFocus();
