@@ -4,7 +4,9 @@
  */
 package Vistas;
 
+import AccesoDatos.AccesoMembresia;
 import AccesoDatos.AccesoSocio;
+import Entidades.Membresia;
 import Entidades.Socio;
 import java.awt.event.ItemEvent;
 import java.util.List;
@@ -24,12 +26,15 @@ import javax.swing.table.TableRowSorter;
 public class VistaSocio extends javax.swing.JInternalFrame {
 
     private Socio socio = null;
+    private Membresia membresia = null;
     private AccesoSocio as = null;
+    private AccesoMembresia am = null;
     private DefaultTableModel tabla;
 
     public VistaSocio() {
         initComponents();
         as = new AccesoSocio();
+        am = new AccesoMembresia();
         ocultarModificar();
         ocultarEliminar();
         txtIdSocio.requestFocus();
@@ -422,13 +427,14 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 txtIdSocio.requestFocus();
                 return;
             }
-            if ( !validaNatural(txtIdSocio.getText()) ) {
+            if ( !validaEnteroPositivo(txtIdSocio.getText()) ) {
                 JOptionPane.showMessageDialog(this, "El campo id debe ser un numero natural");
                 txtIdSocio.setText("");
                 txtIdSocio.requestFocus();
                 return;
             }
             socio = (((Socio) as.buscarSocio(Integer.parseInt(txtIdSocio.getText()))));
+            membresia = am.buscarMembresiaPorIdSocio(socio.getIdSocio());
 
             if (socio == null) {
                 return;
@@ -440,7 +446,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
                 flag = as.eliminarSocio(socio.getIdSocio());
             }
             txtIdSocio.requestFocus();
-            if (flag) limpiarCampos();
+            if (flag) {
+                am.eliminarMembresia(membresia.getIdMembresia());
+                limpiarCampos();
+            }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar socio: " + e);
