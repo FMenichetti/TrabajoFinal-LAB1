@@ -1,10 +1,9 @@
-
 package Vistas;
 
-
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import javax.swing.ImageIcon;
-
 
 public class Menu extends javax.swing.JFrame {
 
@@ -13,12 +12,12 @@ public class Menu extends javax.swing.JFrame {
     private boolean entFlag = false;
     private boolean claFlag = false;
     private boolean asFlag = false;
-    
-    
+    ArrayList<String> frases = new ArrayList<>();
+
     //============== CONSTRUCTOR ================
-    
     public Menu() {
         initComponents();
+
         try {
             //membresia
             URL imagenMembresia = new URL("https://raw.githubusercontent.com/FMenichetti/TrabajoFinal-LAB1/37fa8fa4d270cd25a3339014b742db8329d0ec87/ProyectoFinal_LAB1/Botones/Botones_sin_pulsar/MEMBRES%C3%8DA_MENU.png");
@@ -40,10 +39,10 @@ public class Menu extends javax.swing.JFrame {
             URL imagenEntrenador = new URL("https://raw.githubusercontent.com/FMenichetti/TrabajoFinal-LAB1/37fa8fa4d270cd25a3339014b742db8329d0ec87/ProyectoFinal_LAB1/Botones/Botones_sin_pulsar/ENTRENADOR_MENU.png");
             ImageIcon iconEntrenador = new ImageIcon(imagenEntrenador);
             lblEntrenador.setIcon(iconEntrenador);
-            
+
             // ICONO DE LA APP
             setIconImage(new ImageIcon(getClass().getResource("/Botones/Botones_internos/logoGYM.png")).getImage());
-            
+
         } catch (Exception e) {
             System.out.println("no " + e);
         }
@@ -67,11 +66,11 @@ public class Menu extends javax.swing.JFrame {
         jlLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         escritorio = new javax.swing.JPanel();
+        lblFrases = new javax.swing.JLabel();
         jlFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GYM");
-        setPreferredSize(new java.awt.Dimension(1280, 721));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
 
@@ -158,6 +157,10 @@ public class Menu extends javax.swing.JFrame {
         escritorio.setBackground(new java.awt.Color(214, 236, 225));
         escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
 
+        lblFrases.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblFrases.setForeground(new java.awt.Color(204, 0, 51));
+        lblFrases.setText("Frase del dia");
+
         jlFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
@@ -167,10 +170,20 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addComponent(jlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                    .addContainerGap(209, Short.MAX_VALUE)
+                    .addComponent(lblFrases, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(130, Short.MAX_VALUE)))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                    .addContainerGap(265, Short.MAX_VALUE)
+                    .addComponent(lblFrases, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(353, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -320,7 +333,7 @@ public class Menu extends javax.swing.JFrame {
         m.setVisible(true);
         escritorio.add(m);
         m.moveToFront();
-        
+
         try {
             m.setMaximum(true);
         } catch (Exception e) {
@@ -347,7 +360,7 @@ public class Menu extends javax.swing.JFrame {
         s.setVisible(true);
         escritorio.add(s);
         s.moveToFront();
-        
+
         try {
             s.setMaximum(true);
         } catch (Exception e) {
@@ -373,7 +386,7 @@ public class Menu extends javax.swing.JFrame {
         c.setVisible(true);
         escritorio.add(c);
         c.moveToFront();
-        
+
         try {
             c.setMaximum(true);
         } catch (Exception e) {
@@ -399,7 +412,7 @@ public class Menu extends javax.swing.JFrame {
         a.setVisible(true);
         escritorio.add(a);
         a.moveToFront();
-        
+
         try {
             a.setMaximum(true);
         } catch (Exception e) {
@@ -425,19 +438,22 @@ public class Menu extends javax.swing.JFrame {
         e.setVisible(true);
         escritorio.add(e);
         e.moveToFront();
-        
+
         try {
             e.setMaximum(true);
         } catch (Exception f) {
         }
-        
+
     }//GEN-LAST:event_lblEntrenadorMouseClicked
 
     private void jlLogoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLogoMouseReleased
         escritorio.removeAll();
         escritorio.repaint();
+        fraseDiaria();
+        escritorio.add(lblFrases);
         escritorio.add(jlFondo);
-        
+
+
     }//GEN-LAST:event_jlLogoMouseReleased
 
     public void despintarTodos() {
@@ -478,7 +494,42 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }
-  
+
+    private void fraseDiaria() {
+        frases.add("No pain, no gain.");
+        frases.add("El dolor es temporal, la gloria es para siempre.");
+        frases.add("Hazlo por el '¡wow!' que vendrá después.");
+        frases.add("Nunca es tarde para empezar.");
+        frases.add("Tú contra ti mismo. Sé tu mejor versión.");
+        frases.add("Cada día es una nueva oportunidad para mejorar.");
+        frases.add("El éxito es la suma de pequeños esfuerzos repetidos día tras día.");
+        frases.add("No cuentes los días, haz que los días cuenten.");
+        frases.add("Eres más fuerte de lo que piensas.");
+        frases.add("Tu único límite eres tú mismo.");
+        frases.add("El dolor que sientes hoy será la fuerza que sentirás mañana.");
+     
+        frases.add("El cuerpo logra lo que la mente cree.");
+        frases.add("Hazlo con pasión o no lo hagas.");
+        frases.add("No se trata de ser el mejor, se trata de ser mejor que ayer.");
+        frases.add("La disciplina es el puente entre tus metas y tus logros.");
+        frases.add("No te detengas hasta que estés orgulloso.");
+        frases.add("Cuida tu cuerpo, es el único lugar que tienes para vivir.");
+        frases.add("Si no te desafía, no te cambia.");
+        
+        frases.add("Entrena duro o vete a casa.");
+        frases.add("El único mal entrenamiento es el que no se hace.");
+        frases.add("Transforma tu cuerpo, transforma tu vida.");
+        frases.add("Esfuérzate un poco más cada día.");
+        frases.add("Los resultados no se obtienen con excusas.");
+        frases.add("Nunca te rindas en lo que realmente quieres hacer.");
+        frases.add("El cuerpo logra lo que la mente cree.");
+        frases.add("La única manera de hacer un gran trabajo es amar lo que haces.");
+
+        Collections.shuffle(frases);
+        lblFrases.setText(frases.get(0));
+
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -521,6 +572,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel lblAsistencia;
     private javax.swing.JLabel lblClases;
     private javax.swing.JLabel lblEntrenador;
+    private javax.swing.JLabel lblFrases;
     private javax.swing.JLabel lblMembresia;
     private javax.swing.JLabel lblSocios;
     // End of variables declaration//GEN-END:variables
