@@ -89,6 +89,39 @@ public class AccesoSocio {
         }
         return socio;
     }
+    
+     public Socio buscarSocioCompleto(int id) {
+        Socio socio = null;
+
+        String sql = "SELECT dni,nombre,apellido,edad,correo,telefono FROM socios WHERE idSocio=? ";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                socio = new Socio();
+                socio.setDni(rs.getString("dni"));
+                socio.setIdSocio(id);
+                socio.setNombre(rs.getString("nombre"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getString("telefono"));
+                socio.setEstado(true);
+            } else {
+
+                JOptionPane.showMessageDialog(null, "No existe el socio");
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar socio");
+        }
+        return socio;
+    }
 
     public Socio buscarSocioPorDni(String dni) {
         Socio socio = null;
@@ -149,6 +182,35 @@ public class AccesoSocio {
         return socios;
     }
 
+     public List<Socio> listarSocioCompleto() {
+        List<Socio> socios = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM socios  ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Socio socio = new Socio();
+                socio.setIdSocio(rs.getInt("idSocio"));
+                socio.setDni(rs.getString("dni"));
+                socio.setNombre(rs.getString("nombre"));
+                socio.setApellido(rs.getString("apellido"));
+                socio.setEdad(rs.getInt("edad"));
+                socio.setCorreo(rs.getString("correo"));
+                socio.setTelefono(rs.getString("telefono"));
+                socio.setEstado(true);
+                socios.add(socio);
+
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla socio");
+        }
+        return socios;
+    }
+     
     public boolean modificarSocio(Socio socio) {
         boolean flag = false;
         //Comparo id de parametro con id de busqueda
