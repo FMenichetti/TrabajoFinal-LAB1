@@ -91,37 +91,43 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jPanel1.setLayout(null);
 
         lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdClase.setForeground(new java.awt.Color(28, 89, 59));
         lblIdClase.setText("ID CLASE");
         jPanel1.add(lblIdClase);
         lblIdClase.setBounds(20, 110, 120, 35);
 
         lblNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(28, 89, 59));
         lblNombre.setText("NOMBRE");
         jPanel1.add(lblNombre);
         lblNombre.setBounds(20, 180, 120, 35);
 
         lblEntrenador.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblEntrenador.setForeground(new java.awt.Color(28, 89, 59));
         lblEntrenador.setText("ENTRENADOR");
         jPanel1.add(lblEntrenador);
         lblEntrenador.setBounds(20, 380, 130, 35);
 
         lblHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblHorario.setForeground(new java.awt.Color(28, 89, 59));
         lblHorario.setText("HORARIO");
         jPanel1.add(lblHorario);
         lblHorario.setBounds(20, 240, 120, 35);
 
         lblCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblCapacidad.setForeground(new java.awt.Color(28, 89, 59));
         lblCapacidad.setText("CAPACIDAD");
         jPanel1.add(lblCapacidad);
         lblCapacidad.setBounds(20, 310, 120, 35);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
         jLabel3.setText("CLASES");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(165, 20, 160, 36);
 
         txtHorario.setBackground(new java.awt.Color(28, 89, 59));
-        txtHorario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtHorario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtHorario.setForeground(new java.awt.Color(255, 255, 255));
         txtHorario.setBorder(null);
         txtHorario.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -130,7 +136,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         txtHorario.setBounds(140, 240, 200, 30);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setBorder(null);
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -139,7 +145,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         txtNombre.setBounds(140, 180, 200, 30);
 
         txtCapacidad.setBackground(new java.awt.Color(28, 89, 59));
-        txtCapacidad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtCapacidad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCapacidad.setForeground(new java.awt.Color(255, 255, 255));
         txtCapacidad.setBorder(null);
         txtCapacidad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -175,7 +181,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         btnGuardar.setBounds(150, 600, 100, 40);
 
         txtIdClase.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtIdClase.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdClase.setForeground(new java.awt.Color(255, 255, 255));
         txtIdClase.setBorder(null);
         txtIdClase.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -206,6 +212,9 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jPanel1.add(btnEliminar);
         btnEliminar.setBounds(410, 600, 100, 40);
 
+        cbEntrenadores.setBackground(new java.awt.Color(28, 89, 59));
+        cbEntrenadores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbEntrenadores.setForeground(new java.awt.Color(28, 89, 59));
         jPanel1.add(cbEntrenadores);
         cbEntrenadores.setBounds(170, 380, 200, 30);
 
@@ -215,11 +224,14 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jLabel4.setBounds(-3, -4, 530, 690);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 510, 680);
+        jPanel1.setBounds(0, 0, 520, 680);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        cbFiltro.setBackground(new java.awt.Color(28, 89, 59));
+        cbFiltro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbFiltro.setForeground(new java.awt.Color(28, 89, 59));
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IdClase", "Nombre", "Horario", "Capacidad", "Entrenador" }));
         cbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -267,6 +279,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         txtFiltro.setBounds(35, 80, 206, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE CLASES");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(125, 26, 258, 36);

@@ -52,7 +52,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         inicializarTabla();
         
         //color texto
-        configurarColorLabel();
         configurarColorTexto();
 
         //iniciar filtro dinamico
@@ -101,31 +100,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         });
     }
     
-    //configurar color texto
-    private void configurarColorLabel() {
-        Color verde = new Color(28, 89, 59);
-
-        //color de texto
-        txtIdSocio.setForeground(verde);
-        txtIdMembresia.setForeground(verde);
-        txtPrecio.setForeground(verde);
-
-        // Etiquetas
-        lblSocio.setForeground(verde);
-        lblMembresia.setForeground(verde);
-        lblFechaInicio.setForeground(verde);
-        lblFechaFin.setForeground(verde);
-        lblPrecio.setForeground(verde);
-        lblCantidadPases.setForeground(verde);
-        jLabel2.setForeground(verde);
-        jLabel3.setForeground(verde);
-
-        // ComboBox
-        cbCantidadPases.setForeground(verde);
-        cbMembresias.setForeground(verde);
-
-        
-    }
     
     //configurar color texto
     private void configurarColorTexto() {
@@ -324,7 +298,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 })
                 .collect(Collectors.toList());
     }
-
+    
+    //validacion de fechas
     private boolean validarFechas() {
         java.util.Date fechaInicioUtil = txtFechaInicio.getDate();
         java.util.Date fechaFinUtil = txtFechaFin.getDate();
@@ -361,16 +336,16 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         lblFechaInicio = new javax.swing.JLabel();
         lblFechaFin = new javax.swing.JLabel();
         lblSocio = new javax.swing.JLabel();
-        btnBuscar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
+        txtIdMembresia = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtIdSocio = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
-        txtIdMembresia = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
-        txtIdSocio = new javax.swing.JTextField();
         txtFechaFin = new com.toedter.calendar.JDateChooser();
         txtFechaInicio = new com.toedter.calendar.JDateChooser();
         cbCantidadPases = new javax.swing.JComboBox<>();
@@ -391,19 +366,55 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(214, 236, 225));
 
         lblMembresia.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblMembresia.setForeground(new java.awt.Color(28, 89, 59));
         lblMembresia.setText("ID MEMBRESÍA");
 
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblCantidadPases.setForeground(new java.awt.Color(28, 89, 59));
         lblCantidadPases.setText("CANTIDAD DE PASES");
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblFechaInicio.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaInicio.setText("FECHA INICIO");
 
         lblFechaFin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblFechaFin.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaFin.setText("FECHA FIN");
 
         lblSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblSocio.setText("ID SOCIO");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
+        jLabel3.setText("MEMBRESÍA");
+
+        lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(28, 89, 59));
+        lblPrecio.setText("PRECIO");
+
+        txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdMembresia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        txtPrecio.setEditable(true);
+        txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
+        txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPrecio.setBorder(null);
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
+
+        txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
+        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIdSocio.setBorder(null);
+        txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdSocioKeyTyped(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -411,12 +422,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnBuscarMouseClicked(evt);
             }
         });
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("MEMBRESÍA");
-
-        lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        lblPrecio.setText("PRECIO");
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -443,29 +448,6 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnModificarMouseClicked(evt);
-            }
-        });
-
-        txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIdMembresia.setBorder(null);
-
-        txtPrecio.setEditable(true);
-        txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
-        txtPrecio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPrecio.setBorder(null);
-        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPrecioKeyTyped(evt);
-            }
-        });
-
-        txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIdSocio.setBorder(null);
-        txtIdSocio.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdSocioKeyTyped(evt);
             }
         });
 
@@ -608,6 +590,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        cbMembresias.setBackground(new java.awt.Color(28, 89, 59));
+        cbMembresias.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbMembresias.setForeground(new java.awt.Color(28, 89, 59));
         cbMembresias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMembresiasActionPerformed(evt);
@@ -663,6 +648,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         txtFiltrar.setBounds(48, 80, 180, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(75, 17, 338, 36);

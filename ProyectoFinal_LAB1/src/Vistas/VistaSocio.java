@@ -95,7 +95,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel1.setLayout(null);
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdSocio.setForeground(new java.awt.Color(255, 255, 255));
         txtIdSocio.setBorder(null);
         txtIdSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -109,47 +109,55 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtIdSocio.setBounds(150, 110, 60, 30);
 
         lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblIdSocio.setText("ID SOCIO");
         jPanel1.add(lblIdSocio);
         lblIdSocio.setBounds(20, 110, 120, 35);
 
         lblNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(28, 89, 59));
         lblNombre.setText("NOMBRE");
         jPanel1.add(lblNombre);
         lblNombre.setBounds(20, 230, 120, 35);
 
         lblApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblApellido.setForeground(new java.awt.Color(28, 89, 59));
         lblApellido.setText("APELLIDO");
         jPanel1.add(lblApellido);
         lblApellido.setBounds(20, 290, 120, 35);
 
         lblEdad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblEdad.setForeground(new java.awt.Color(28, 89, 59));
         lblEdad.setText("EDAD");
         jPanel1.add(lblEdad);
         lblEdad.setBounds(20, 350, 120, 35);
 
         lblDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblDniSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblDniSocio.setText("DNI SOCIO");
         jPanel1.add(lblDniSocio);
         lblDniSocio.setBounds(20, 170, 120, 35);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
         jLabel3.setText("SOCIO");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(230, 20, 95, 36);
 
         lblCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(28, 89, 59));
         lblCorreo.setText("CORREO");
         jPanel1.add(lblCorreo);
         lblCorreo.setBounds(20, 410, 120, 35);
 
         lblTelefono.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(28, 89, 59));
         lblTelefono.setText("TELEFONO");
         jPanel1.add(lblTelefono);
         lblTelefono.setBounds(20, 470, 120, 35);
 
         txtTelefono.setBackground(new java.awt.Color(28, 89, 59));
-        txtTelefono.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtTelefono.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(255, 255, 255));
         txtTelefono.setBorder(null);
         txtTelefono.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -158,7 +166,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtTelefono.setBounds(150, 470, 200, 35);
 
         txtCorreo.setBackground(new java.awt.Color(28, 89, 59));
-        txtCorreo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(255, 255, 255));
         txtCorreo.setBorder(null);
         txtCorreo.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -167,7 +175,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtCorreo.setBounds(150, 410, 200, 30);
 
         txtEdad.setBackground(new java.awt.Color(28, 89, 59));
-        txtEdad.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtEdad.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtEdad.setForeground(new java.awt.Color(255, 255, 255));
         txtEdad.setBorder(null);
         txtEdad.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -176,7 +184,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtEdad.setBounds(150, 350, 60, 30);
 
         txtApellido.setBackground(new java.awt.Color(28, 89, 59));
-        txtApellido.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtApellido.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(255, 255, 255));
         txtApellido.setBorder(null);
         txtApellido.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -185,7 +193,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtApellido.setBounds(150, 290, 200, 30);
 
         txtNombre.setBackground(new java.awt.Color(28, 89, 59));
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setBorder(null);
         txtNombre.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -194,7 +202,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtNombre.setBounds(150, 230, 200, 30);
 
         txtDniSocio.setBackground(new java.awt.Color(28, 89, 59));
-        txtDniSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtDniSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtDniSocio.setForeground(new java.awt.Color(255, 255, 255));
         txtDniSocio.setBorder(null);
         txtDniSocio.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -258,6 +266,9 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        cbFiltro.setBackground(new java.awt.Color(28, 89, 59));
+        cbFiltro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbFiltro.setForeground(new java.awt.Color(28, 89, 59));
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "IDSocio", "DNI", "Nombre", "Apellido" }));
         cbFiltro.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -305,6 +316,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         txtFiltro.setBounds(44, 80, 180, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE MEMBRESÍAS");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(70, 30, 338, 36);

@@ -114,21 +114,25 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jPanel1.setLayout(null);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(28, 89, 59));
         jLabel7.setText("ID ASISTENCIA");
         jPanel1.add(jLabel7);
         jLabel7.setBounds(20, 130, 126, 30);
 
         lblIdSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblIdSocio.setText("ID SOCIO");
         jPanel1.add(lblIdSocio);
         lblIdSocio.setBounds(20, 250, 80, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(28, 89, 59));
         jLabel10.setText("FECHA DE INSCRIPCION");
         jPanel1.add(jLabel10);
         jLabel10.setBounds(20, 310, 210, 30);
 
         lblIdClase.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblIdClase.setForeground(new java.awt.Color(28, 89, 59));
         lblIdClase.setText("ID CLASE");
         jPanel1.add(lblIdClase);
         lblIdClase.setBounds(20, 190, 80, 30);
@@ -143,6 +147,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         btnModificar.setBounds(270, 600, 100, 40);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(28, 89, 59));
         jLabel3.setText("ASISTENCIA");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(160, 30, 190, 36);
@@ -201,11 +206,13 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnGuardar);
         btnGuardar.setBounds(150, 600, 100, 40);
+
+        dcFecha.setForeground(new java.awt.Color(28, 89, 59));
         jPanel1.add(dcFecha);
         dcFecha.setBounds(250, 310, 180, 30);
 
         txtIdAsistencia1.setBackground(new java.awt.Color(28, 89, 59));
-        txtIdAsistencia1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtIdAsistencia1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdAsistencia1.setForeground(new java.awt.Color(255, 255, 255));
         txtIdAsistencia1.setBorder(null);
         txtIdAsistencia1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -228,6 +235,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         txtPases.setBounds(220, 370, 140, 30);
 
         lblPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblPases.setForeground(new java.awt.Color(28, 89, 59));
         lblPases.setText("CANTIDAD DE PASES");
         jPanel1.add(lblPases);
         lblPases.setBounds(20, 370, 190, 30);
@@ -251,6 +259,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
 
+        cbListar.setBackground(new java.awt.Color(28, 89, 59));
+        cbListar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cbListar.setForeground(new java.awt.Color(28, 89, 59));
         cbListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbListarActionPerformed(evt);
@@ -294,11 +305,12 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         jScrollPane1.setBounds(44, 142, 407, 463);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(28, 89, 59));
         jLabel2.setText("LISTA DE ASISTENCIAS");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(60, 30, 380, 36);
 
-        txtBuscarLista.setBackground(new java.awt.Color(28, 89, 59));
+        txtBuscarLista.setBackground(new java.awt.Color(255, 255, 255));
         txtBuscarLista.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtBuscarLista.setForeground(new java.awt.Color(255, 255, 255));
         txtBuscarLista.setBorder(null);
