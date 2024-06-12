@@ -59,13 +59,16 @@ public class Enrenador extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JLabel();
         btnModificar = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtablaEntrenadores = new javax.swing.JTable();
         txtTabla = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
+        setBorder(null);
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(214, 236, 225));
@@ -101,9 +104,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
         btnBuscar.setBounds(350, 110, 150, 50);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel3.setText("Entrenador");
+        jLabel3.setText("ENTRENADOR");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(180, 30, 147, 36);
+        jLabel3.setBounds(180, 30, 220, 36);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel18.setText("ID ENTRENADOR");
@@ -191,10 +194,15 @@ public class Enrenador extends javax.swing.JInternalFrame {
         jPanel1.add(btnEliminar);
         btnEliminar.setBounds(380, 540, 100, 33);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(-3, -4, 530, 690);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 520, 680);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel2.setLayout(null);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "dni", "apellido", "nombre", "especialidad", "seleccione" }));
         jComboBox1.setSelectedIndex(5);
@@ -203,6 +211,8 @@ public class Enrenador extends javax.swing.JInternalFrame {
                 jComboBox1ItemStateChanged(evt);
             }
         });
+        jPanel2.add(jComboBox1);
+        jComboBox1.setBounds(290, 80, 167, 30);
 
         jtablaEntrenadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -230,6 +240,9 @@ public class Enrenador extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jtablaEntrenadores);
 
+        jPanel2.add(jScrollPane1);
+        jScrollPane1.setBounds(44, 136, 413, 463);
+
         txtTabla.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtTablaFocusLost(evt);
@@ -245,41 +258,17 @@ public class Enrenador extends javax.swing.JInternalFrame {
                 txtTablaKeyReleased(evt);
             }
         });
+        jPanel2.add(txtTabla);
+        txtTabla.setBounds(44, 80, 170, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
-        jLabel2.setText("Lista de entrenadores");
+        jLabel2.setText("LISTA DE ENTRENADORES");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(46, 26, 410, 36);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(114, 114, 114))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(63, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
-        );
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
+        jPanel2.add(jLabel4);
+        jLabel4.setBounds(-13, 0, 520, 680);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(520, 0, 520, 680);
@@ -602,11 +591,13 @@ public class Enrenador extends javax.swing.JInternalFrame {
     private javax.swing.JLabel btnModificar;
     private javax.swing.JLabel btnNuevo;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;

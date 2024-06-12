@@ -64,7 +64,9 @@ public class Menu extends javax.swing.JFrame {
         lblSocios = new javax.swing.JLabel();
         lblClases = new javax.swing.JLabel();
         lblAsistencia = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         escritorio = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GYM");
@@ -74,6 +76,7 @@ public class Menu extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1280, 720));
 
         jpFondoBtn.setBackground(new java.awt.Color(102, 102, 102));
+        jpFondoBtn.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblEntrenador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -86,6 +89,7 @@ public class Menu extends javax.swing.JFrame {
                 lblEntrenadorMouseExited(evt);
             }
         });
+        jpFondoBtn.add(lblEntrenador, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 530, 200, 67));
 
         lblMembresia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -98,6 +102,7 @@ public class Menu extends javax.swing.JFrame {
                 lblMembresiaMouseExited(evt);
             }
         });
+        jpFondoBtn.add(lblMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 200, 67));
 
         lblSocios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,6 +115,7 @@ public class Menu extends javax.swing.JFrame {
                 lblSociosMouseExited(evt);
             }
         });
+        jpFondoBtn.add(lblSocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 200, 67));
 
         lblClases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,6 +128,7 @@ public class Menu extends javax.swing.JFrame {
                 lblClasesMouseExited(evt);
             }
         });
+        jpFondoBtn.add(lblClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 200, 67));
 
         lblAsistencia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -134,48 +141,28 @@ public class Menu extends javax.swing.JFrame {
                 lblAsistenciaMouseExited(evt);
             }
         });
+        jpFondoBtn.add(lblAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 200, 67));
 
-        javax.swing.GroupLayout jpFondoBtnLayout = new javax.swing.GroupLayout(jpFondoBtn);
-        jpFondoBtn.setLayout(jpFondoBtnLayout);
-        jpFondoBtnLayout.setHorizontalGroup(
-            jpFondoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpFondoBtnLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jpFondoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblClases, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        jpFondoBtnLayout.setVerticalGroup(
-            jpFondoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpFondoBtnLayout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
-                .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(lblSocios, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(lblClases, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(lblAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(lblEntrenador, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_menu.png"))); // NOI18N
+        jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 720));
 
         escritorio.setBackground(new java.awt.Color(214, 236, 225));
+        escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1023, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -183,14 +170,14 @@ public class Menu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+            .addComponent(jpFondoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -512,6 +499,8 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel escritorio;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jpFondoBtn;
     private javax.swing.JLabel lblAsistencia;
     private javax.swing.JLabel lblClases;
