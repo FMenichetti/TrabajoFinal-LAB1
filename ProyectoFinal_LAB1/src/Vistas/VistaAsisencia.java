@@ -5,6 +5,7 @@ import AccesoDatos.AccesoInscripcion;
 import AccesoDatos.AccesoMembresia;
 import AccesoDatos.AccesoSocio;
 import Entidades.Inscripcion;
+import Entidades.Socio;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.net.URL;
@@ -28,6 +29,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
     // entidades 
     Inscripcion i = null;
     Entidades.Membresia m = null;
+    Socio socioABuscar = null;
     // accesos
     AccesoInscripcion acInscripcion = new AccesoInscripcion();
     AccesoClase acClase = new AccesoClase();
@@ -382,6 +384,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 fechaDeInscripcion = Date.valueOf(i.getFechaInscripcion());
                 txtIdClase.setText(i.getClase().getIdClase() + "");
                 txtIdSocio.setText(i.getSocio().getIdSocio() + "");
+                // ===========================================
+                socioBuscado(i.getSocio().getIdSocio());
+                // ===========================================
                 dcFecha.setDate(fechaDeInscripcion);
                 // mostrar cantidad de pases restantes
                 Entidades.Membresia me = new Entidades.Membresia();
@@ -397,7 +402,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 // cambiar estados de botones
                 btnEliminar.setEnabled(true); // se activa en el caso que si exista la asist a buscar
                 btnModificar.setEnabled(true);// se activa en el caso que si exista la asist a buscar
-                txtIdSocio.setEnabled(false);
+                //txtIdSocio.setEnabled(false);
                 
             } else {
                 limpiarCampos();
@@ -552,11 +557,19 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         }
         
     }
-    
+    // restamos los pases del socio de la membresia 
     public void restarPases(int id) {
         Entidades.Membresia restarPase = new Entidades.Membresia();
         restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
         restarPase.setCantidadPases(restarPase.getCantidadPases() - 1);
+        acMembresia.modificarMembresia(restarPase);
+        
+    }
+    // sumamos los pases al socio de la membresia
+      public void sumarPases(int id) {
+        Entidades.Membresia restarPase = new Entidades.Membresia();
+        restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
+        restarPase.setCantidadPases(restarPase.getCantidadPases() + 1);
         acMembresia.modificarMembresia(restarPase);
         
     }
@@ -575,6 +588,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 }
                 idClase = Integer.parseInt(txtIdClase.getText());
                 idSocio = Integer.parseInt(txtIdSocio.getText());
+                // =============================================================
+                    modificarPases(Integer.parseInt(txtIdSocio.getText()));
+                // =============================================================
                 c = acClase.buscarClase(idClase);
                 s = acSocio.buscarSocio(idSocio);
                 if (c == null) {
@@ -734,6 +750,25 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         
     }
 
+    // ==================================== METODO PARA CUANDO MODIFICA EL ID SOCIO =========================================
+    public Socio socioBuscado(int id){
+        socioABuscar = acSocio.buscarSocio(id);
+        return socioABuscar;
+    }
+    // METODO PARA CUANDO MODIFICA EL ID SOCIO
+    
+    public void modificarPases(int id){
+        Socio so = new Socio();
+        so = acSocio.buscarSocio(id);
+        int anterior = socioABuscar.getIdSocio();
+        int nuevo = so.getIdSocio();
+    
+        if (nuevo != anterior) {
+            restarPases(nuevo);
+            sumarPases(anterior);
+        }
+        
+    }
     // -------------------------------TABLA-------------------------------------
     private void pintarColumnasTabla() {
         tblAsistencia.setModel(tabla);
