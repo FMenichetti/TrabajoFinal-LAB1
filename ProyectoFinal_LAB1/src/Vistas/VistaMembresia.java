@@ -364,38 +364,55 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(214, 236, 225));
+        jPanel1.setLayout(null);
 
         lblMembresia.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblMembresia.setForeground(new java.awt.Color(28, 89, 59));
         lblMembresia.setText("ID MEMBRESÍA");
+        jPanel1.add(lblMembresia);
+        lblMembresia.setBounds(23, 184, 140, 22);
 
         lblCantidadPases.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblCantidadPases.setForeground(new java.awt.Color(28, 89, 59));
         lblCantidadPases.setText("CANTIDAD DE PASES");
+        jPanel1.add(lblCantidadPases);
+        lblCantidadPases.setBounds(23, 254, 184, 22);
 
         lblFechaInicio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaInicio.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaInicio.setText("FECHA INICIO");
+        jPanel1.add(lblFechaInicio);
+        lblFechaInicio.setBounds(23, 334, 130, 22);
 
         lblFechaFin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblFechaFin.setForeground(new java.awt.Color(28, 89, 59));
         lblFechaFin.setText("FECHA FIN");
+        jPanel1.add(lblFechaFin);
+        lblFechaFin.setBounds(23, 404, 100, 22);
 
         lblSocio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblSocio.setForeground(new java.awt.Color(28, 89, 59));
         lblSocio.setText("ID SOCIO");
+        jPanel1.add(lblSocio);
+        lblSocio.setBounds(23, 114, 90, 22);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(28, 89, 59));
         jLabel3.setText("MEMBRESÍA");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(183, 24, 178, 36);
 
         lblPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lblPrecio.setForeground(new java.awt.Color(28, 89, 59));
         lblPrecio.setText("PRECIO");
+        jPanel1.add(lblPrecio);
+        lblPrecio.setBounds(23, 484, 80, 30);
 
         txtIdMembresia.setBackground(new java.awt.Color(28, 89, 59));
         txtIdMembresia.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIdMembresia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel1.add(txtIdMembresia);
+        txtIdMembresia.setBounds(173, 174, 60, 30);
 
         txtPrecio.setEditable(true);
         txtPrecio.setBackground(new java.awt.Color(28, 89, 59));
@@ -406,6 +423,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 txtPrecioKeyTyped(evt);
             }
         });
+        jPanel1.add(txtPrecio);
+        txtPrecio.setBounds(103, 484, 100, 30);
 
         txtIdSocio.setBackground(new java.awt.Color(28, 89, 59));
         txtIdSocio.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -415,6 +434,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 txtIdSocioKeyTyped(evt);
             }
         });
+        jPanel1.add(txtIdSocio);
+        txtIdSocio.setBounds(123, 104, 60, 30);
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/BUSCAR.png"))); // NOI18N
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -422,6 +443,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnBuscarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnBuscar);
+        btnBuscar.setBounds(303, 94, 150, 50);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -429,6 +452,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnEliminarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnEliminar);
+        btnEliminar.setBounds(403, 604, 110, 50);
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/NUEVO.png"))); // NOI18N
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -436,6 +461,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnNuevoMouseClicked(evt);
             }
         });
+        jPanel1.add(btnNuevo);
+        btnNuevo.setBounds(33, 604, 110, 50);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -443,6 +470,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnGuardarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnGuardar);
+        btnGuardar.setBounds(153, 604, 110, 50);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -450,139 +479,35 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
                 btnModificarMouseClicked(evt);
             }
         });
+        jPanel1.add(btnModificar);
+        btnModificar.setBounds(273, 604, 110, 50);
 
         txtFechaFin.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaFin.setDateFormatString("dd/MM/yyyy");
         txtFechaFin.setInheritsPopupMenu(true);
         txtFechaFin.setOpaque(false);
+        jPanel1.add(txtFechaFin);
+        txtFechaFin.setBounds(153, 404, 150, 30);
 
         txtFechaInicio.setBackground(new java.awt.Color(28, 89, 59));
         txtFechaInicio.setDateFormatString("dd/MM/yyyy");
         txtFechaInicio.setInheritsPopupMenu(true);
         txtFechaInicio.setOpaque(false);
+        jPanel1.add(txtFechaInicio);
+        txtFechaInicio.setBounds(163, 334, 150, 30);
 
         cbCantidadPases.setBackground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbCantidadPases.setForeground(new java.awt.Color(28, 89, 59));
         cbCantidadPases.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8", "12", "20" }));
         cbCantidadPases.setToolTipText("");
+        jPanel1.add(cbCantidadPases);
+        cbCantidadPases.setBounds(233, 244, 110, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(jLabel3))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(273, 273, 273)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(303, 303, 303)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(lblCantidadPases))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(403, 403, 403)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel3)
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(lblSocio))
-                            .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(48, 48, 48)
-                        .addComponent(lblMembresia)
-                        .addGap(128, 128, 128)
-                        .addComponent(lblFechaInicio)
-                        .addGap(48, 48, 48)
-                        .addComponent(lblFechaFin)
-                        .addGap(58, 58, 58)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(90, 90, 90)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(404, 404, 404)
-                        .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(254, 254, 254)
-                        .addComponent(lblCantidadPases))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(334, 334, 334)
-                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(604, 604, 604)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 0, 510, 700);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 510, 700);
