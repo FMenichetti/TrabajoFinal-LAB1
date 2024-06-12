@@ -50,6 +50,10 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         });
         //iniciar tabla        
         inicializarTabla();
+        
+        //color texto
+        configurarColorLabel();
+        configurarColorTexto();
 
         //iniciar filtro dinamico
         inicializarTxtFiltrar();
@@ -96,6 +100,48 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
             }
         });
     }
+    
+    //configurar color texto
+    private void configurarColorLabel() {
+        Color verde = new Color(28, 89, 59);
+
+        //color de texto
+        txtIdSocio.setForeground(verde);
+        txtIdMembresia.setForeground(verde);
+        txtPrecio.setForeground(verde);
+
+        // Etiquetas
+        lblSocio.setForeground(verde);
+        lblMembresia.setForeground(verde);
+        lblFechaInicio.setForeground(verde);
+        lblFechaFin.setForeground(verde);
+        lblPrecio.setForeground(verde);
+        lblCantidadPases.setForeground(verde);
+        jLabel2.setForeground(verde);
+        jLabel3.setForeground(verde);
+
+        // ComboBox
+        cbCantidadPases.setForeground(verde);
+        cbMembresias.setForeground(verde);
+
+        
+    }
+    
+    //configurar color texto
+    private void configurarColorTexto() {
+    Color blanco = new Color(255, 255, 255);
+
+    //color de texto
+    txtIdSocio.setForeground(blanco);
+    txtIdMembresia.setForeground(blanco);
+    txtPrecio.setForeground(blanco);
+
+    // JDateChooser
+    JTextFieldDateEditor editorFechaInicio = (JTextFieldDateEditor) txtFechaInicio.getDateEditor();
+    editorFechaInicio.setForeground(blanco);
+    JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
+    editorFechaFin.setForeground(blanco);
+}
 
     //bloquear todos los campos excepto txtIdSocio al iniciar
     private void bloquearCamposInicio() {
@@ -503,58 +549,61 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lblSocio))
-                    .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(lblMembresia)
-                .addGap(128, 128, 128)
-                .addComponent(lblFechaInicio)
-                .addGap(48, 48, 48)
-                .addComponent(lblFechaFin)
-                .addGap(58, 58, 58)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(604, 604, 604)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(604, 604, 604)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(404, 404, 404)
-                .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addComponent(lblCantidadPases))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(334, 334, 334)
-                .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(604, 604, 604)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel3)
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(lblSocio))
+                            .addComponent(txtIdSocio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addComponent(lblMembresia)
+                        .addGap(128, 128, 128)
+                        .addComponent(lblFechaInicio)
+                        .addGap(48, 48, 48)
+                        .addComponent(lblFechaFin)
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(90, 90, 90)
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(604, 604, 604)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(604, 604, 604)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(404, 404, 404)
+                        .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(244, 244, 244)
+                        .addComponent(cbCantidadPases, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(254, 254, 254)
+                        .addComponent(lblCantidadPases))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(334, 334, 334)
+                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(604, 604, 604)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(txtIdMembresia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 510, 680);
+        jPanel1.setBounds(0, 0, 510, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
@@ -619,12 +668,11 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         jLabel2.setBounds(75, 17, 338, 36);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(-3, -4, 520, 680);
+        jLabel4.setBounds(-3, -4, 600, 700);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(510, 0, 530, 680);
+        jPanel2.setBounds(510, 0, 550, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -738,6 +786,8 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtPrecioKeyTyped
 
+    // ==================== BOTONES ====================
+    
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (!btnModificar.isEnabled()) {
             return; //no hace nada si el boton de modificar esta desactivado
@@ -854,9 +904,9 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         limpiarCampos();
         habilitarCampos();
         btnGuardar.setEnabled(true);
-        btnBuscar.setEnabled(false);
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
+        txtIdMembresia.setEnabled(false);
         txtIdSocio.requestFocusInWindow();
     }//GEN-LAST:event_btnNuevoMouseClicked
 
@@ -896,11 +946,16 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
-    // ==================== BOTONES ====================
-
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         if (!btnBuscar.isEnabled()) {
             return; // No hacer nada si el botón de buscar está desactivado
+        }
+        
+        if (!txtIdMembresia.isEnabled()) {
+            txtIdMembresia.setEnabled(true);
+            txtIdSocio.requestFocus();
+            btnGuardar.setEnabled(false);
+            return;
         }
         String idSocioStr = txtIdSocio.getText().trim();
         if (idSocioStr.isEmpty()) {
