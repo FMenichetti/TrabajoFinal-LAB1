@@ -191,7 +191,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnNuevo);
-        btnNuevo.setBounds(40, 540, 100, 30);
+        btnNuevo.setBounds(30, 610, 100, 30);
 
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/GUARDAR.png"))); // NOI18N
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -200,7 +200,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnGuardar);
-        btnGuardar.setBounds(150, 540, 100, 30);
+        btnGuardar.setBounds(150, 610, 100, 30);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/MODIFICAR.png"))); // NOI18N
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -209,7 +209,7 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnModificar);
-        btnModificar.setBounds(260, 540, 100, 30);
+        btnModificar.setBounds(270, 610, 100, 30);
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/ELIMINAR_2_PULSADO.png"))); // NOI18N
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,14 +218,14 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(380, 540, 100, 33);
+        btnEliminar.setBounds(390, 610, 100, 33);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(-3, -4, 530, 690);
+        jLabel1.setBounds(-3, -4, 530, 710);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 520, 680);
+        jPanel1.setBounds(0, 0, 520, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
@@ -293,10 +293,10 @@ public class VistaEntrenador extends javax.swing.JInternalFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(-13, 0, 520, 680);
+        jLabel4.setBounds(-13, 0, 520, 700);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(520, 0, 520, 680);
+        jPanel2.setBounds(520, 0, 520, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

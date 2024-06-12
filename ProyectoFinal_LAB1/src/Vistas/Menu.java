@@ -152,39 +152,23 @@ public class Menu extends javax.swing.JFrame {
         jpFondoBtn.add(jlLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 180, 160));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_menu.png"))); // NOI18N
-        jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 720));
+        jpFondoBtn.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 680));
 
         escritorio.setBackground(new java.awt.Color(214, 236, 225));
         escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
+        escritorio.setLayout(null);
 
-        lblFrases.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblFrases.setForeground(new java.awt.Color(204, 0, 51));
+        lblFrases.setFont(new java.awt.Font("Edo", 1, 30)); // NOI18N
+        lblFrases.setForeground(new java.awt.Color(0, 51, 51));
+        lblFrases.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFrases.setText("Frase del dia");
+        lblFrases.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        escritorio.add(lblFrases);
+        lblFrases.setBounds(50, 40, 920, 103);
 
         jlFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground.png"))); // NOI18N
-
-        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
-        escritorio.setLayout(escritorioLayout);
-        escritorioLayout.setHorizontalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addComponent(jlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1018, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
-                    .addContainerGap(209, Short.MAX_VALUE)
-                    .addComponent(lblFrases, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(130, Short.MAX_VALUE)))
-        );
-        escritorioLayout.setVerticalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
-                    .addContainerGap(265, Short.MAX_VALUE)
-                    .addComponent(lblFrases, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(353, Short.MAX_VALUE)))
-        );
+        escritorio.add(jlFondo);
+        jlFondo.setBounds(0, 0, 1018, 680);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,12 +177,12 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE))
+                .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
-            .addComponent(jpFondoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpFondoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 675, Short.MAX_VALUE)
         );
 
         pack();

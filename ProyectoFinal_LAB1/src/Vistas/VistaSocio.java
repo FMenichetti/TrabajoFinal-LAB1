@@ -258,10 +258,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(-3, -4, 530, 690);
+        jLabel1.setBounds(-3, -4, 530, 700);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 520, 680);
+        jPanel1.setBounds(0, 0, 520, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
@@ -324,10 +324,10 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(-3, 0, 510, 680);
+        jLabel4.setBounds(-3, 0, 510, 700);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(516, 0, 510, 680);
+        jPanel2.setBounds(516, 0, 510, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

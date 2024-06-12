@@ -253,10 +253,10 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(-3, -4, 540, 690);
+        jLabel1.setBounds(-3, -4, 540, 700);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 540, 680);
+        jPanel1.setBounds(0, 0, 540, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
@@ -336,10 +336,10 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(-3, 0, 490, 680);
+        jLabel4.setBounds(-3, 0, 490, 700);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(536, 0, 490, 680);
+        jPanel2.setBounds(536, 0, 490, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

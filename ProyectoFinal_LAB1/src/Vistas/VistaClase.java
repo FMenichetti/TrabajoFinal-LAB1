@@ -210,7 +210,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
             }
         });
         jPanel1.add(btnEliminar);
-        btnEliminar.setBounds(410, 600, 100, 40);
+        btnEliminar.setBounds(400, 600, 100, 40);
 
         cbEntrenadores.setBackground(new java.awt.Color(28, 89, 59));
         cbEntrenadores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -221,10 +221,10 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(-3, -4, 530, 690);
+        jLabel4.setBounds(-3, -4, 530, 700);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 520, 680);
+        jPanel1.setBounds(0, 0, 520, 700);
 
         jPanel2.setBackground(new java.awt.Color(214, 236, 225));
         jPanel2.setLayout(null);
@@ -287,10 +287,10 @@ public class VistaClase extends javax.swing.JInternalFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/Botones_internos/Brackground_internal.png"))); // NOI18N
         jLabel5.setText("jLabel5");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(0, -4, 520, 690);
+        jLabel5.setBounds(0, -4, 520, 710);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(506, 0, 530, 680);
+        jPanel2.setBounds(506, 0, 530, 700);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
