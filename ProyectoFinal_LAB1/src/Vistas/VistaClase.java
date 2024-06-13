@@ -367,9 +367,17 @@ public class VistaClase extends javax.swing.JInternalFrame {
                 return;
             }
             //modificar Clase(clase);
+            Clase saliente = ac.buscarClase(Integer.parseInt( txtIdClase.getText() ));
             if (cargarClase(clase)) {
-
-                flag = ac.modificarClase(clase);
+                if (saliente.getEntrenador().getIdEntrenador() == clase.getEntrenador().getIdEntrenador()
+                     && saliente.getHorario() == clase.getHorario()   ) {
+                    flag = ac.modificarClaseParcial(clase);
+                }
+                if (saliente.getEntrenador().getIdEntrenador() != clase.getEntrenador().getIdEntrenador()
+                     || saliente.getHorario() != clase.getHorario()   ) {
+                    flag = ac.modificarClase(clase);
+                }
+                
             }
             txtIdClase.requestFocus();
             if (flag) {
@@ -459,6 +467,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
             txtIdClase.requestFocus();
             if (flag) {
                 ocultarBotonesMenosNuevo();
+                btnGuardar.setEnabled(true);
                 resetFiltros();
                 limpiarCampos();
             }
@@ -559,8 +568,8 @@ public class VistaClase extends javax.swing.JInternalFrame {
             clase.setIdClase(Integer.parseInt(txtIdClase.getText()));
         }
 
-        //Validaciones campos solo letras
-        if (validaSoloLetras(txtNombre.getText()) && validaciones) {
+        //Validaciones nombre
+        if (validaNombre(txtNombre.getText()) && validaciones) {
             clase.setNombre(txtNombre.getText());
 
         } else {
@@ -585,7 +594,7 @@ public class VistaClase extends javax.swing.JInternalFrame {
         }
 
         //Validacion cb entrenadores
-        if (validaciones && cbEntrenadores.getSelectedIndex() > 0) {
+        if (validaciones && cbEntrenadores.getSelectedIndex() > -1) {
             entrenador = (Entrenador) cbEntrenadores.getSelectedItem();
             clase.setEntrenador(entrenador);
         } else {
@@ -723,6 +732,12 @@ public class VistaClase extends javax.swing.JInternalFrame {
 
     //Metodo valida letras
     private boolean validaSoloLetras(String texto) {
+        Pattern patron = Pattern.compile("^[a-zA-Z\\s]+$");
+        Matcher m = patron.matcher(texto);
+        return m.matches();
+    }
+    //Valida nombre con letras y espacios
+    private boolean validaNombre(String texto) {
         Pattern patron = Pattern.compile("^[a-zA-Z\\s]+$");
         Matcher m = patron.matcher(texto);
         return m.matches();

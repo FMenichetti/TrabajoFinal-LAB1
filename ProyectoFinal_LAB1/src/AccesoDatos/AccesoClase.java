@@ -167,6 +167,7 @@ public class AccesoClase {
     public boolean modificarClase(Clase clase) {
         
         boolean flag = false;
+        
         if (existeClase(clase)) {
             JOptionPane.showMessageDialog(null, "El entrenador ya tiene clase agendada en ese horario");
             return false;
@@ -200,6 +201,40 @@ public class AccesoClase {
         return flag;
     }
     }
+    //modifica clase con mismo entrenador y mismo horario
+    public boolean modificarClaseParcial(Clase clase) {
+        
+        boolean flag = false;
+        
+        
+        String sql = "UPDATE clases SET nombre = ? , idEntrenador = ?, horario = ?, capacidad = ?, estado = ? WHERE idClase =  ?";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, clase.getNombre());
+            ps.setInt(2, clase.getEntrenador().getIdEntrenador());
+            ps.setTime(3, Time.valueOf(clase.getHorario()));
+            ps.setInt(4, clase.getCapacidad());
+            ps.setBoolean(5, clase.isEstado());
+            ps.setInt(6, clase.getIdClase());
+
+            int exito = ps.executeUpdate();
+
+            if (exito == 1) {
+                flag = true;
+                JOptionPane.showMessageDialog(null, "Clase modificada");
+            } else {
+                JOptionPane.showMessageDialog(null, "La clase no existe");
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
+        }
+        return flag;
+    }
+    
     
       public void modificarClaseFabri(Clase clase) {
         

@@ -214,7 +214,7 @@ public class AccesoSocio {
     public boolean modificarSocio(Socio socio) {
         boolean flag = false;
         //Comparo id de parametro con id de busqueda
-        if (socio.getIdSocio() == buscarSocio(socio.getIdSocio()).getIdSocio()) {
+        if (socio.getDni()== buscarSocio(socio.getIdSocio()).getDni()) {
             JOptionPane.showMessageDialog(null, "Cuidado, ya existe un socio con ese dni");
             return false;
         } else {

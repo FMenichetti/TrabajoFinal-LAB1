@@ -580,7 +580,7 @@ public class VistaSocio extends javax.swing.JInternalFrame {
         }
 
         //Validaciones campos solo letras
-        if (validaSoloLetras(txtNombre.getText()) && validaSoloLetras(txtApellido.getText()) && validaciones) {
+        if (validaNombre(txtNombre.getText()) && validaNombre(txtApellido.getText()) && validaciones) {
             socio.setNombre(txtNombre.getText());
             socio.setApellido(txtApellido.getText());
         } else {
@@ -714,6 +714,13 @@ public class VistaSocio extends javax.swing.JInternalFrame {
 
     //Metodo valida letras
     private boolean validaSoloLetras(String texto) {
+        Pattern patron = Pattern.compile("^[a-zA-Z\\s]+$");
+        Matcher m = patron.matcher(texto);
+        return m.matches();
+    }
+    
+    //Valida nombre con letras y espacios
+    private boolean validaNombre(String texto) {
         Pattern patron = Pattern.compile("^[a-zA-Z\\s]+$");
         Matcher m = patron.matcher(texto);
         return m.matches();
