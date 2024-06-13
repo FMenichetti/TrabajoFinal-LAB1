@@ -76,6 +76,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         java.util.Date formatoParaElJc = java.sql.Date.valueOf(fechaMinima);
         dcFecha.setMinSelectableDate(formatoParaElJc);
         // bandera para ver si tiene membresia
+        editorJcalendar.setDate(Date.valueOf(LocalDate.now()));
 
     }
 
@@ -532,7 +533,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                         aBuscar = acSocio.buscarSocioCompleto(Integer.parseInt(txtIdSocio.getText()));
                         socioBuscado(aBuscar.getIdSocio());
                         Clase aBuscarClase;
-                        aBuscarClase = acClase.buscarTodasLasClases(Integer.parseInt(txtIdClase.getText()));                 
+                        aBuscarClase = acClase.buscarTodasLasClases(Integer.parseInt(txtIdClase.getText()));
                         claseBuscadaMet(aBuscarClase.getIdClase());
                     }
                 } catch (NumberFormatException e) {
@@ -562,7 +563,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         Entidades.Membresia restarPase = new Entidades.Membresia();
         restarPase = acMembresia.buscarMembresiaPorIdSocio(id);
         restarPase.setCantidadPases(restarPase.getCantidadPases() - 1);
-        acMembresia.modificarMembresia(restarPase);
+        acMembresia.modificarMembresiaNoCartel(restarPase);
 
     }
 
@@ -572,7 +573,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
         sumarPase = acMembresia.buscarMembresiaPorIdSocio(id);
 
         sumarPase.setCantidadPases(sumarPase.getCantidadPases() + 1);
-        acMembresia.modificarMembresia(sumarPase);
+        acMembresia.modificarMembresiaNoCartel(sumarPase);
 
     }
 
@@ -638,6 +639,14 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
             Entidades.Clase c = acClase.buscarClase(idClase);
             Entidades.Socio s = acSocio.buscarSocio(idSocio);
             Entidades.Membresia me = acMembresia.buscarMembresiaPorIdSocio(idSocio);
+
+            //checkeamos si la fecha de hoy esta antes que la fecha fin de la membresia para darla de baja al inscribirla
+            if (Date.valueOf(LocalDate.now()).after(Date.valueOf(me.getFechaFin()))) {
+                JOptionPane.showMessageDialog(rootPane, "La membresia ah expirado,dando de baja");
+                acMembresia.eliminarMembresia(me.getIdMembresia());
+                return;
+            }
+
             // que exista la membresia
             if (me == null) {
                 JOptionPane.showMessageDialog(null, "El socio no tiene membresia");
@@ -796,7 +805,7 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                 tieneMembresia = true;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Uno de los socios no tiene membresia, no se puede modificar... CATCHHHHH ");
+            JOptionPane.showMessageDialog(null, "Uno de los socios no tiene membresia, no se puede modificar... .");
             tieneMembresia = false;
         }
 

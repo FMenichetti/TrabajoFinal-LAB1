@@ -255,14 +255,14 @@ public class AccesoClase {
 
             if (exito == 1) {
                 
-                JOptionPane.showMessageDialog(null, "Clase modificada");
+                System.out.println("modifico");
             } else {
-                JOptionPane.showMessageDialog(null, "La clase no existe");
+                System.out.println("no existe la clase");
             }
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla clases" + e);
+            System.out.println(""+e);
         }
         
     

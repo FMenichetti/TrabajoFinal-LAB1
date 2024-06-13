@@ -133,6 +133,31 @@ public class AccesoMembresia {
         }
     }
 
+    
+    public void modificarMembresiaNoCartel(Membresia membresia) {
+        String sql = "UPDATE membresia SET idSocio = ?, cantidadPases = ?, fechaInicio = ?, fechaFin = ?, costo = ? WHERE idMembresia = ? AND estado = 1";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, membresia.getSocio().getIdSocio());
+            ps.setInt(2, membresia.getCantidadPases());
+            ps.setDate(3, Date.valueOf(membresia.getFechaInicio()));
+            ps.setDate(4, Date.valueOf(membresia.getFechaFin()));
+            ps.setDouble(5, membresia.getCosto());
+            ps.setInt(6, membresia.getIdMembresia());
+
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                System.out.println(""+membresia);
+            } else {
+                System.out.println("no se cargo");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(""+e);
+        }
+    }
+    
     public void eliminarMembresia(int id) {
         try {
             String sql = "UPDATE membresia SET estado = 0 WHERE idMembresia = ?";
@@ -148,6 +173,27 @@ public class AccesoMembresia {
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+        }
+
+    }
+    
+     public void eliminarMembresiaActiva(int id) {
+        try {
+            String sql = "UPDATE membresia SET estado = 0 WHERE idMembresia = ? AND estado=1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            int fila = ps.executeUpdate();
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "Se eliminó la membresía");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró la membresía con el ID proporcionado");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla membresias: " + e.getMessage());
+        }catch(Exception A){
+            JOptionPane.showMessageDialog(null, A);
         }
 
     }

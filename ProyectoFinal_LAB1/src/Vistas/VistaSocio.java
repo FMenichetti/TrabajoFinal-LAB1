@@ -9,6 +9,7 @@ import AccesoDatos.AccesoSocio;
 import Entidades.Membresia;
 import Entidades.Socio;
 import java.awt.event.ItemEvent;
+import java.sql.SQLWarning;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -435,11 +436,11 @@ public class VistaSocio extends javax.swing.JInternalFrame {
             // Mostrar el cuadro de diálogo de confirmación
             int opcion = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar al socio con ID; " + socio.getIdSocio(), "Confirma eliminacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (opcion == 0) {
-                flag = as.eliminarSocio(socio.getIdSocio());
+                    flag = as.eliminarSocio(socio.getIdSocio());
             }
             txtIdSocio.requestFocus();
-            if (flag) {
-                am.eliminarMembresia(membresia.getIdMembresia());
+            if (flag && membresia!=null) {
+                am.eliminarMembresiaActiva(membresia.getIdMembresia());
                 limpiarCampos();
             }
 

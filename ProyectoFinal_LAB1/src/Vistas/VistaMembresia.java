@@ -197,6 +197,7 @@ public class VistaMembresia extends javax.swing.JInternalFrame {
         editorFechaInicio.setEditable(false);
         JTextFieldDateEditor editorFechaFin = (JTextFieldDateEditor) txtFechaFin.getDateEditor();
         editorFechaFin.setEditable(false);
+        editorFechaInicio.setDate(Date.valueOf(LocalDate.now()));
     }
 
     //eliminar bordes internal frame
