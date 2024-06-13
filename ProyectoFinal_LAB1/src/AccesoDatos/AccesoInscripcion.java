@@ -151,7 +151,7 @@ public class AccesoInscripcion {
             if (rs.next()) {
                 insc = new Inscripcion();
                 insc.setIdInscripcion(id);
-                insc.setClase(ac.buscarClase(rs.getInt("idClase")));
+                insc.setClase(ac.buscarTodasLasClases(rs.getInt("idClase")));
                 insc.setSocio(as.buscarSocioCompleto(rs.getInt("idSocio")));
                 insc.setFechaInscripcion(rs.getDate("fechaInscripcion").toLocalDate());
 

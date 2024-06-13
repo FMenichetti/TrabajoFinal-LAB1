@@ -18,7 +18,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         fraseDiaria();
-
+        
         try {
             //membresia
             URL imagenMembresia = new URL("https://raw.githubusercontent.com/FMenichetti/TrabajoFinal-LAB1/37fa8fa4d270cd25a3339014b742db8329d0ec87/ProyectoFinal_LAB1/Botones/Botones_sin_pulsar/MEMBRES%C3%8DA_MENU.png");
@@ -159,7 +159,7 @@ public class Menu extends javax.swing.JFrame {
         escritorio.setPreferredSize(new java.awt.Dimension(1100, 0));
         escritorio.setLayout(null);
 
-        lblFrases.setFont(new java.awt.Font("Edo", 1, 30)); // NOI18N
+        lblFrases.setFont(new java.awt.Font("Ink Free", 3, 30)); // NOI18N
         lblFrases.setForeground(new java.awt.Color(0, 51, 51));
         lblFrases.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFrases.setText("Frase del dia");

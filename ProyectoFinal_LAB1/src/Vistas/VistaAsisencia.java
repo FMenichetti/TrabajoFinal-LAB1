@@ -531,6 +531,9 @@ public class VistaAsisencia extends javax.swing.JInternalFrame {
                         Socio aBuscar;
                         aBuscar = acSocio.buscarSocioCompleto(Integer.parseInt(txtIdSocio.getText()));
                         socioBuscado(aBuscar.getIdSocio());
+                        Clase aBuscarClase;
+                        aBuscarClase = acClase.buscarTodasLasClases(Integer.parseInt(txtIdClase.getText()));                 
+                        claseBuscadaMet(aBuscarClase.getIdClase());
                     }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(rootPane, "Ingrese un ID válido");
